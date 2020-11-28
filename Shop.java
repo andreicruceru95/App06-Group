@@ -1,12 +1,12 @@
 
 /**
- * A shop on the map. 
- * Will privide weapons and armours with the same level as the map.
+ * Write a description of class Shop here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
 public class Shop
 {
+    // instance variables - replace the example below with your own
     
 }

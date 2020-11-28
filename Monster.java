@@ -14,7 +14,7 @@ public class Monster
     
     private int atackForce = 10;
     private int shield = 12;
-    private int currentHitPoints = 25;
+    private int currentHp = 25;
     private int level;
           
     private String name;
@@ -22,7 +22,7 @@ public class Monster
     /**
      * Add a name and a level for the monster.
      * @param name is the input name.
-     * @param lvl is the input lvl.
+     * @param level is the input level.
      */
     public Monster(String name, int level)
     {
@@ -31,7 +31,7 @@ public class Monster
         this.level = level;
         this.atackForce *= level;
         this.shield *= level;
-        this.currentHitPoints *= level;
+        this.currentHp *= level;
     }
     
     /**
@@ -40,10 +40,10 @@ public class Monster
      */
     public int atack()
     {
-        int minAtk = atackForce - 3;
-        int maxAtk = atackForce + 3;
+        int minAtackForce = atackForce - 3;
+        int maxAtackForce = atackForce + 3;
         
-        int value = random.nextInt(maxAtk) + minAtk;
+        int value = random.nextInt(maxAtackForce) + minAtackForce;
          
         return value;
     }
@@ -53,19 +53,19 @@ public class Monster
      * @param value is the value we recieve.
      * @return the value we recieved.
      */
-    public int recieveDamage(int value)
+    public int recieveDmg(int value)
     {
         int recieved = 0;
         
         if (shield >= value)
         {
             recieved = -1;
-            currentHitPoints -= 1;
+            currentHp -= 1;
         }
         else
         { 
             recieved = value - shield;
-            currentHitPoints -= (value - shield);
+            currentHp -= (value - shield);
         }
         
         return recieved;   
@@ -78,7 +78,7 @@ public class Monster
      */
     public boolean checkHealth()
     {
-        if (currentHitPoints <= 0)
+        if (currentHp <= 0)
         {
             System.out.println("\t\t\t\tYou Win!");
             return false;
@@ -89,15 +89,15 @@ public class Monster
     }
     
     /**
-     * @return monster's hit points.
+     * @return health
      */
     public int getHealth()
     {
-        return currentHitPoints;
+        return currentHp;
     }
     
     /**
-     * @return monster's level.
+     * @return level
      */
     public int getLevel()
     {

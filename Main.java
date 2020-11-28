@@ -9,7 +9,9 @@ public class Main
     private Map map;
     private Input reader = new Input();
     
-        
+    /**
+     * tester
+     */    
     public Main()
     {
         System.out.println("Please enter the player's name:");
@@ -22,6 +24,9 @@ public class Main
         run(); 
     }
     
+    /**
+     * Main options.
+     */
     public void run()
     {
         boolean finished = false;
@@ -35,7 +40,7 @@ public class Main
             }
             else if(choice.equals("check"))
             {
-                map.getPlayerHp();
+                map.getPlayerAttr();
             }
             else
                 runMenu(choice);

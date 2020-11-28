@@ -1,8 +1,8 @@
 /**
  *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  "World of Zuul" is a very simple, console based game.  
+ *  It's a world of monsters, where a young warior must fight to grow 
+ *  so he can defeat tougher and tougher evils.
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.

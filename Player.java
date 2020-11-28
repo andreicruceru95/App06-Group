@@ -11,7 +11,7 @@ public class Player
 {
     private final static int MIN_HEALTH = 0;
     
-    private int atackForce = 0;
+    private int atackForce = 15;
     private int shield = 0;
     private int maxHitPoints = 100;
     private int currentHitPoints = 100;
@@ -23,9 +23,8 @@ public class Player
        
     private String name;
     private int score = 0;
-    private int playerRowCoord = 2;
-    private int playerColCoord = 2;
-    
+    private int playerRowCoord = 5;
+    private int playerColCoord = 5;
     /**
      * Add a name for the player.
      * @param name is the input name.
@@ -38,21 +37,13 @@ public class Player
         inventory = new ArrayList<Item>();
         equipment = new ArrayList<Item>();
         
-        equipment.add(new Item(10,"Steel Sword ", 5, 0,0,0,0,1));
-        equipment.add(new Item(20,"Steel Armour", 0, 10,0,10,0,1));
+        inventory.add(new Item(10,"Steel Sword ", 5, 0,0,0,0,1));
+        inventory.add(new Item(20,"Steel Armour", 0, 10,0,10,0,1));        
         inventory.add(new Item(30,"HP Potion", 100, 0,0,0,5,1));
+        equip("Steel Sword");
+        equip("Steel Armour");
     }
-    
-    /**
-     * Set/change a player's name.
-     * @param name is the input name.
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-    
-    
+        
     /**
      * Print a list of items.
      * @param list is the given list.
@@ -143,7 +134,7 @@ public class Player
     }
     
     /**
-     * Verify that the curent Hp isn't bigger then max Hit points.
+     * Verify that the curent Hp isn't bigger then max Hp.
      */
     private void verify(int hitPoints)
     {
@@ -162,14 +153,14 @@ public class Player
         {
             equipment.add(item);            
                         
-            atackForce = item.getAtackForce();
+            atackForce = item.getAtack();
         }
         else if(item.getID() < 30)
         {
             equipment.add(item);
                      
             maxHitPoints += item.getHitPoints();
-            shield = item.getShield();
+            shield = item.getShield(); 
         }
         else
             System.out.println("Error");
@@ -190,7 +181,7 @@ public class Player
             
             if(id < 20)
             {
-                atackForce -= item.getAtackForce();
+                atackForce -= item.getAtack();
             }
             else if(id < 30)
             {
@@ -262,10 +253,10 @@ public class Player
      */
     public int atack()
     {
-        int minAtackForce = atackForce - 3;
-        int maxAtackForce = atackForce + 3;
+        int minatackForce = atackForce - 3;
+        int maxatackForce = atackForce + 3;
         
-        int value = random.nextInt(maxAtackForce) + minAtackForce;
+        int value = random.nextInt(maxatackForce) + minatackForce;
          
         return value;
     }
@@ -275,7 +266,7 @@ public class Player
      * @param value is the value we recieve.
      * @return the value we recieved.
      */
-    public int recieveDamage(int value)
+    public int recieveDmg(int value)
     {
         int recieved = 0;
         
@@ -325,7 +316,7 @@ public class Player
     }
     
     /**
-     * Set player coordinates.
+     * 
      */
     public void setCoordinates(int rowCoord, int colCoord)
     {
@@ -333,17 +324,11 @@ public class Player
         this.playerColCoord = colCoord;
     }
     
-    /**
-     * Get player row coordinates.
-     */
     public int getRowCoord()
     {
         return playerRowCoord;
     }
     
-    /**
-     * Get player column coordinates.
-     */
     public int getColCoord()
     {
         return playerColCoord;

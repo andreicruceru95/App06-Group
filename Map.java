@@ -9,18 +9,54 @@ import java.util.*;
  */
 public class Map
 {
-    private static final String currentMap[][] = new String[39][39];
+    private static final char CLEAR = '\u000c';
+    
+    //maps
+    private static final String currentMap[][] = new String[47][35];
+    private static final String town[][] = new String[47][35];
+    private static final int MAP_EDGE = 3;
     private static final int MAP_L = 27;
     private static final int MAP_H = 39;
+    private static final int FULL_L = 34;
+    private static final int FULL_H = 46;
     
-    private static final String visualField[][] = new String[5][5];
+    //player's visual field
+    private static final String visualField[][] = new String[7][7];
     private static final int initialPlayerRow = 2;
     private static final int initialPlayerCol = 2;
     
-    private static final String dessert[][]= new String[39][39];
+    //objects that apear in the game
+    private static final int SHOP_ROW = 10;
+    private static final int SHOP_COL = 3;
+    private static final int BLACKSMITH_ROW = 13;
+    private static final int BLACKSMITH_COL = 9;
+    private static final int PERSON_1_ROW = 17;
+    private static final int PERSON_1_COL = 4;
+    private static final int PERSON_2_ROW = 21;
+    private static final int PERSON_2_COL = 7;
+    private static final int PERSON_3_ROW = 24;
+    private static final int PERSON_3_COL = 5;
+    private static final int PERSON_4_ROW = 28;
+    private static final int PERSON_4_COL = 9;
+    private static final int PERSON_5_ROW = 32;
+    private static final int PERSON_5_COL = 8;
+    private static final int GUARD_ROW = 33;
+    private static final int GUARD_COL = 11;
+    private static final int STABLE_ROW = 35;
+    private static final int STABLE_COL = 3;
+    private static final int WALL_START = 10;
+    private static final int WALL_END = 13;
+    private static final int FOREST_ENTRANCE_START = 31;
+    private static final int FOREST_ENTRANCE_END = 36;
     
-    private static final int ROOM_L = 10;
-    private static final String town[][] = new String[40][28];
+    
+    private static final String PERSON_1 = " ⛹";
+    private static final String PERSON_2 = " ⛹";
+    private static final String PERSON_3 = " ⛹";
+    private static final String PERSON_4 = " ⛹";
+    private static final String PERSON_5 = " ⛹";
+    private static final String GUARD = " ⏳ ";
+    private static final String STABLE = " ♞";
     
     private static final String PLAYER = "P";
     private static final String UP = "w";
@@ -28,13 +64,55 @@ public class Map
     private static final String LEFT = "a";
     private static final String RIGHT = "d";
     private static final String WALL = "[/]";
-    private static final String BLACKSMITH = "B";
-    private static final String SHOP = "S";
+    private static final String BLACKSMITH = " B ";
+    private static final String SHOP = " S ";
     private static final String CHEST = "!?";
     private static final String GOLD = "$";
     private static final String ITEM = "!^";
-    private static final String MONSTER = "①";
-    private static final String BOSS = "!B";
+    private static final String TREE = " ¥";
+    
+    //monsters
+    private static final String BLACK_BEAR = " ① ";
+    private static final String WHITE_TIGER = " ② ";
+    private static final String APE_THROWER = " ③ ";
+    private static final String POISON_SPIDER = " ④ ";
+    private static final String RED_SCORPION = " ⑤ ";
+    private static final String ALBINO_SNAKE = " ⑥ ";
+    private static final String POLAR_BEAR = " ⑦ ";
+    private static final String YETI = " ⑧ ";
+    private static final String ABOMINABLE_SNOWMAN = " ⑨ ";
+    private static final String DEMON = " ⑩ ";
+    private static final String CURSED_VAMPIRE = " ⑪ ";
+    private static final String WITCH = " ⑫ ";
+    private static final int LEVEL_1 = 1;
+    private static final int LEVEL_5 = 5;
+    private static final int LEVEL_10 = 10;
+    private static final int LEVEL_15 = 15;
+    private static final int LEVEL_20 = 20;
+    private static final int LEVEL_25 = 25;
+    private static final int LEVEL_30 = 30;
+    private static final int LEVEL_35 = 35;
+    private static final int LEVEL_40 = 40;
+    private static final int LEVEL_45 = 45;
+    private static final int LEVEL_50 = 50;
+    private static final int LEVEL_55 = 55;
+    
+    //bosses    
+    private static final String BERA = " Ⓑ ";
+    private static final String TIGRIS = " Ⓣ ";
+    private static final String APE_KING = " Ⓐ ";
+    private static final String SPIDER_QUEEN = " Ⓢ ";
+    private static final String NINE_TAILS = " Ⓝ ";
+    private static final String DEATH = " Ⓓ ";
+    private static final String RED_DRAGON = " Ⓡ ";
+    private static final int LEVEL_9 = 9;
+    private static final int LEVEL_14 = 14;
+    private static final int LEVEL_19 = 19;
+    private static final int LEVEL_34 = 34;
+    private static final int LEVEL_49 = 49;
+    private static final int LEVEL_60 = 60;
+    private static final int LEVEL_70 = 70;
+    
     private static final String ABANDONED_HOUSE = "H";
     private static final String MAIN_QUEST = "!";
     private static final String QUEST_HUSBAND = "Q1";
@@ -44,8 +122,9 @@ public class Map
     
     private Random rand;
     private Player player;
-    
-    private ArrayList<Monster> monsters = new ArrayList<Monster>();
+    private int playerHp;
+    //A list of monsters name, level
+    private HashMap <String, Integer> monsters = new HashMap<String, Integer>();
     private ArrayList<Item> items = new ArrayList<Item>();
     
     private String square = "   ";
@@ -53,47 +132,46 @@ public class Map
     private String description;
     private String name;
     private int level;
-    private int playerRowCoord = 3;
-    private int playerColCoord = 3;
+    private int playerRowCoord = 0;
+    private int playerColCoord = 0;
     
     /**
-     * Contructor method for the room.
-     * Room(map) has a name, a description and  a level which will define the items and monsters range of levels.
-     * The room can have up to 4 exists defined at the creation. and a possible npc.
+     * Constructor for the Map
      */
-    public Map(int level, String name, String playerName)
+     public Map(int level, String name, String playerName)
     {
+        createMap(town);
         rand = new Random();
         this.description = description;
         this.level = level;
         this.name = name;
         player = new Player(playerName);
         
-        //createRoom(e1,e2,e3,e4,npc);
-        printTownMap();
         setCurrentMap("town");
         // create monsters
-        monsters.add(new Monster("Black Bear", 1));
-        monsters.add(new Monster("White Tiger", 5));
-        monsters.add(new Monster("Ape Thrower", 10));
-        monsters.add(new Monster("Ape General", 15));
-        monsters.add(new Monster("Scorpion", 20));
-        monsters.add(new Monster("Snake Archer", 25));
-        monsters.add(new Monster("Grizly Bear", 30));
-        monsters.add(new Monster("Yeti", 35));
-        monsters.add(new Monster("Demon", 40));
-        monsters.add(new Monster("Cursed Zombie", 45));
-        monsters.add(new Monster("Bera", 4));
-        monsters.add(new Monster("Tigris", 9));
-        monsters.add(new Monster("Ape King", 14));
-        monsters.add(new Monster("Spider Queen", 29));
-        monsters.add(new Monster("Nine Tails", 34));
-        monsters.add(new Monster("Death", 44));
-                
+        monsters.put(BLACK_BEAR,LEVEL_1);
+        monsters.put(WHITE_TIGER, LEVEL_5);
+        monsters.put(APE_THROWER, LEVEL_10);
+        monsters.put(POISON_SPIDER, LEVEL_15);
+        monsters.put(RED_SCORPION,LEVEL_20);
+        monsters.put(ALBINO_SNAKE,LEVEL_25);
+        monsters.put(POLAR_BEAR,LEVEL_30);
+        monsters.put(YETI,LEVEL_35);
+        monsters.put(ABOMINABLE_SNOWMAN,LEVEL_40);
+        monsters.put(DEMON,LEVEL_45);
+        monsters.put(CURSED_VAMPIRE,LEVEL_50);
+        monsters.put(WITCH,LEVEL_55);
+        monsters.put(BERA,LEVEL_9);
+        monsters.put(TIGRIS,LEVEL_14);
+        monsters.put(APE_KING,LEVEL_19);
+        monsters.put(SPIDER_QUEEN,LEVEL_34);
+        monsters.put(NINE_TAILS,LEVEL_49);
+        monsters.put(DEATH,LEVEL_60);
+        monsters.put(RED_DRAGON,70);
     }
     
     /**
-     * Visual field of the player.
+     * Player's visual field 7x7
      */
     public void printVisualField()
     {
@@ -105,35 +183,61 @@ public class Map
             
             for (int j = 0; j < visualField.length; j++)
             {
-                visualField[0][0] = currentMap[playerRowCoord - 2][playerColCoord - 2];
-                visualField[0][1] = currentMap[playerRowCoord - 2][playerColCoord - 1];
-                visualField[0][2] = currentMap[playerRowCoord - 2][playerColCoord];
-                visualField[0][3] = currentMap[playerRowCoord - 2][playerColCoord + 1];
-                visualField[0][4] = currentMap[playerRowCoord - 2][playerColCoord + 2];
+                visualField[0][0] = currentMap[playerRowCoord - 3][playerColCoord - 3];
+                visualField[0][1] = currentMap[playerRowCoord - 3][playerColCoord - 2];
+                visualField[0][2] = currentMap[playerRowCoord - 3][playerColCoord - 1];
+                visualField[0][3] = currentMap[playerRowCoord - 3][playerColCoord];
+                visualField[0][4] = currentMap[playerRowCoord - 3][playerColCoord + 1];
+                visualField[0][5] = currentMap[playerRowCoord - 3][playerColCoord + 2];
+                visualField[0][6] = currentMap[playerRowCoord - 3][playerColCoord + 3];
                 
-                visualField[1][0] = currentMap[playerRowCoord - 1][playerColCoord - 2];
-                visualField[1][1] = currentMap[playerRowCoord - 1][playerColCoord - 1];                
-                visualField[1][2] = currentMap[playerRowCoord - 1][playerColCoord];
-                visualField[1][3] = currentMap[playerRowCoord - 1][playerColCoord + 1];
-                visualField[1][4] = currentMap[playerRowCoord - 1][playerColCoord + 2];
+                visualField[1][0] = currentMap[playerRowCoord - 2][playerColCoord - 3];
+                visualField[1][1] = currentMap[playerRowCoord - 2][playerColCoord - 2];
+                visualField[1][2] = currentMap[playerRowCoord - 2][playerColCoord - 1];
+                visualField[1][3] = currentMap[playerRowCoord - 2][playerColCoord];
+                visualField[1][4] = currentMap[playerRowCoord - 2][playerColCoord + 1];
+                visualField[1][5] = currentMap[playerRowCoord - 2][playerColCoord + 2];
+                visualField[1][6] = currentMap[playerRowCoord - 2][playerColCoord + 3];
                 
-                visualField[2][0] = currentMap[playerRowCoord][playerColCoord - 2];
-                visualField[2][1] = currentMap[playerRowCoord][playerColCoord -1];
-                visualField[2][2] = " " + PLAYER + " ";
-                visualField[2][3] = currentMap[playerRowCoord][playerColCoord + 1];
-                visualField[2][4] = currentMap[playerRowCoord][playerColCoord + 2];
+                visualField[2][0] = currentMap[playerRowCoord - 1][playerColCoord - 3];
+                visualField[2][1] = currentMap[playerRowCoord - 1][playerColCoord - 2];
+                visualField[2][2] = currentMap[playerRowCoord - 1][playerColCoord - 1];
+                visualField[2][3] = currentMap[playerRowCoord - 1][playerColCoord];
+                visualField[2][4] = currentMap[playerRowCoord - 1][playerColCoord + 1];
+                visualField[2][5] = currentMap[playerRowCoord - 1][playerColCoord + 2];
+                visualField[2][6] = currentMap[playerRowCoord - 1][playerColCoord + 3];
                 
-                visualField[3][0] = currentMap[playerRowCoord + 1][playerColCoord - 2];
-                visualField[3][1] = currentMap[playerRowCoord + 1][playerColCoord - 1];
-                visualField[3][2] = currentMap[playerRowCoord + 1][playerColCoord];
-                visualField[3][3] = currentMap[playerRowCoord + 1][playerColCoord + 1];
-                visualField[3][4] = currentMap[playerRowCoord + 1][playerColCoord + 2];
+                visualField[3][0] = currentMap[playerRowCoord][playerColCoord - 3];
+                visualField[3][1] = currentMap[playerRowCoord][playerColCoord - 2];
+                visualField[3][2] = currentMap[playerRowCoord][playerColCoord - 1];
+                visualField[3][3] = " " + PLAYER + " ";
+                visualField[3][4] = currentMap[playerRowCoord][playerColCoord + 1];
+                visualField[3][5] = currentMap[playerRowCoord][playerColCoord + 2];
+                visualField[3][6] = currentMap[playerRowCoord][playerColCoord + 3];
                 
-                visualField[4][0] = currentMap[playerRowCoord + 2][playerColCoord - 2];
-                visualField[4][1] = currentMap[playerRowCoord + 2][playerColCoord -1];
-                visualField[4][2] = currentMap[playerRowCoord + 2][playerColCoord];
-                visualField[4][3] = currentMap[playerRowCoord + 2][playerColCoord + 1];
-                visualField[4][4] = currentMap[playerRowCoord + 2][playerColCoord + 2];
+                visualField[4][0] = currentMap[playerRowCoord + 1][playerColCoord - 3];
+                visualField[4][1] = currentMap[playerRowCoord + 1][playerColCoord - 2];
+                visualField[4][2] = currentMap[playerRowCoord + 1][playerColCoord - 1];
+                visualField[4][3] = currentMap[playerRowCoord + 1][playerColCoord];
+                visualField[4][4] = currentMap[playerRowCoord + 1][playerColCoord + 1];
+                visualField[4][5] = currentMap[playerRowCoord + 1][playerColCoord + 2];
+                visualField[4][6] = currentMap[playerRowCoord + 1][playerColCoord + 3];
+                
+                visualField[5][0] = currentMap[playerRowCoord + 2][playerColCoord - 3];
+                visualField[5][1] = currentMap[playerRowCoord + 2][playerColCoord - 2];
+                visualField[5][2] = currentMap[playerRowCoord + 2][playerColCoord - 1];
+                visualField[5][3] = currentMap[playerRowCoord + 2][playerColCoord];
+                visualField[5][4] = currentMap[playerRowCoord + 2][playerColCoord + 1];
+                visualField[5][5] = currentMap[playerRowCoord + 2][playerColCoord + 2];
+                visualField[5][6] = currentMap[playerRowCoord + 2][playerColCoord + 3];
+                
+                visualField[6][0] = currentMap[playerRowCoord + 3][playerColCoord - 3];
+                visualField[6][1] = currentMap[playerRowCoord + 3][playerColCoord - 2];
+                visualField[6][2] = currentMap[playerRowCoord + 3][playerColCoord - 1];
+                visualField[6][3] = currentMap[playerRowCoord + 3][playerColCoord];
+                visualField[6][4] = currentMap[playerRowCoord + 3][playerColCoord + 1];
+                visualField[6][5] = currentMap[playerRowCoord + 3][playerColCoord + 2];
+                visualField[6][6] = currentMap[playerRowCoord + 3][playerColCoord + 3];
                 
                 System.out.print(visualField[i][j]);
             }
@@ -142,7 +246,7 @@ public class Map
     }
     
     /**
-     * Set values in the 2D map.
+     * Set a single object on the map at given location
      */
     public void setObject(int row, int col, String obj)
     {
@@ -156,16 +260,16 @@ public class Map
     }
     
     /**
-     * Print the room. Will be hidden to the player.
+     * print the current room. Developers only
      */
     public void printCurrentRoom()
     {
         playerRowCoord = player.getRowCoord();
         playerColCoord = player.getColCoord();
-        
-        for (int i = 0; i < currentMap.length; i++)
+               
+        for (int i = 0; i < FULL_H; i++)
         {
-            for (int j = 0; j < currentMap.length; j++)
+            for (int j = 0; j < FULL_L; j++)
             {
                 currentMap[playerRowCoord][playerColCoord] = " " + PLAYER + " ";
                 System.out.print(currentMap[i][j]);
@@ -173,12 +277,14 @@ public class Map
             System.out.println("");
         }
     }
-        
+    
     /**
-     * move player in a direction
+     * Move player on the map.
      */
     public void movePlayer(String direction)
     {
+        System.out.println(CLEAR);
+        System.out.println("\tHP " + playerHp + "\tScore " + player.getScore());
         playerRowCoord = player.getRowCoord();
         playerColCoord = player.getColCoord();
         
@@ -245,11 +351,8 @@ public class Map
         //printCurrentRoom();
     }
     
-    
     /**
-     * check the next square.
-     * @return 1 if the next square can be walked uppon/modified,
-     * @return 0 if it cannot.
+     * Check the next square
      */
     public int checkNextSquare(int nextRow, int nextCol)
     {
@@ -287,26 +390,28 @@ public class Map
             //take random item
             return 1;
         }
-        else if(currentMap[nextRow][nextCol].contains(MONSTER) )//|| currentMap[nextRow][nextCol].equals(BOSS))
+        else 
         {
-            int result = action();
+            String character = currentMap[nextRow][nextCol];
+            Monster monster = findMonster(character);
             
-            if(result > 0)
+            if (monster != null)
             {
-                return 1;
+                 
+                int result = action(monster);
+                
+                if(result > 0)
+                {
+                    return 1;
+                }
             }
+            playerHp = player.getHitPoints();
         }
-        
-        else
-        {
-            System.out.println("\t\t\t\tYou can't do that");
-            return 0;
-        }   
-        return 0;    
+        return 0;
     }
     
     /**
-     * Get the room/map description.
+     * get the map description
      */
     public void getDescription()
     {
@@ -314,7 +419,7 @@ public class Map
     }
     
     /**
-     * return the map level.
+     * get the map level
      */
     public int getLevel()
     {
@@ -322,7 +427,7 @@ public class Map
     }
     
     /**
-     * return the map name.
+     * Get the map name
      */
     public String getName()
     {
@@ -330,11 +435,30 @@ public class Map
     }
     
     /**
-     * Skip-forward in a fight.
+     * Find which monster we are dealing with.
      */
-    public int action()//move into Game
+    private Monster findMonster(String character)
     {
-        Monster monster = findMonster(level);
+        for (String monsterName : monsters.keySet())     
+        {
+            if (monsterName.equals(character))
+            {
+                int monsterLevel = monsters.get(monsterName);
+                
+                Monster monster = new Monster(monsterName,monsterLevel);
+                
+                return monster;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * fast-forward fight
+     */
+    public int action(Monster monster)//move into Game
+    {
+        //Monster monster = findMonster(level);
         //Monster boss = findMonster(lvl - 1);
         
         if (monster != null)// || boss!= null)
@@ -344,8 +468,8 @@ public class Map
             
             do
             {
-                monster.recieveDamage(playerAtk);
-                player.recieveDamage(monsterAtk);
+                monster.recieveDmg(playerAtk);
+                player.recieveDmg(monsterAtk);
                 
             }
             while(player.checkHealth() == true && monster.checkHealth() == true);
@@ -356,154 +480,144 @@ public class Map
     }
     
     /**
-     * Find a monster's level. (Monster level will be in the same range as the map).
+     * create a the walls and center of a given map name
      */
-    private Monster findMonster(int level)
+    public void createMap(String [][] name)
     {
-        for (Monster monster : monsters)
+        //map walls and empty center
+        for(int i = 0; i < FULL_H;i++)
         {
-            if (monster.getLevel() == level)
+            for(int j = 0; j < FULL_L; j++)
             {
-                return monster;
+                name[i][j] = square;
             }
         }
-        return null;
-    }
-    
-    private void createMap(String [][] mapName)
-    {
-        //external walls and empty squares
-        for (int i = 0; i < MAP_H; i++)
+        //top
+        for(int i = 0; i < MAP_EDGE; i++)
         {
-            for (int j = 0; j < MAP_L; j++)
+            for (int j = 0; j < FULL_L; j++)
             {
-                town[i][j] = square;
-                town[i][0] = WALL;
-                town[i][26] = WALL;
-                town[0][j] = WALL;
-                town[38][j] =WALL;                
+                name[i][j] = WALL;
             }
         }
-                
+        //bottom
+        for(int i = FULL_H - MAP_EDGE; i < FULL_H; i++)
+        {
+            for (int j = 0; j < FULL_L; j++)
+            {
+                name[i][j] = WALL;
+            }
+        }
+        //left
+        for(int i = 0; i < FULL_H; i++)
+        {
+            for (int j = 0; j < MAP_EDGE; j++)
+            {
+                name[i][j] = WALL;
+            }
+        }
+        //right
+        for(int i = 0; i < FULL_H; i++)
+        {
+            for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
+            {
+                name[i][j] = WALL;
+            }
+        }
+        
     }
     
+    /**
+     * add an amount of objects in a map.
+     */
     private void addObjects(String[][] map,int columnMin, int columnMax, int rowMin, int rowMax, String object, int amount)
     {
-        //adding trees in random squares in the forest
+        
         for(int i = 0; i < amount; i++)
         {
-            int randomRow = rand.nextInt(rowMax) + rowMin;
-            int randomCol = rand.nextInt(columnMax) + columnMin;
-            town[randomRow][randomCol] = object;
+            int randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+            int randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+            
+            map[randomRow][randomCol] = object;
         }
-        
-        // //adding monsters in random squares on the map
-        // for(int i = 0; i < 25; i++)
-        // {
-            // int randomCol = rand.nextInt(25) + 1;
-            // int randomRow = rand.nextInt(17) + 17;
-            // town[randomRow][randomCol] = " M1";
-        // }
     }
     
-    private void createTownMapObjects()
+    /**
+     * add object to the town map
+     */
+    private void addObjectsToTown()
     {
-        createMap(town);
-        //wall at row 0-15, col 6
-        for(int i = 0; i < 15; i++)
+        //add wall
+        for (int i = 0; i < FULL_H; i++)
         {
-            town[i][6] = WALL;// + " ";
-            //town[i][22] = " " + WALL + " ";
-            town[i][23] = WALL;
-            town[i][24] = WALL;
-            town[i][25] = WALL;
-        }
-                
-        //wall at row 0-5, col 13
-        for(int i = 0; i < 5; i++)
-        {
-            town[i][13] = WALL;
-        }
-        
-        //wall at row 5, col 0-14
-        for(int j = 0; j < 14; j++)
-        {
-            town[5][j] = WALL;
-        }
-        
-        //walls at rows 10-14 col 0-6
-        for(int j = 0; j < 6; j++)
-        {
-            town[10][j] = WALL;
-            town[12][j] = WALL;
-            town[13][j] = WALL;
-            town[14][j] = WALL;
-        }
-        
-        //wall separating the market and the forest
-        for(int j = 0; j < MAP_L; j++)
-        {
-            town[15][j] = WALL;
-        }
-        
-        //adding doors/walkways/items/quest and people on the map
-        town[2][6] = square;
-        town[2][13] = square;
-        town[4][22] = square;
-        town[4][23] = square;
-        town[4][24] = square;   
-        town[4][25] = square;
-        town[10][3] = square;
-        town[10][22] = square;
-        town[10][23] = square;
-        town[10][24] = square;
-        town[10][25] = square;
-        town[11][1] = square;
-        town[11][2] = square;
-        town[11][3] = square;
-        town[11][4] = square;
-        town[11][5] = square;
-        town[11][6] = square;
-        town[15][12] = square;
-        town[15][13] = square;
-        town[15][14] = square;
-        town[15][15] = square;
-        
-        //add people/quests on the map.
-        town[2][22] = " " + SHOP+ " ";
-        town[4][25] = " " + CHEST;
-        town[8][22] = " " + BLACKSMITH + " ";
-        town[13][22] = " " + ABANDONED_HOUSE + " ";
-        town[4][12] = " " + MAIN_QUEST + " ";
-        town[9][8] = " " + QUEST_HUSBAND;
-        town[14][10] = " " + QUEST_FARM;
-        town[13][18] = " " + QUEST_WOLF;
-        town[33][22] = " " + MISSING_HUSBAND;
-        
-        addObjects(town,1, 24, 17, 19, " ¥ ", 50);
-        addObjects(town,1, 24, 17, 19, " " + MONSTER, 25);
-        
-        //add farm walls
-        for (int i = 33; i < MAP_H; i++)
-        {
-            for(int j = 0; j < 10; j++)
+            for(int j = WALL_START; j < WALL_END; j++)
             {
-                town[33][j] = WALL;
-                town[i][10] = WALL;
+                town[i][j] = WALL;
+            }
+        }
+        //add forest entrance
+         for (int i = FOREST_ENTRANCE_START; i < FOREST_ENTRANCE_END; i++)
+        {
+            for(int j = WALL_START; j < WALL_END; j++)
+            {
+                town[i][j] = square;
+            }
+        }
+        //add objects
+        for (int i = 0; i < FULL_H; i++)
+        {
+            for(int j = 0; j < FULL_L; j++)
+            {
+                town[SHOP_ROW][SHOP_COL] = SHOP;
+                town[BLACKSMITH_ROW][BLACKSMITH_COL] = BLACKSMITH;
+                town[PERSON_1_ROW][PERSON_1_COL] = PERSON_1;
+                town[PERSON_2_ROW][PERSON_2_COL] =PERSON_2;
+                town[PERSON_3_ROW][PERSON_3_COL] =PERSON_3;
+                town[PERSON_4_ROW][PERSON_4_COL] =PERSON_4;
+                town[PERSON_5_ROW][PERSON_5_COL] =PERSON_5;
+                town[GUARD_ROW][GUARD_COL] = GUARD;
+                town[STABLE_ROW][STABLE_COL] = STABLE;
                 
             }
         }
-        town[36][10] = square;
-    
+        
+        for(int i = 0; i < FULL_H; i++)
+        {
+            for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
+            {
+                town[i][j] = TREE;
+            }
+        }
+        
+        //add monsters, trees, etc
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, TREE, 100);
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, BLACK_BEAR, 20);
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, WHITE_TIGER, 15);
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, APE_THROWER, 10);
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, BERA, 1);
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, TIGRIS, 1);
+        addObjects(town, WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, APE_KING, 1);
+            
+        //add trees to the right of the map
+        for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
+        {
+            for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
+            {
+                town[i][j] = TREE;
+            }
+        }
     }
     
+    /**
+     * print town map. Developers only
+     */
     public void printTownMap()
     {
-        createTownMapObjects();
-                 
-        for(int i = 0; i < MAP_H; i++)
+        createMap(town);
+        addObjectsToTown();
+        for(int i = 0; i < FULL_H; i++)
         {
-            for(int j = 0; j < MAP_L; j++)
+            for(int j = 0; j < FULL_L; j++)
             {
                System.out.print(town[i][j]);
             }
@@ -512,14 +626,18 @@ public class Map
         
     }
     
+    /**
+     * set the curent map to a given map name
+     */
     public void setCurrentMap(String name)
     {
         if (name.toLowerCase().equals("town"))
         {
-                       
-            for(int i = 0; i < MAP_H; i++)
+            createMap(town);
+            addObjectsToTown();         
+            for(int i = 0; i < FULL_H; i++)
             {
-                for(int j = 0; j < MAP_L; j++)
+                for(int j = 0; j < FULL_L; j++)
                 {
                     currentMap[i][j] = town[i][j];
                 }
@@ -528,43 +646,9 @@ public class Map
         else
             System.out.println("error");
         
-        printCurrentRoom();
     }
     
-    /**
-     * Create map Dessert
-     */
-    public void createDessertMapObjects()
-    {
-        createMap(dessert);
-        createDessertMapObjects();
-    }
-    
-    /**
-     * 
-     */
-    public void createDesertMapObjects()
-    {
-        addObjects(dessert,1, MAP_L, 1, MAP_H, " M1", 25);
-        addObjects(dessert,1, MAP_L, 1, MAP_H, " M2", 50);
-        addObjects(dessert,1, MAP_L, 1, MAP_H, " M3", 75);
-    }
-    
-    public void printDessertMap()
-    {
-        createDessertMapObjects();
-        
-        for(int i = 0; i < MAP_H; i++)
-        {
-            for(int j = 0; j < MAP_L; j++)
-            {
-               System.out.print(dessert[i][j]);
-            }
-            System.out.println("");
-        }
-    }
-    
-    public void getPlayerHp()
+        public void getPlayerAttr()
     {
         player.getPlayerAttributes();
     }
