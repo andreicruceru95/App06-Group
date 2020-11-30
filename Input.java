@@ -40,6 +40,15 @@ public class Input
 
         return string;
     }
+    
+    public String getAny()
+    {
+        //System.out.print("");
+        
+        String string = reader.nextLine();
+        
+        return string;
+    }
       
     /**
      * Read a line from standard input (the text terminal),
