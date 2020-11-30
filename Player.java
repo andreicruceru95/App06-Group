@@ -9,12 +9,15 @@ import java.util.*;
  */
 public class Player
 {
+    private static final int HEAL_AMOUNT = 100;
     private final static int MIN_HEALTH = 0;
     
     private int atackForce = 15;
     private int shield = 0;
-    private int maxHitPoints = 100;
-    private int currentHitPoints = 100;
+    private int maxHitPoints;
+    private int currentHitPoints;
+    private int goldAmount;
+    private int potionAmount = 0;
     
     private Random random;
         
@@ -23,8 +26,9 @@ public class Player
        
     private String name;
     private int score = 0;
-    private int playerRowCoord = 5;
-    private int playerColCoord = 5;
+    private int deathScore = 0;
+    private int playerRowCoord = 6;
+    private int playerColCoord = 6;
     /**
      * Add a name for the player.
      * @param name is the input name.
@@ -33,15 +37,19 @@ public class Player
     {
         this.name = name;
         random = new Random();
+        maxHitPoints = 100;
+        currentHitPoints = 100;
+        goldAmount = 0;
         
         inventory = new ArrayList<Item>();
         equipment = new ArrayList<Item>();
         
-        inventory.add(new Item(10,"Steel Sword ", 5, 0,0,0,0,1));
-        inventory.add(new Item(20,"Steel Armour", 0, 10,0,10,0,1));        
-        inventory.add(new Item(30,"HP Potion", 100, 0,0,0,5,1));
-        equip("Steel Sword");
-        equip("Steel Armour");
+        inventory.add(new Item(10,"steel sword ", 25, 0,0,0,0,1));
+        inventory.add(new Item(20,"steel armour", 0, 10,0,100,0,1));        
+        inventory.add(new Item(30,"potion", HEAL_AMOUNT, 0,0,0,potionAmount,1));
+        potionAmount += 15;
+        equip("steel sword");
+        equip("steel armour");
     }
         
     /**
@@ -119,15 +127,16 @@ public class Player
     {
         Item item = findItem(name);
         
-        if (item != null)
+        if (name.toLowerCase().equals("potion"))
         {
-            if (item.getID() == 30)
-            {
-                currentHitPoints += item.getHeal();
-                verify(currentHitPoints);
-            }
-            else
-                swapEquipment(item);
+            currentHitPoints += HEAL_AMOUNT;
+            potionAmount--;
+            verify();
+        }
+        
+        else if (item != null)
+        {
+            swapEquipment(item);
         }  
         else
             System.out.println("Don't be ridiculous..");
@@ -136,12 +145,20 @@ public class Player
     /**
      * Verify that the curent Hp isn't bigger then max Hp.
      */
-    private void verify(int hitPoints)
+    private void verify()
     {
-        if (hitPoints > maxHitPoints)
+        if (currentHitPoints > maxHitPoints)
         {
             currentHitPoints = maxHitPoints;
         }
+    }
+    
+    /**
+     * add score to the player
+     */
+    public void addScore(int score)
+    {
+        this.score += score;
     }
     
     /**
@@ -158,8 +175,12 @@ public class Player
         else if(item.getID() < 30)
         {
             equipment.add(item);
-                     
+            
             maxHitPoints += item.getHitPoints();
+            currentHitPoints += item.getHitPoints();
+            checkHealth();
+            
+            
             shield = item.getShield(); 
         }
         else
@@ -203,7 +224,7 @@ public class Player
     {
         for (Item item : inventory)
         {
-            if (item.getName().contains((name)))
+            if (item.getName().toLowerCase().contains((name)))
             {
                 return item;
             }
@@ -285,6 +306,29 @@ public class Player
     }
     
     /**
+     * Receieve gold.
+     */
+    public void addGold(int gold)
+    {
+        
+        if(gold > 0)
+        {
+            System.out.println("\t\t\tReceived " + gold);
+        }
+        
+        this.goldAmount += gold;
+        score += gold;
+    }
+    
+    /**
+     * return the gold amount
+     */
+    public int getGold()
+    {
+        return goldAmount;
+    }
+    
+    /**
      * Check the health status.
      * @return false if player died.
      * @return true if player is still alive.
@@ -293,30 +337,67 @@ public class Player
     {
         if (currentHitPoints <= 0)
         {
-            System.out.println("\t\t\t\tYou Lost!");
-            
             return false;
         }
         else
             return true;
     }
     
+    /**
+     * get the player's score before death
+     */
+    public int getScoreBeforeDeath()
+    {
+        return score - deathScore;
+    }
+    
+    /**
+     * update the score before last death
+     */
+    public void updateScoreBeforeDeath(int score)
+    {
+        deathScore = score;
+    }
+    
+    /**
+     * @return the hit points
+     */
     public int getHitPoints()
     {
         return currentHitPoints;
     }
     
-    public void getPlayerAttributes()
+    /**
+     * set player's health to 100%
+     */
+    public void setFullHealth()
     {
-        System.out.println("\nName: " + name);
-        System.out.println("Score: " + score);
-        System.out.println("Attack: " + atackForce);
-        System.out.println("Defense" + shield);
-        System.out.println("Current HP: " + currentHitPoints + "/" + maxHitPoints);
+        currentHitPoints = maxHitPoints;
     }
     
     /**
-     * 
+     * @return name
+     */
+    public String getName()
+    {
+        return name;
+    }
+    
+    /**
+     * return the player's attributes
+     */
+    public void getPlayerAttributes()
+    {
+        System.out.println("\n\tName: " + name);
+        System.out.println("\tGold: " + goldAmount);
+        System.out.println("\tScore: " + score);
+        System.out.println("\tAttack: " + atackForce);
+        System.out.println("\tDefense" + shield);
+        System.out.println("\tCurrent HP: " + currentHitPoints + "/" + maxHitPoints);
+    }
+    
+    /**
+     * set player's coordinates
      */
     public void setCoordinates(int rowCoord, int colCoord)
     {
@@ -324,11 +405,17 @@ public class Player
         this.playerColCoord = colCoord;
     }
     
+    /**
+     * @return player's row coordinates
+     */
     public int getRowCoord()
     {
         return playerRowCoord;
     }
     
+    /**
+     * @return player's column coordinates
+     */
     public int getColCoord()
     {
         return playerColCoord;

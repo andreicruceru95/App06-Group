@@ -80,7 +80,6 @@ public class Monster
     {
         if (currentHp <= 0)
         {
-            System.out.println("\t\t\t\tYou Win!");
             return false;
         }
         else
