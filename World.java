@@ -37,8 +37,18 @@ public class World
     private static final int PERSON_4_COL = 9;
     private static final int PERSON_5_ROW = 32;
     private static final int PERSON_5_COL = 8;
-    private static final int TELEPORT_ROW = 3;
-    private static final int TELEPORT_COL = 25;
+    private static final int TOWN_TELEPORT_ROW = 3;
+    private static final int TOWN_TELEPORT_COL = 25;
+    private static final int DESSERT_TELEPORT_ROW = 27;
+    private static final int DESSERT_TELEPORT_COL = 15;
+    private static final int DESSERT_SHOP_ROW = 4;
+    private static final int DESSERT_SHOP_COL = 4;
+    private static final int DESSERT_BLACKSMITH_ROW = 8;
+    private static final int DESSERT_BLACKSMITH_COL = 8;
+    private static final int CAVE_SHOP_ROW = 4;
+    private static final int CAVE_SHOP_COL = 4;
+    private static final int CAVE_BLACKSMITH_ROW = 8;
+    private static final int CAVE_BLACKSMITH_COL = 8;
     private static final int SHOP_ROW = 10;
     private static final int SHOP_COL = 3;
     private static final int BLACKSMITH_ROW = 13;
@@ -119,7 +129,7 @@ public class World
         this.name = name;
         
         town = new Map("Town", TOWN,"The only safe place left in the world", FULL_H, FULL_L);
-        town.createMap(WALL, FULL_H, FULL_L,MAP_EDGE);
+        town.createMap(ROCK, FULL_H, FULL_L,MAP_EDGE);
         addObjectsToTown();
         
         dessert = new Map("Dessert",DESSERT,"One of the most dangerous places", FULL_H, FULL_L);
@@ -208,9 +218,9 @@ public class World
         
         //add monsters, trees, etc       
         town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, TREE, 50);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, BLACK_BEAR, 20);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, WHITE_TIGER, 15);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, APE_THROWER, 10);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, BLACK_BEAR, 30);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, WHITE_TIGER, 25);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, APE_THROWER, 20);
         town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, BERA, 1);
         town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, TIGRIS, 1);
         town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, APE_KING, 1);
@@ -224,7 +234,7 @@ public class World
             }
         }
         
-        town.setOne(TELEPORT_ROW, TELEPORT_COL, TELEPORT);
+        town.setOne(TOWN_TELEPORT_ROW, TOWN_TELEPORT_COL, TELEPORT);
     }
     
     /**
@@ -242,9 +252,9 @@ public class World
     private void addObjectsToDessert()
     {
         dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, CACTUS, 50);
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, POISON_SPIDER, 20);
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, RED_SCORPION, 20);
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, ALBINO_SNAKE, 20);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, POISON_SPIDER, 30);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, RED_SCORPION, 30);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, ALBINO_SNAKE, 30);
         
         //add rocks to the right of the map
         for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
@@ -254,6 +264,10 @@ public class World
                 dessert.setOne(i, j,ROCK);
             }
         }
+        
+        dessert.setOne(DESSERT_TELEPORT_ROW, DESSERT_TELEPORT_COL, TELEPORT);
+        dessert.setOne(DESSERT_SHOP_ROW, DESSERT_SHOP_COL, SHOP);
+        dessert.setOne(DESSERT_BLACKSMITH_ROW, DESSERT_BLACKSMITH_COL, BLACKSMITH);
     }
     
     /**
@@ -263,9 +277,9 @@ public class World
     {
         int thickness = 3;
         int opening = 5;
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, POISON_SPIDER, 20);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, RED_SCORPION, 20);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, ALBINO_SNAKE, 20);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, POISON_SPIDER, 30);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, RED_SCORPION, 30);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, ALBINO_SNAKE, 30);
         
         //add a wall going down in the cave
         for (int i = 0; i < FULL_H - MAP_EDGE - opening; i++)
@@ -299,8 +313,12 @@ public class World
                 spiderCave.setOne(i, j,ROCK);
             }
         }
+        
         spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, SPIDER_QUEEN, 1);
         spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, TELEPORT, 1);
+        
+        spiderCave.setOne(CAVE_SHOP_ROW,CAVE_SHOP_COL,SHOP);
+        spiderCave.setOne(CAVE_BLACKSMITH_ROW,CAVE_BLACKSMITH_COL,BLACKSMITH);
     }
     
     /**
@@ -388,4 +406,5 @@ public class World
         else
             return false;
     }
+    
 }
