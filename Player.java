@@ -2,28 +2,27 @@ import java.util.*;
 
 /**
  * A player for our game.
- * Each new player recieves a basic armour, weapon and 5 health potions.
+ * Each new player receives a basic armour, weapon and 5 health potions.
  * 
  * @author Andrei Cruceru
  * @version 21112020
  */
 public class Player
 {
-    private static final int HEAL_AMOUNT = 100;
-    private final static int MIN_HEALTH = 0;
-    
-    private int atackForce = 15;
-    private int shield = 0;
-    private int maxHitPoints;
-    private int currentHitPoints;
-    private int goldAmount;
-    private int potionAmount = 0;
-    
     private Random random;
-        
-    private ArrayList<Item> inventory;
-    private ArrayList<Item> equipment;
-       
+    private Weapon weapon ;
+    private Armour armour ;
+    private Potion potion ;
+    
+    private int maxHitPoints = 0;
+    private int currentHitPoints = 0;
+    private int potionAmount = 15;
+    
+    private int attackForce = 0;
+    private int shield = 0;
+    
+    private int goldAmount = 1000;
+            
     private String name;
     private int score = 0;
     private int deathScore = 0;
@@ -36,112 +35,20 @@ public class Player
     public Player(String name)
     {
         this.name = name;
+        weapon = new Weapon();
+        armour = new Armour();
+        potion = new Potion();
+        
+        this.attackForce = weapon.getAttackValue();
+        this.shield = armour.getArmourShield();
+        this.maxHitPoints += armour.getArmourHItPoints();
+        this.currentHitPoints += armour.getArmourHItPoints();
+        
         random = new Random();
-        maxHitPoints = 100;
-        currentHitPoints = 100;
         goldAmount = 0;
-        
-        inventory = new ArrayList<Item>();
-        equipment = new ArrayList<Item>();
-        
-        inventory.add(new Item(10,"steel sword ", 25, 0,0,0,0,1));
-        inventory.add(new Item(20,"steel armour", 0, 10,0,100,0,1));        
-        inventory.add(new Item(30,"potion", HEAL_AMOUNT, 0,0,0,potionAmount,1));
-        potionAmount += 15;
-        equip("steel sword");
-        equip("steel armour");
-    }
-        
-    /**
-     * Print a list of items.
-     * @param list is the given list.
-     */
-    private void seeItems(ArrayList<Item> list)
-    {
-        for (Item item : list)
-        {
-            System.out.println("\n" + item.getName());
-        }
-    }
-    
-    /**
-     * Print inventory.
-     */
-    public void printInventory()
-    {
-        seeItems(inventory);
-    }
-    
-    /**
-     * Print the equiped items.
-     */
-    public void printEquiped()
-    {
-        if (equipment.size() > 0)
-        {
-            seeItems(equipment);
-        }
-        else    
-            System.out.println("\n    Nothing equipped");
-    }
-    
-    /**
-     * See an item.
-     * @param name is the input name of the item we want to see.
-     */
-    public void seeItem(String name)
-    {
-        Item item = findItem(name);
-        
-        if (item != null)
-        {
-            int id = item.getID();
-            
-            if(id < 20)
-            {
-                item.seeWeapon();
                 
-            }
-            else if(id < 30)
-            {
-                item.seeArmour();
-                
-            }
-            else if(id == 30)
-            {
-                item.seePotion();
-                
-            }
-            else
-                System.out.println("error");
-        }
-        else
-            System.out.println("Don't be ridiculous..");
     }
-    
-    /**
-     * Equip an item.
-     * @param name is th input name of the item we want to equip.
-     */
-    public void equip(String name)
-    {
-        Item item = findItem(name);
         
-        if (name.toLowerCase().equals("potion"))
-        {
-            currentHitPoints += HEAL_AMOUNT;
-            potionAmount--;
-            verify();
-        }
-        
-        else if (item != null)
-        {
-            swapEquipment(item);
-        }  
-        else
-            System.out.println("Don't be ridiculous..");
-    }
-    
     /**
      * Verify that the curent Hp isn't bigger then max Hp.
      */
@@ -160,106 +67,7 @@ public class Player
     {
         this.score += score;
     }
-    
-    /**
-     * Equip an item in a item slot.
-    */
-    private void swapEquipment(Item item)
-    {
-        if (item.getID() < 20)
-        {
-            equipment.add(item);            
-                        
-            atackForce = item.getAtack();
-        }
-        else if(item.getID() < 30)
-        {
-            equipment.add(item);
-            
-            maxHitPoints += item.getHitPoints();
-            currentHitPoints += item.getHitPoints();
-            checkHealth();
-            
-            
-            shield = item.getShield(); 
-        }
-        else
-            System.out.println("Error");
-                
-    }
-    
-    /**
-     * Discard an item.
-     * @param name is the input name of the item we want to discard.
-     */
-    public void discard(String name)
-    {
-        Item item = findItem(name);
         
-        if (item != null)
-        {
-            int id = item.getID();
-            
-            if(id < 20)
-            {
-                atackForce -= item.getAtack();
-            }
-            else if(id < 30)
-            {
-                shield -= item.getShield();
-                maxHitPoints -= item.getHitPoints();
-            }
-            else
-                System.out.println("error");
-        }
-        else
-            System.out.println("Don't be ridiculous..");
-    }
-    
-    /**
-     * Find an item in the inventory.
-     * @param name is the name of the item we are looking for.
-     */
-    private Item findItem(String name)
-    {
-        for (Item item : inventory)
-        {
-            if (item.getName().toLowerCase().contains((name)))
-            {
-                return item;
-            }
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Pick an item.
-     * @param name is the name of the item we want to pick.
-     */
-    public void pickItem(Item item)
-    {
-        inventory.add(item);
-        
-        score += 10;
-    }
-    
-    /**
-     * Distroy an item from the inventory.
-     * @param name is the name of the item we want to destroy.
-     */
-    public void throwItem(String name)
-    {
-        Item item = findItem(name);
-        
-        if (item != null)
-        {   
-            inventory.remove(item);
-        }
-        else
-            System.out.println("error");
-    }
-    
     /**
      * @return the score.
      */
@@ -269,40 +77,43 @@ public class Player
     }
     
     /**
-     * Send an atack.
+     * Send an attack.
      * @param value is the a random value.
      */
-    public int atack()
+    public int attack()
     {
-        int minatackForce = atackForce - 3;
-        int maxatackForce = atackForce + 3;
+        int chance = 5;//%
         
-        int value = random.nextInt(maxatackForce) + minatackForce;
+        int minAttackForce = attackForce - (attackForce - chance);
+        int maxAttackForce = attackForce + (attackForce - chance);
+        
+        int value = random.nextInt(maxAttackForce - minAttackForce) + minAttackForce;
          
         return value;
     }
     
     /**
-     * Recieve an atack.
-     * @param value is the value we recieve.
-     * @return the value we recieved.
+     * receive an attack.
+     * @param value is the value we receive.
+     * @return the value we received.
      */
-    public int recieveDmg(int value)
+    public int receiveDmg(int value)
     {
-        int recieved = 0;
+        int received = 0;
         
         if (shield >= value)
         {
-            recieved = -1;
+            received = -1;
             currentHitPoints -= 1;
         }
         else
         { 
-            recieved = value - shield;
+            received = value - shield;
+            
             currentHitPoints -= (value - shield);
         }
-        
-        return recieved;   
+        //System.out.println("player:" + received);
+        return received;   
     }
     
     /**
@@ -310,14 +121,13 @@ public class Player
      */
     public void addGold(int gold)
     {
-        
         if(gold > 0)
         {
-            System.out.println("\t\t\tReceived " + gold);
+            System.err.println("\t\t\tReceived " + gold + "Gold");
         }
         
         this.goldAmount += gold;
-        score += gold;
+        score ++;
     }
     
     /**
@@ -326,6 +136,64 @@ public class Player
     public int getGold()
     {
         return goldAmount;
+    }
+    
+    /**
+     * Pay for enchantment.
+     */
+    public void pay(int cost)
+    {
+        goldAmount -= cost;
+        
+        updateStats();
+    }
+    
+    /**
+     * Update Player stats.
+     */
+    private void updateStats()
+    {
+        this.attackForce = weapon.getAttackValue();
+        this.shield = armour.getArmourShield();
+        this.maxHitPoints = armour.getArmourHItPoints();
+        this.currentHitPoints = armour.getArmourHItPoints();
+        
+    }
+        
+    /**
+     * Increase attack force.
+     */
+    public void increaseAttackForce(int value)
+    {
+        this.attackForce += value;
+        
+    }
+    
+    /**
+     * Increase shield.
+     */
+    public void increaseShield(int value)
+    {
+        this.shield += value;
+        
+    }
+    
+    /**
+     * Increase maximum hit points.
+     */
+    public void increaseHitPoints(int value)
+    {
+        this.maxHitPoints += value;
+        
+    }
+    
+    /**
+     * increase potion amount
+     */
+    public void increasePotionAmount (int amount)
+    {
+        this.potionAmount += amount;
+        
     }
     
     /**
@@ -341,30 +209,16 @@ public class Player
         }
         else
             return true;
+            
     }
-    
-    /**
-     * get the player's score before death
-     */
-    public int getScoreBeforeDeath()
-    {
-        return score - deathScore;
-    }
-    
-    /**
-     * update the score before last death
-     */
-    public void updateScoreBeforeDeath(int score)
-    {
-        deathScore = score;
-    }
-    
+        
     /**
      * @return the hit points
      */
     public int getHitPoints()
     {
         return currentHitPoints;
+        
     }
     
     /**
@@ -373,6 +227,7 @@ public class Player
     public void setFullHealth()
     {
         currentHitPoints = maxHitPoints;
+        
     }
     
     /**
@@ -381,19 +236,17 @@ public class Player
     public String getName()
     {
         return name;
+        
     }
     
     /**
      * return the player's attributes
      */
-    public void getPlayerAttributes()
+    public String getPlayerAttributes()
     {
-        System.out.println("\n\tName: " + name);
-        System.out.println("\tGold: " + goldAmount);
-        System.out.println("\tScore: " + score);
-        System.out.println("\tAttack: " + atackForce);
-        System.out.println("\tDefense" + shield);
-        System.out.println("\tCurrent HP: " + currentHitPoints + "/" + maxHitPoints);
+        return "\n\tName: " + name + "\t Score: " + score + "\tGold: " + goldAmount +
+                "\n\tAttack: " + attackForce + "\tDefense" + shield + "\tCurrent HP: " 
+                + currentHitPoints + "/" + maxHitPoints + "\n\n";
     }
     
     /**
@@ -421,4 +274,50 @@ public class Player
         return playerColCoord;
     }
     
+    /**
+     * Drink a health potion.
+     */
+    public void drinkPotion()
+    {
+        if(potionAmount > 0)
+        {
+            currentHitPoints += potion.getHeal();
+            potionAmount --;
+            verify();
+        }
+        else
+            System.err.println("Not enough potions");
+    }
+    
+    /**
+     * @return items attributes
+     */
+    public String getItemsAttributes()
+    {
+        return weapon.getWeaponAttributes() + "\n" + armour.getArmourAttributes() + "\n" + potion.getName() + ":" + potion.getHeal() + " " + potionAmount;
+    }
+    
+    /**
+     * @return weapon
+     */
+    public Weapon getWeapon()
+    {
+        return weapon;
+    }
+    
+    /**
+     * @return armour
+     */
+    public Armour getArmour()
+    {
+        return armour;
+    }
+    
+    /**
+     * @return potion
+     */
+    public Potion getPotion()
+    {
+        return potion;
+    }
 }
