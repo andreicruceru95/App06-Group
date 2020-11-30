@@ -12,7 +12,7 @@ public class Map
     private static final String CURRENT_MAP[][] = new String[47][35];
     private static final String visualField[][] = new String[7][7];
     private String map[][]  = new String[47][35];
-    private static final String PLAYER = "☧";
+    private static final String PLAYER = "O";
     
     private Random rand;
     private String square = "   ";
