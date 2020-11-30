@@ -12,9 +12,9 @@ public class Monster
     
     private Random random;
     
-    private int atackForce = 10;
-    private int shield = 12;
-    private int currentHp = 25;
+    private int attackForce = 15;
+    private int shield = 6;
+    private int currentHitPoints = 40;
     private int level;
           
     private String name;
@@ -29,21 +29,21 @@ public class Monster
         random = new Random();
         this.name = name;
         this.level = level;
-        this.atackForce *= level;
+        this.attackForce *= level;
         this.shield *= level;
-        this.currentHp *= level;
+        this.currentHitPoints *= level;
     }
     
     /**
      * Send an atack.
      * @param value is the a random value.
      */
-    public int atack()
+    public int attack()
     {
-        int minAtackForce = atackForce - 3;
-        int maxAtackForce = atackForce + 3;
+        int minAttackForce = attackForce - 3;
+        int maxAttackForce = attackForce + 3;
         
-        int value = random.nextInt(maxAtackForce) + minAtackForce;
+        int value = random.nextInt(maxAttackForce - minAttackForce) + minAttackForce;
          
         return value;
     }
@@ -53,22 +53,22 @@ public class Monster
      * @param value is the value we recieve.
      * @return the value we recieved.
      */
-    public int recieveDmg(int value)
+    public int receiveDmg(int value)
     {
-        int recieved = 0;
+        int received = 0;
         
         if (shield >= value)
         {
-            recieved = -1;
-            currentHp -= 1;
+            received = -1;
+            currentHitPoints -= 1;
         }
         else
         { 
-            recieved = value - shield;
-            currentHp -= (value - shield);
+            received = value - shield;
+            currentHitPoints -= (value - shield);
         }
-        
-        return recieved;   
+        //System.out.println("monster:" + received);
+        return received;   
     }
     
     /**
@@ -78,7 +78,7 @@ public class Monster
      */
     public boolean checkHealth()
     {
-        if (currentHp <= 0)
+        if (currentHitPoints <= 0)
         {
             return false;
         }
@@ -92,7 +92,7 @@ public class Monster
      */
     public int getHealth()
     {
-        return currentHp;
+        return currentHitPoints;
     }
     
     /**
