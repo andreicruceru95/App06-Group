@@ -22,6 +22,8 @@ import java.util.*;
 public class Game 
 {
     private static final char CLEAR = '\u000c';
+    private static final Shop OBJECT_SHOP = new Shop();
+    
     private static final int PLAYER_INITIAL_ROW = 7;
     private static final int PLAYER_INITIAL_COL = 7;
     private static final int FULL_L = 34;
@@ -113,6 +115,7 @@ public class Game
     private boolean spiderCaveDescription =  false;
     private boolean firstDeathDescription =  false;
     
+    private Blacksmith blacksmith;
     private Random rand = new Random();
     private Input reader = new Input();
     private int playerRowCoord = 6;
@@ -138,6 +141,7 @@ public class Game
         System.out.println("\n\n\n\t\tPlease enter the player's name:");
         String playerName = reader.getString();
         player = new Player(playerName);
+        blacksmith = new Blacksmith(player, player.getWeapon(), player.getArmour(), player.getPotion());
         
         String [] partTwo = new String[] 
         {
@@ -194,19 +198,22 @@ public class Game
     {
         world.printVisualField(playerRowCoord, playerColCoord);
         
-        System.out.println("\t\tEnter w/a/s/d to move");        
+        System.out.println("\t\tEnter \'w\' to move forward");  
+        System.out.println("\t\tEnter \'s\' to move back");  
+        System.out.println("\t\tEnter \'a\' to move left");  
+        System.out.println("\t\tEnter \'d\' to move right");  
         
         boolean finished = false;
         while(!finished)
         {
             String choice = reader.getString();
-            if (choice.equals("quit"))
+            if (choice.toLowerCase().replaceAll("\\s+","").equals("quit"))
             {
                 finished = true;
             }
-            else if(choice.equals("potion"))
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("potion"))
             {
-                player.equip("Potion");
+                player.drinkPotion();
             }
             else
                 runMenu(choice);
@@ -232,7 +239,7 @@ public class Game
         playerRowCoord = player.getRowCoord();
         playerColCoord = player.getColCoord();
                 
-        if(direction.equals(UP))
+        if(direction.replaceAll("\\s+","").equals(UP))
         {
             int nextRowUp = playerRowCoord - 1;
             int check = checkNextSquare(nextRowUp, playerColCoord);
@@ -246,7 +253,7 @@ public class Game
             }
                        
         }
-        else if(direction.equals(DOWN))
+        else if(direction.replaceAll("\\s+","").equals(DOWN))
         {
             int nextRowDown = playerRowCoord + 1;
             int check = checkNextSquare(nextRowDown, playerColCoord);
@@ -260,7 +267,7 @@ public class Game
             }
                
         }
-        else if(direction.equals(LEFT))
+        else if(direction.replaceAll("\\s+","").equals(LEFT))
         {
             int nextColLeft = playerColCoord - 1;
             int check = checkNextSquare(playerRowCoord, nextColLeft);
@@ -274,7 +281,7 @@ public class Game
             }
                
         }
-        else if(direction.equals(RIGHT))
+        else if(direction.replaceAll("\\s+","").equals(RIGHT))
         {
             int nextColRight = playerColCoord + 1;
             int check = checkNextSquare(playerRowCoord, nextColRight);
@@ -294,8 +301,10 @@ public class Game
         playerRowCoord = player.getRowCoord();
         playerColCoord = player.getColCoord();
         
-        System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase());
-        player.getPlayerAttributes(); 
+        System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase() + "\n");
+        System.out.println(player.getPlayerAttributes()); 
+        System.out.println(player.getItemsAttributes());
+        
         world.printVisualField(playerRowCoord,playerColCoord);
         
         checkFirstInteraction();       
@@ -317,12 +326,14 @@ public class Game
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(SHOP))
         {
-            //see shop
+            runShop();
+            
             return 0;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(BLACKSMITH))
         {
-            //SEE BLACKSMITH
+            runBlacksmith();
+            
             return 0;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(CHEST))
@@ -342,61 +353,62 @@ public class Game
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(TELEPORT))
         {
-            if(world.getCurrentMapName().toLowerCase().equals("town"))
-            {
-                player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
-                world.setCurrentMap("dessert");
-            }
+            teleport();
             return 0;
         }
         else 
         {
             String character = (world.getSquareValue(nextRow,nextCol));
+            
             Monster monster = findMonster(character);
             
             if (monster != null)
             {
                 int result = action(monster);
                 
-                if(result > 0)
-                {
-                    System.err.println("\t\t\t\tYou Win!");
-                    
-                    world.addAnotherMonster(character);
-                    int gold = dropGold();
-                    
-                    player.addScore(1);
-                    player.addGold(gold);
-                    
-                    return 1;
-                }
+                int check = checkResult(result, character);
                 
-                else
-                {
-                    if(firstDeathDescription == false)
-                    {
-                        System.out.println("You died! You will be sent back in town where someone will take care of you.");
-                        System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
-                        reader.getAny();
-                        firstDeathDescription = true;
-                    }
-                    System.err.println("\t\t\t\tYou Lost!");
-                    
-                    int score = player.getScore();
-                    player.updateScoreBeforeDeath(score);
-                    
-                    player.setCoordinates(PLAYER_INITIAL_ROW, PLAYER_INITIAL_COL);
-                    player.setFullHealth();
-                    
-                    int gold = player.getScoreBeforeDeath();
-                    player.addGold(gold);
-                    
-                    System.out.println("You have recieved " + score + " Gold from the guard");
-                    System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
-                    reader.getAny();
-                }
+                return check;
             }
             
+        }
+        return 0;
+    }
+    
+    /**
+     * Spawn another monster on the map if you won the fight.
+     * If you die, you will be set back to the initial position.
+     */
+    private int checkResult(int result, String character)
+    {
+        if(result > 0)
+        {
+            System.err.println("\t\t\t\tYou Win!");
+                    
+            world.addAnotherMonster(character);
+            int gold = dropGold();
+                    
+            player.addScore(1);
+            player.addGold(gold);
+                    
+            return 1;
+        }
+                
+        else
+        {
+            if(firstDeathDescription == false)
+            {
+                System.out.println("You died! You will be sent back in town where someone will take care of you.");
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+                reader.getAny();
+                firstDeathDescription = true;
+            }
+            System.err.println("\t\t\t\tYou Lost!");
+                    
+            player.setCoordinates(PLAYER_INITIAL_ROW, PLAYER_INITIAL_COL);
+            player.setFullHealth();
+                    
+            guardQuest();
         }
         return 0;
     }
@@ -425,13 +437,14 @@ public class Game
      */
     public int action(Monster monster)
     {
-        int playerAtk = player.atack();
-        int monsterAtk = monster.atack();
-            
         do
         {
-            monster.recieveDmg(playerAtk);
-            player.recieveDmg(monsterAtk);
+            int playerAttack = player.attack();
+            int monsterAttack = monster.attack();
+        
+            monster.receiveDmg(playerAttack);
+            
+            player.receiveDmg(monsterAttack);
                 
         }
         while(player.checkHealth() == true && monster.checkHealth() == true);
@@ -444,8 +457,8 @@ public class Game
      */
     private int dropGold()
     {
-        int min = 0;
-        int max = 9;
+        int min = 5;
+        int max = 15;
                 
         int dropChance = rand.nextInt(max - min) + min;
         int multiplier = rand.nextInt(max - (min + 1)) + min;
@@ -472,7 +485,8 @@ public class Game
         
         if(world.checkVisualField(BLACKSMITH) == true && blacksmithDescription == false)
         {
-            System.out.println("There is a blacksmith there, you can ask him to improve your items for a price");
+            System.out.println("There is a blacksmith there, you can ask him to improve your items for a price.\n" +
+                                "Ask him \"enchance armour\" or \"enchance weapon\" or \"enchance potion\"." );
             System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
             reader.getAny();
             blacksmithDescription = true;
@@ -519,6 +533,169 @@ public class Game
             System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
             reader.getAny();
             spiderCaveDescription = true;
+        }
+    }
+    
+    /**
+     * Enchance an item.
+     */
+    private void runBlacksmith()
+    {
+        boolean finished = false;
+            
+        while(!finished)
+        {
+            System.out.println("What can I do for you?");
+                
+            blacksmith.openBlacksmithShop();
+                
+            String choice = reader.getString();
+                
+            if(choice.toLowerCase().replaceAll("\\s+","").equals("quit"))
+            {
+                finished = true;
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceweapon"))
+            {
+                int weaponCost = blacksmith.getWeaponCost();
+                   
+                if (blacksmith.enchanceWeapon(player.getGold()) == true)
+                {
+                    player.pay(weaponCost);
+                }
+                
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancearmour"))
+            {
+                int armourCost = blacksmith.getArmourCost();
+                    
+                if (blacksmith.enchanceArmour(player.getGold()) == true)
+                    player.pay(armourCost);
+                    
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancepotion"))
+            {
+                int potionCost = blacksmith.getPotionCost();
+                   
+                if (blacksmith.enchancePotion(player.getGold()) == true)
+                    player.pay(potionCost);
+                    
+            }
+            else
+                System.out.println("Not an option");
+                
+        }
+        
+    }
+    
+    /**
+     * Buy from shop.
+     */
+    private void runShop()
+    {
+        boolean finished = false;
+            
+        while(!finished)
+        {
+            System.out.println("Have a look at what I got!");
+               
+            OBJECT_SHOP.openShop();
+                
+            String choice = reader.getString();
+            
+            if(choice.toLowerCase().replaceAll("\\s+","").equals("quit"))
+            {
+                finished = true;
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("buypotion"))
+            {
+                System.out.println("How many do you want to buy?");
+                int amount = reader.getInteger();
+                    
+                if (player.getGold() >= (OBJECT_SHOP.getPotionPrice() * amount))
+                {
+                    player.pay(OBJECT_SHOP.getPotionPrice() * amount);
+                    
+                    player.increasePotionAmount(amount);
+                }
+                
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyattack"))
+            {
+                
+                if (player.getGold() >= (OBJECT_SHOP.getAttackPrice()))
+                {
+                    player.pay(OBJECT_SHOP.getAttackPrice());
+                    
+                    player.increaseAttackForce(OBJECT_SHOP.getAtackValue());
+                }
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyshield"))
+            {
+                
+                if (player.getGold() >= (OBJECT_SHOP.getShieldPrice()))
+                {
+                    player.pay(OBJECT_SHOP.getShieldPrice());
+                    
+                    player.increaseShield(OBJECT_SHOP.getShieldValue());
+                }
+                    
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyhealth"))
+            {
+                
+                if (player.getGold() >= (OBJECT_SHOP.getHealthPrice()))
+                {
+                    player.pay(OBJECT_SHOP.getHealthPrice());
+                    
+                    player.increaseHitPoints(OBJECT_SHOP.getHealthValue());
+                }
+            }
+            else
+                System.out.println("Not an option");
+        }
+        
+    }
+    
+    /**
+     * Guardian Quest
+     */
+    public void guardQuest()
+    {
+        int min = 1;
+        int max = player.getScore() + 10;
+        
+        int guardGold = rand.nextInt(max - min) + min;
+        
+        player.addGold(guardGold);
+        
+        System.out.println("You have recieved " + guardGold + " Gold from the guard");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+        reader.getAny();
+    }
+    
+    /**
+     * Teleport to a different map
+     */
+    private void teleport()
+    {
+        if(world.getCurrentMapName().toLowerCase().equals("town"))
+        {
+            player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
+            
+            world.setCurrentMap("dessert");
+        }
+        else if(world.getCurrentMapName().toLowerCase().equals("dessert"))
+        {
+            player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
+            
+            world.setCurrentMap("spidercave");
+        }
+        else if(world.getCurrentMapName().toLowerCase().equals("spidercave"))
+        {
+            player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
+            
+            world.setCurrentMap("town");
         }
     }
 }
