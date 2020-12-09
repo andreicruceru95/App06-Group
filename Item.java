@@ -1,183 +1,124 @@
+
 /**
- * The attributes of our items.
+ * Write a description of class Item here.
  *
- * @author Andrei Cruceru
- * @version 21112020
+ * @author (your name)
+ * @version (a version number or a date)
  */
 public class Item
 {
-    //The item attributes
-    private int id;
-    private String name;
-    private int atack;
-    private int shield;
-    private int heal;
-    private int hitPoints;
-    private int quantity;
-    private int level = 1;
+    public static final int EVO_LEVEL_1 = 10;
+    public static final int EVO_LEVEL_2 = 20;
+    public static final int EVO_LEVEL_3 = 30;
+    public static final int EVO_LEVEL_4 = 39;
+    public static final String EVO_NAME_1 = "Basic";
+    public static final String EVO_NAME_2 = "Advanced";
+    public static final String EVO_NAME_3 = "Epic";
+    public static final String EVO_NAME_4 = "Legendary";
     
-
-    /**
-     * Initialising attributes.
-     * @param id is the item's id.
-     * @param name is the item name.
-     * @param atack is the weapon atack.
-     * @param shield is the armour shield.
-     * @param heal is the potion restore health amount.
-     * @param hitPoints is the armour health bonus.
-     * @param quantity is the item's qunatity.
-     */
-    public Item(int id,String name,int atack,int shield,int heal,int hitPoints,int quantity, int level)
+    protected int bonusPerLevel;
+    
+    protected String name;
+    protected String displayName;
+    
+    protected int displayLevel;
+    protected int enchantLevel;
+    
+    protected int baseStats;
+    protected int enchantStats;    
+    
+    protected int goldMultiplier = 1;   
+    protected int goldRequired = 10 * goldMultiplier; 
+   
+    public Item(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {
-        this.id = id;
+        this.bonusPerLevel = bonusPerLevel;
+        
         this.name = name;
-        this.heal = heal;
-        this.quantity = quantity;
-        this.level = level;
-        this.atack = atack * level;
-        this.shield = shield* level;
-        this.hitPoints = hitPoints * level;
-    }
-    
-    /**
-     * See a weapon item.
-     */
-    public void seeWeapon()
-    {
-        System.out.println("\n    " + name + ":\n");
-        System.out.println("atack: " + atack);
-    }
-    
-    /**
-     * @return a weapon's attributes.
-     */
-    public String returnWeaponAttr()
-    {
-        return "\n    Name +" + name + "\natack: " + atack;
-    }
-    
-    /**
-     * Enchance a weapon.
-     * @return the new atack.
-     */
-    public int enchanceWeapon()
-    {
-        atack += 10;
+        displayName = EVO_NAME_1 + " " + name;
         
-        return atack;
-    }
-    
-    /**
-     * See an armour item.
-     */
-    public void seeArmour()
-    {
-        System.out.println("\n    " + getName() + ":\n");
-        System.out.println("shield :" + shield);
-        System.out.println("hitPoints: "+ hitPoints);
-    }
-    
-    /**
-     * @return an armour attributes.
-     */
-    public String returnArmourAttr()
-    {
-        return "\n    Name +" + name + getName() + "\natack: " + shield + "\nhitPoints: " + hitPoints;
-    }
-    
-    /**
-     * Enchance an armour shieldense.
-     * @return the new shieldense value;
-     */
-    public int enchanceArmourshield()
-    {
-        shield += 10;
+        this.enchantLevel = enchantLevel;
+        displayLevel = enchantLevel;
         
-        return shield;
-    }
-    
-    /**
-     * Enchance an armour hit points bonus.
-     * @return the new hitPoints value.
-     */
-    public int enchanceArmourhitPoints()
-    {
-        hitPoints += 10;
+        this.baseStats = baseStats;
+        enchantStats = baseStats * enchantLevel;
         
-        return hitPoints ;
+        update();
+    }
+    
+    protected int getStats()
+    {
+        return enchantStats;
+    }
+   
+    /**
+     * Increment an item level.
+     * Every 9 levels the name changes
+     */
+    public void enchance()
+    {
+        if(enchantLevel < EVO_LEVEL_4)
+        {
+            enchantLevel ++;
+            displayLevel ++;
+            
+            enchantStats = (baseStats + ( enchantLevel * bonusPerLevel ));
+            
+            goldMultiplier ++;
+            
+            update();
+        }   
+        else
+            System.out.println("\t\tMaximum level reached");
     }
     
     /**
-     * See a potion item.
+     * Update the item's name.
      */
-    public void seePotion()
+    protected boolean update()
     {
-        System.out.println("\n    " + getName() + ":\n");
-        System.out.println("Restore hitPoints: " + heal);
-        System.out.println("Quantity: " + quantity);
+        if(enchantLevel >= EVO_LEVEL_1)
+        {
+            displayLevel = enchantLevel % EVO_LEVEL_1;
+            
+            displayName = EVO_NAME_2 + " " + name;
+            
+            return true;
+        }
+        else if(enchantLevel >= EVO_LEVEL_2)
+        {
+            displayLevel = enchantLevel % EVO_LEVEL_1;
+            
+            displayName = EVO_NAME_3 + " " + name;
+            
+            return true;
+        }
+        else if(enchantLevel >= EVO_LEVEL_3)
+        {
+            displayLevel = enchantLevel % EVO_LEVEL_1;
+            
+            displayName = EVO_NAME_4 + " " + name;
+            
+            return true;
+        }
+        else
+            return false;
+    }
+        
+    /**
+     * @return the amount of gold required.
+     */
+    public int getGoldRequired()
+    {
+        return goldRequired;
     }
     
     /**
-     * @return a potion attributes.
+     * @return an item's name.
      */
-    public String returnPotionAttr()
+    protected String getName()
     {
-        return "\n    Name +" + getName() + "\nHeal: " + heal + "\n" + quantity;
-    }
-    
-    /**
-     * @return the item's id.
-     */
-    public int getID()
-    {
-        return id;
-    }
-    
-    /**
-     * @return the item's name.
-     */
-    public String getName()
-    {
-        return name + " " + level;
-    }
-    
-    /**
-     * @return the item's shield.
-     */
-    public int getShield()
-    {
-        return shield;
-    }
-    
-    /**
-     * @return the item's hitPoints.
-     */
-    public int getHitPoints()
-    {
-        return hitPoints;
-    }
-    
-    /**
-     * @return the heal value of an item.
-     */
-    public int getHeal()
-    {
-        return heal;
-    }
-    
-    /**
-     * @return the quantity of an item.
-     */
-    public int getQuantity()
-    {
-        return quantity;
-    }
-    
-    /**
-     * @return an item's atack value.
-     */
-    public int getAtack()
-    {
-        return atack;
+        return name;
     }
 }
+
