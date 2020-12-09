@@ -11,7 +11,7 @@ public class World
     private static final String TOWN[][] = new String[47][35];
     private static final String DESSERT[][] = new String[47][35];
     private static final String SPIDER_CAVE[][]  = new String[47][35];
-    
+    private static final String EMPTY[][] = new String[47][35];
     
     private static final int MAP_EDGE = 3;
     private static final int MAP_L = 27;
@@ -68,6 +68,7 @@ public class World
     private Map town;
     private Map dessert;
     private Map spiderCave;
+    private Map userHelp;
     
     private Random rand;
     private Characters character;
@@ -86,7 +87,7 @@ public class World
         this.name = name;
         
         town = new Map("Town", TOWN,"The only safe place left in the world", FULL_H, FULL_L);
-        town.createMap(character.ROCK.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
+        town.createMap(character.WALL.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
         addObjectsToTown();
         
         dessert = new Map("Dessert",DESSERT,"One of the most dangerous places", FULL_H, FULL_L);
@@ -96,7 +97,7 @@ public class World
         spiderCave = new Map("SpiderCave",SPIDER_CAVE,"The home of the Spider Queen", FULL_H, FULL_L);
         spiderCave.createMap(character.ROCK.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
         addObjectsToSpiderCave();
-        
+                
         setCurrentMap("town");
     } 
      
@@ -223,9 +224,6 @@ public class World
     {
         int thickness = 3;
         int opening = 5;
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 30);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 30);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ALBINO_SNAKE.getCharacter(), 30);
         
         //add a wall going down in the cave
         for (int i = 0; i < FULL_H - MAP_EDGE - opening; i++)
@@ -238,7 +236,7 @@ public class World
         //add a wall to the right
         for (int i = FULL_H - opening - thickness; i < FULL_H - opening; i++)
         {
-            for(int j = MAP_EDGE + opening; j < FULL_L - MAP_EDGE - opening - opening; j++)
+            for(int j = MAP_EDGE + opening; j < FULL_L - MAP_EDGE - opening - thickness; j++)
             {
                 spiderCave.setOne(i, j, character.ROCK.getCharacter());
             }
@@ -259,6 +257,9 @@ public class World
                 spiderCave.setOne(i, j,character.ROCK.getCharacter());
             }
         }
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 40);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 40);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ALBINO_SNAKE.getCharacter(), 40);
         
         spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, character.SPIDER_QUEEN.getCharacter(), 1);
         spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, character.TELEPORT.getCharacter(), 1);
@@ -267,16 +268,6 @@ public class World
         spiderCave.setOne(CAVE_BLACKSMITH_ROW,CAVE_BLACKSMITH_COL,character.BLACKSMITH.getCharacter());
     }
         
-    /**
-     * print dessert map. developers only
-     */
-    private void printDesertMap()
-    {
-        addObjectsToDessert();
-        
-        dessert.printMap();
-    }
-    
     /**
      * return the current map
      */
@@ -330,4 +321,23 @@ public class World
         }
     }
     
+    public void printMaps()
+    {
+        town.printMap();
+        dessert.printMap();
+        spiderCave.printMap();
+    }
+    
+    /**
+     * Print a empty map for the user with the player's location.
+     */
+    public void printHelpMap(int row, int col)
+    {
+        userHelp = new Map("Location", EMPTY, "Player's location on the map", FULL_H, FULL_L);
+        userHelp.createMap(character.WALL.getCharacter(), FULL_H,FULL_L,MAP_EDGE);
+        
+        userHelp.setOne(row, col, character.PLAYER3.getCharacter());
+        
+        userHelp.printMap();
+    }
 }
