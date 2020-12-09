@@ -30,13 +30,7 @@ public class Shop
             command.BUY_HEALTH.getCommand() + HEALTH + "\t\t" + HEALTH_PRICE + " Gold" ,
             command.QUIT.getCommand()
         };
-    
-    public Shop()
-    {
-        this.name = name;
-        
-    }
-    
+           
     public void openShop()
     {
         menu.listOptions(list);

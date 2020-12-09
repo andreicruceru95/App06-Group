@@ -43,7 +43,7 @@ public class VisualField
         VISUAL_FIELD[3][0] = map[playerRowCoord][playerColCoord - 3];
         VISUAL_FIELD[3][1] = map[playerRowCoord][playerColCoord - 2];
         VISUAL_FIELD[3][2] = map[playerRowCoord][playerColCoord - 1];
-        VISUAL_FIELD[3][3] = player + " ";
+        VISUAL_FIELD[3][3] = " " + player + " ";
         VISUAL_FIELD[3][4] = map[playerRowCoord][playerColCoord + 1];
         VISUAL_FIELD[3][5] = map[playerRowCoord][playerColCoord + 2];
         VISUAL_FIELD[3][6] = map[playerRowCoord][playerColCoord + 3];
@@ -82,7 +82,7 @@ public class VisualField
     {
         for(int i = 0; i < VISUAL_FIELD.length; i++)
         {
-            for(int j = 0; j < VISUAL_FIELD.length; j++)
+            for(int j = 0; j < VISUAL_FIELD[i].length; j++)
             {
                 if (VISUAL_FIELD[i][j].contains(character))
                 {
@@ -100,7 +100,7 @@ public class VisualField
     {
         for (int i = 0; i < VISUAL_FIELD.length; i++)
         {
-            for (int j = 0; j < VISUAL_FIELD.length; j++)
+            for (int j = 0; j < VISUAL_FIELD[i].length; j++)
             {
                 System.out.print(VISUAL_FIELD[i][j]);
             }

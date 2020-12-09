@@ -8,7 +8,7 @@
 public enum Characters
 {
     TELEPORT (" ↈ "),
-    PERSON_1 (" ⛹ "),
+    PERSON_1 (" ⛹"),
     GUARD (" ⏳ "),
     STABLE (" ♞ "),
     BLACK_BEAR (" ① "),
@@ -31,9 +31,10 @@ public enum Characters
     DEATH (" Ⓓ "),
     RED_DRAGON (" Ⓡ "),
     PLAYER ("☺"),
-    PLAYER2("☹"),
+    PLAYER2("☠"),
+    PLAYER3(" ⚉ "),
     
-    ROCK ("⛰"),
+    ROCK (" ⛰ "),
     WALL ("[/]"),
     BLACKSMITH (" B "),
     SHOP (" S "),

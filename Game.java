@@ -27,6 +27,8 @@ public class Game
     public static final String POTION = "potion";
     public static final String SEE_DATABASE = "database";
     public static final String SEE_STATS = "seestats";
+    public static final String SEE_LOCATION = "seelocation";
+    public static final String SUCCESS = "\t\tYou have successfully purchased: ";    
     
     public static final Shop SHOP = new Shop();
     public static final int PLAYER_INITIAL_ROW = 7;
@@ -218,21 +220,29 @@ public class Game
         boolean finished = false;
         while(!finished)
         {
+            changeImage();
+            showInfo();
+            
             String choice = reader.getString();
+            
             if (choice.toLowerCase().replaceAll("\\s+","").equals(QUIT))
-            {
                 finished = true;
-            }
+            
             else if(choice.toLowerCase().replaceAll("\\s+","").equals(POTION))
-            {
                 player.drinkPotion();
-            }
+                
             else if(choice.toLowerCase().replaceAll("\\s","").contains(HELP))
                 menu.listOptions(list);
+                
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_DATABASE))
                 database.printAll();
+                
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_STATS))
                 database.getMonsterList(monsters);
+            
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_LOCATION))
+                world.printHelpMap(player.getRowCoord(), player.getColCoord());
+                
             else
                 runMenu(choice);
         }
@@ -323,17 +333,19 @@ public class Game
             
         }
         
-        showInfo();
-        
         updateVisualField();
         
         checkFirstInteraction();       
     }
     
+    /**
+     * Display information about the player and map.
+     */
     public void showInfo()
     {
         System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase() + "\n");
         System.out.println(player.getStats()); 
+        System.out.println("\tGold: " + player.getGold() + "" + character.GOLD.getCharacter());
         ((Weapon) weapon).print();
         ((Armour) armour).print();
         ((Potion) potion).print();
@@ -417,10 +429,12 @@ public class Game
             System.err.println("\t\t\t\tYou Win!");
                     
             world.addAnother(character);
-            int gold = dropGold();
+            
+            checkLuck();
                     
             player.addScore(1);
-            player.addGold(gold);
+            
+            player.addGold(goldChance());
                     
             return 1;
         }
@@ -463,6 +477,11 @@ public class Game
         return null;
     }
     
+    private void checkLuck()
+    {
+        
+    }
+    
     /**
      * Fast-forward fight
      */
@@ -477,18 +496,26 @@ public class Game
         }
         while(player.checkHealth() == true && monster.checkHealth() == true);
         
-        if(player.getCurrentHealth() <= player.getFullHealth() / 2)
-            player.changeImage(character.PLAYER2.getCharacter());
-        else
-            player.changeImage(character.PLAYER.getCharacter());
-        
         return player.getHitPoints();
     }
     
     /**
+     * 
+     */
+    public void changeImage()
+    {
+        if(player.getCurrentHealth() <= player.getFullHealth() / 2)
+            player.changeImage(character.PLAYER2.getCharacter());
+            
+        else
+            player.changeImage(character.PLAYER.getCharacter()); 
+    }
+     
+    
+    /**
      * 30% chance to recieve a 2x monster's level amount of gold.
      */
-    private int dropGold()
+    private int goldChance()
     {
         int min = 5;
         int max = 15;
@@ -500,6 +527,7 @@ public class Game
         {
             return monsterLevel * multiplier;
         }
+        
         return 0;
     }
     
@@ -588,7 +616,7 @@ public class Game
             
         while(!finished)
         {
-            System.out.println("\t\tWhat can I do for you?\n\n\n");
+            System.out.println("\n\n\t\tWhat can I do for you?\n\n");
                 
             blacksmith.openBlacksmithShop();
                 
@@ -601,23 +629,29 @@ public class Game
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceweapon"))
             {
                                  
-                blacksmith.enchance(weapon, player.getGold());
+                if(blacksmith.enchance(weapon, player.getGold()))
+                    player.pay(blacksmith.getCost(weapon));
                 
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancearmour"))
             {
-                blacksmith.enchance(armour,player.getGold());
+                
+                if(blacksmith.enchance(armour,player.getGold()))
+                    player.pay(blacksmith.getCost(armour));
+                    
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancepotion"))
             {
                 
-                blacksmith.enchance(potion, player.getGold());
+                if(blacksmith.enchance(potion, player.getGold()))
+                    player.pay(blacksmith.getCost(potion));
                     
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceamulet"))
             {
                 
-                blacksmith.enchance(amulet, player.getGold());
+                if(blacksmith.enchance(amulet, player.getGold()))
+                    player.pay(blacksmith.getCost(amulet));
                 
             }
             else
@@ -656,6 +690,8 @@ public class Game
                     player.pay(SHOP.getPotionPrice() * amount);
                     
                     player.increasePotionAmount(amount);
+                    
+                    System.out.println(SUCCESS + amount + " Health Potion(s)");
                 }
                 
             }
@@ -667,7 +703,10 @@ public class Game
                     player.pay(SHOP.getAttackPrice());
                     
                     player.increaseAttackForce(SHOP.getAtackValue());
+                    
+                    System.out.println(SUCCESS + " Attack value");
                 }
+                
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyshield"))
             {
@@ -677,6 +716,8 @@ public class Game
                     player.pay(SHOP.getShieldPrice());
                     
                     player.increaseShield(SHOP.getShieldValue());
+                    
+                    System.out.println(SUCCESS + " Deffence value");
                 }
                     
             }
@@ -688,6 +729,8 @@ public class Game
                     player.pay(SHOP.getHealthPrice());
                     
                     player.increaseHealthPoints(SHOP.getHealthValue());
+                    
+                    System.out.println(SUCCESS + " Extra health points");
                 }
                 
             }
