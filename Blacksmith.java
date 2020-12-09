@@ -7,11 +7,13 @@
  */
 public class Blacksmith
 {
-    private int weaponCost = 5;
-    private int armourCost = 5;
-    private int amuletCost = 5;    
+    public static final String SUCCESS = "\t\tYou have succesfully enchanted: ";
+    private int weaponCost = 50;
+    private int armourCost = 50;
+    private int amuletCost = 50; 
+        
     private int potionCost = 100;
-    
+        
     private Menu menu = new Menu();
     private Commands command;
     
@@ -36,7 +38,7 @@ public class Blacksmith
     /**
      * Enchance an item.
      */
-    public void enchance(Item item, int gold)
+    public boolean enchance(Item item, int gold)
     {
         
         if(item.getName().toLowerCase().contains("sword"))
@@ -46,7 +48,11 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                weaponCost += weaponCost;
+                System.out.println(SUCCESS + item.getName());
+                
+                //weaponCost += itemMultiplier;
+                
+                return true;
             }
             
         }
@@ -57,7 +63,11 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                armourCost += weaponCost;
+                System.out.println(SUCCESS + item.getName());
+                
+                //armourCost += itemMultiplier;
+                
+                return true;
             }
             
         }
@@ -68,7 +78,11 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                potionCost += weaponCost;
+                System.out.println(SUCCESS + item.getName());
+                
+                //potionCost += potionMultiplier;
+                
+                return true;
             }
             
         }
@@ -79,20 +93,24 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                amuletCost += weaponCost;
+                System.out.println(SUCCESS + item.getName());
+                
+                //amuletCost += itemMultiplier;
+                
+                return true;
             }
             
         }
-        else
-            System.out.println("\n\t\tNot an option");
+                
+        return false;
     }
     
     /**
      * Check if the gold required exists in the user's account.
      */
-    public boolean checkGold(int gold, int compare)
+    public boolean checkGold(int gold, int cost)
     {
-        if(gold >= compare)
+        if(gold >= cost)
         {
             return true;
         }
