@@ -9,17 +9,14 @@ import java.util.*;
  */
 public class Map
 {
-    private static final String CURRENT_MAP[][] = new String[47][35];
-    private static final String visualField[][] = new String[7][7];
+    private static final String SQUARE = "   ";
+   
     private String map[][]  = new String[47][35];
-    private static final String PLAYER = "O";
-    
+        
     private Random rand;
-    private String square = "   ";
     
     private String description;
     private String name;
-    
     
     /**
      * Constructor for the Map
@@ -29,28 +26,8 @@ public class Map
         rand = new Random();
         this.description = description;
         this.name = name;
-        for(int i = 0; i < height; i++)
-        {
-            for(int j = 0; j < length; j++)
-            {
-                this.map[i][j] = map[i][j];
-            }
-        }
         
-    }
-        
-    /**
-     * Set a single object on the map at given location
-     */
-    public void setObject(int row, int col, String obj, int height, int length)
-    {
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < length; j++)
-            {
-                map[i][i] = obj;
-            }
-        }
+        this.map = map;
     }
     
     /**
@@ -64,11 +41,11 @@ public class Map
     /**
      * print a map
      */
-    public void printMap(int height, int length)
+    public void printMap()
     {
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < map.length; i++)
         {
-            for (int j = 0; j < length; j++)
+            for (int j = 0; j < map[i].length; j++)
             {
                 System.out.print(map[i][j]);
             }
@@ -101,7 +78,7 @@ public class Map
     }
      
     /**
-     * create a the walls and center of a given map name
+     * Create a the walls and center of a map.
      */
     public void createMap(String walls,int height, int length, int mapEdge)
     {
@@ -110,7 +87,7 @@ public class Map
         {
             for(int j = 0; j < length; j++)
             {
-                map[i][j] = square;
+                map[i][j] = SQUARE;
             }
         }
         //top
@@ -147,128 +124,30 @@ public class Map
         }
         
     }
-    
-    /**
-     * add an amount of objects in a map.
-     */
-    public void addObjects(int columnMin, int columnMax, int rowMin, int rowMax, String object, int amount)
-    {
-        for(int i = 0; i < amount; i++)
-        {
-            int randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
-            int randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
-            
-            map[randomRow][randomCol] = object;
-        }
-    }
-    
+        
     /**
      * Re-spawn a monster in an empty square on the map
      */
-    public void reSpawn(int columnMin, int columnMax, int rowMin, int rowMax, String object)
+    public void addObjects(int columnMin, int columnMax, int rowMin, int rowMax, String object, int amount)
     {
         int randomRow = 0;  
         int randomCol = 0;
         
-        while(map[randomRow][randomCol] != square)
+        for(int i = 0; i < amount; i++)
         {
-            randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
-            randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
             
-        }
-        map[randomRow][randomCol] = object;
-    }
-    
-    
-    /**
-     * Player's visual field 7x7
-     */
-    public void printVisualField(int playerRowCoord, int playerColCoord)
-    {
-        for (int i = 0; i < visualField.length; i++)
-        {
-            for (int j = 0; j < visualField.length; j++)
+            while(map[randomRow][randomCol] != SQUARE)
             {
-                visualField[0][0] = map[playerRowCoord - 3][playerColCoord - 3];
-                visualField[0][1] = map[playerRowCoord - 3][playerColCoord - 2];
-                visualField[0][2] = map[playerRowCoord - 3][playerColCoord - 1];
-                visualField[0][3] = map[playerRowCoord - 3][playerColCoord];
-                visualField[0][4] = map[playerRowCoord - 3][playerColCoord + 1];
-                visualField[0][5] = map[playerRowCoord - 3][playerColCoord + 2];
-                visualField[0][6] = map[playerRowCoord - 3][playerColCoord + 3];
-                
-                visualField[1][0] = map[playerRowCoord - 2][playerColCoord - 3];
-                visualField[1][1] = map[playerRowCoord - 2][playerColCoord - 2];
-                visualField[1][2] = map[playerRowCoord - 2][playerColCoord - 1];
-                visualField[1][3] = map[playerRowCoord - 2][playerColCoord];
-                visualField[1][4] = map[playerRowCoord - 2][playerColCoord + 1];
-                visualField[1][5] = map[playerRowCoord - 2][playerColCoord + 2];
-                visualField[1][6] = map[playerRowCoord - 2][playerColCoord + 3];
-                
-                visualField[2][0] = map[playerRowCoord - 1][playerColCoord - 3];
-                visualField[2][1] = map[playerRowCoord - 1][playerColCoord - 2];
-                visualField[2][2] = map[playerRowCoord - 1][playerColCoord - 1];
-                visualField[2][3] = map[playerRowCoord - 1][playerColCoord];
-                visualField[2][4] = map[playerRowCoord - 1][playerColCoord + 1];
-                visualField[2][5] = map[playerRowCoord - 1][playerColCoord + 2];
-                visualField[2][6] = map[playerRowCoord - 1][playerColCoord + 3];
-                
-                visualField[3][0] = map[playerRowCoord][playerColCoord - 3];
-                visualField[3][1] = map[playerRowCoord][playerColCoord - 2];
-                visualField[3][2] = map[playerRowCoord][playerColCoord - 1];
-                visualField[3][3] = " " + PLAYER + " ";
-                visualField[3][4] = map[playerRowCoord][playerColCoord + 1];
-                visualField[3][5] = map[playerRowCoord][playerColCoord + 2];
-                visualField[3][6] = map[playerRowCoord][playerColCoord + 3];
-                
-                visualField[4][0] = map[playerRowCoord + 1][playerColCoord - 3];
-                visualField[4][1] = map[playerRowCoord + 1][playerColCoord - 2];
-                visualField[4][2] = map[playerRowCoord + 1][playerColCoord - 1];
-                visualField[4][3] = map[playerRowCoord + 1][playerColCoord];
-                visualField[4][4] = map[playerRowCoord + 1][playerColCoord + 1];
-                visualField[4][5] = map[playerRowCoord + 1][playerColCoord + 2];
-                visualField[4][6] = map[playerRowCoord + 1][playerColCoord + 3];
-                
-                visualField[5][0] = map[playerRowCoord + 2][playerColCoord - 3];
-                visualField[5][1] = map[playerRowCoord + 2][playerColCoord - 2];
-                visualField[5][2] = map[playerRowCoord + 2][playerColCoord - 1];
-                visualField[5][3] = map[playerRowCoord + 2][playerColCoord];
-                visualField[5][4] = map[playerRowCoord + 2][playerColCoord + 1];
-                visualField[5][5] = map[playerRowCoord + 2][playerColCoord + 2];
-                visualField[5][6] = map[playerRowCoord + 2][playerColCoord + 3];
-                
-                visualField[6][0] = map[playerRowCoord + 3][playerColCoord - 3];
-                visualField[6][1] = map[playerRowCoord + 3][playerColCoord - 2];
-                visualField[6][2] = map[playerRowCoord + 3][playerColCoord - 1];
-                visualField[6][3] = map[playerRowCoord + 3][playerColCoord];
-                visualField[6][4] = map[playerRowCoord + 3][playerColCoord + 1];
-                visualField[6][5] = map[playerRowCoord + 3][playerColCoord + 2];
-                visualField[6][6] = map[playerRowCoord + 3][playerColCoord + 3];
-                
-                System.out.print(visualField[i][j]);
+                randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+                randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+            
             }
-            System.out.println("");
+            
+            map[randomRow][randomCol] = object;
         }
+        
     }
-    
-    /**
-     * Check the visual field of the player for a given character
-     */
-    public boolean checkVisualField(String character)
-    {
-        for(int i = 0; i < visualField.length; i++)
-        {
-            for(int j = 0; j < visualField.length; j++)
-            {
-                if (visualField[i][j].contains(character))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
+        
     /**
      * @return a square value
      */

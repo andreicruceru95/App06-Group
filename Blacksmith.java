@@ -1,148 +1,129 @@
-import java.util.Random;
 
 /**
- * Write a description of class Blacksmith here.
+ * Write a description of class BlacksmithTest here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
 public class Blacksmith
 {
-    private Player player;
-    private Random rand;
+    private int weaponCost = 5;
+    private int armourCost = 5;
+    private int amuletCost = 5;    
+    private int potionCost = 100;
     
-    private Weapon weapon ;
-    private Armour armour ;
-    private Potion potion ;
+    private Menu menu = new Menu();
+    private Commands command;
     
-    private int weaponCost;
-    private int armourCost;
-    private int potionCost;
+    private String name; 
     
-    /**
-     * Constructor for blacksmith
-     */
-    public Blacksmith(Player player, Weapon weapon, Armour armour, Potion potion)
-    {
-        this.player = player;
-        this.weapon = weapon;
-        this.armour = armour;
-        this.potion = potion;
-        
-        rand = new Random();
-        weaponCost = 5;
-        armourCost = 5;
-        potionCost = 100;
-        
-    }
-    
-    /**
-     * See blacksmith prices.
-     */
-    public void openBlacksmithShop()
-    {
-        String[] list = new String[] 
+    String[] list = new String[] 
         {
-            "\tEnchance weapon" + "\t\t" + weaponCost + " Gold",
-            "\tEnchance armour" + "\t\t" + armourCost + " Gold",
-            "\tEnchance potion" + "\t\t" + potionCost + " Gold",
-            "\tQuit" + "\t\t\t\tquit"
+            command.ENCHANCE_WEAPON.getCommand() + "\t\t" + weaponCost + " Gold",
+            command.ENCHANCE_ARMOUR.getCommand() + "\t\t" + armourCost + " Gold",
+            command.ENCHANCE_POTION.getCommand() + "\t\t" + potionCost + " Gold",
+            command.ENCHANCE_AMULET.getCommand() + "\t\t" + amuletCost + "Gold\n",
+            command.QUIT.getCommand()
         };                                  
         
-        for(int i = 0; i < list.length; i++)
-        {
-            System.err.println(list[i]);
-        }
+    
+    public Blacksmith(String name)
+    {
+       this.name = name;
+       
     }
     
     /**
-     * increase armour level;
+     * Enchance an item.
      */
-    public boolean enchanceArmour(int playerGold)
+    public void enchance(Item item, int gold)
     {
-        int multiplier = 12;
         
-        if(playerGold >= armourCost)
+        if(item.getName().toLowerCase().contains("sword"))
         {
-            armour.enchance();
-            armourCost += multiplier;
             
-            return true;
+            if(checkGold(gold, weaponCost) == true)
+            {
+                item.enchance();
+                
+                weaponCost += weaponCost;
+            }
+            
+        }
+        else if(item.getName().toLowerCase().contains("armour"))
+        {
+            
+            if(checkGold(gold, armourCost) == true)
+            {
+                item.enchance();
+                
+                armourCost += weaponCost;
+            }
+            
+        }
+        else if(item.getName().toLowerCase().contains("potion"))
+        {
+            
+            if(checkGold(gold, potionCost) == true)
+            {
+                item.enchance();
+                
+                potionCost += weaponCost;
+            }
+            
+        }
+        else if(item.getName().toLowerCase().contains("amulet"))
+        {
+            
+            if(checkGold(gold, amuletCost) == true)
+            {
+                item.enchance();
+                
+                amuletCost += weaponCost;
+            }
+            
         }
         else
-        {
-            System.out.println("Blacksmith: Not enough gold");
-            
-            return false;
-        }
+            System.out.println("\n\t\tNot an option");
     }
     
     /**
-     * increase weapon level;
+     * Check if the gold required exists in the user's account.
      */
-    public boolean enchanceWeapon(int playerGold)
+    public boolean checkGold(int gold, int compare)
     {
-        int multiplier = 12;
-        
-        if(playerGold >= weaponCost)
+        if(gold >= compare)
         {
-            weapon.enchance();
-            weaponCost += multiplier;
-            
             return true;
         }
-        else
-        {
-            System.out.println("Blacksmith: Not enough gold");   
-            
+        else   
             return false;
-        }
-        
     }
     
-    /**
-     * increase potion level;
-     */
-    public boolean enchancePotion(int playerGold)
+    public void openBlacksmithShop()
     {
-        int multiplier = 50;
-        
-        if(playerGold >= potionCost)
+        menu.listOptions(list);
+    }
+    
+    public int getCost(Item item)
+    {
+        if(item.getName().toLowerCase().contains("sword"))
         {
-            potion.enchance();
-            potionCost += multiplier;
-            
-            return true;
+            return weaponCost;
+        }
+        else if(item.getName().toLowerCase().contains("armour"))
+        {
+            return armourCost;
+        }
+        else if(item.getName().toLowerCase().contains("potion"))
+        {
+            return potionCost;
+        }
+        else if(item.getName().toLowerCase().contains("amulet"))
+        {
+            return amuletCost;
         }
         else
-        {
-            System.out.println("Blacksmith: Not enough gold");   
-        
-            return false;
-        }
-    }
-    
-    /**
-     * @return potion cost
-     */
-    public int getPotionCost()
-    {
-        return potionCost;
-    }
-    
-    /**
-     * @return armour cost
-     */
-    public int getArmourCost()
-    {
-        return potionCost;
-    }
-    
-    /**
-     * @return weapon cost
-     */
-    public int getWeaponCost()
-    {
-        return weaponCost;
+            return 0;
     }
 }

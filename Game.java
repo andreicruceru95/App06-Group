@@ -21,89 +21,64 @@ import java.util.*;
 
 public class Game 
 {
-    private static final char CLEAR = '\u000c';
-    private static final Shop OBJECT_SHOP = new Shop();
+    public static final char CLEAR = '\u000c';
+    public static final String HELP = "help";
+    public static final String QUIT = "quit";
+    public static final String POTION = "potion";
+    public static final String SEE_DATABASE = "database";
+    public static final String SEE_STATS = "seestats";
     
-    private static final int PLAYER_INITIAL_ROW = 7;
-    private static final int PLAYER_INITIAL_COL = 7;
-    private static final int FULL_L = 34;
-    private static final int FULL_H = 46;
-    private static final int PLAYER_VISUAL = 3;
-    private static final int SHOP_ROW = 10;
-    private static final int SHOP_COL = 3;
-    private static final String TELEPORT = "  ↈ ";
-    private static final String PERSON_1 = " ⛹";
-    private static final String PERSON_2 = " ⛹";
-    private static final String PERSON_3 = " ⛹";
-    private static final String PERSON_4 = " ⛹";
-    private static final String PERSON_5 = " ⛹";
-    private static final String GUARD = " ⏳ ";
-    private static final String STABLE = " ♞";
-    private static final String BLACK_BEAR = " ① ";
-    private static final String WHITE_TIGER = " ② ";
-    private static final String APE_THROWER = " ③ ";
-    private static final String POISON_SPIDER = " ④ ";
-    private static final String RED_SCORPION = " ⑤ ";
-    private static final String ALBINO_SNAKE = " ⑥ ";
-    private static final String POLAR_BEAR = " ⑦ ";
-    private static final String YETI = " ⑧ ";
-    private static final String ABOMINABLE_SNOWMAN = " ⑨ ";
-    private static final String DEMON = " ⑩ ";
-    private static final String CURSED_VAMPIRE = " ⑪ ";
-    private static final String WITCH = " ⑫ ";
-    private static final int LEVEL_1 = 1;
-    private static final int LEVEL_5 = 5;
-    private static final int LEVEL_10 = 10;
-    private static final int LEVEL_15 = 15;
-    private static final int LEVEL_20 = 20;
-    private static final int LEVEL_25 = 25;
-    private static final int LEVEL_30 = 30;
-    private static final int LEVEL_35 = 35;
-    private static final int LEVEL_40 = 40;
-    private static final int LEVEL_45 = 45;
-    private static final int LEVEL_50 = 50;
-    private static final int LEVEL_55 = 55;
-    
-    //bosses    
-    private static final String BERA = " Ⓑ ";
-    private static final String TIGRIS = " Ⓣ ";
-    private static final String APE_KING = " Ⓐ ";
-    private static final String SPIDER_QUEEN = " Ⓢ ";
-    private static final String NINE_TAILS = " Ⓝ ";
-    private static final String DEATH = " Ⓓ ";
-    private static final String RED_DRAGON = " Ⓡ ";
-    private static final int LEVEL_9 = 9;
-    private static final int LEVEL_14 = 14;
-    private static final int LEVEL_19 = 19;
-    private static final int LEVEL_34 = 34;
-    private static final int LEVEL_49 = 49;
-    private static final int LEVEL_60 = 60;
-    private static final int LEVEL_70 = 70;
-    
-    private static final String MAIN_QUEST = "!";
-    private static final String QUEST_HUSBAND = "Q1";
-    private static final String QUEST_FARM = "Q2";
-    private static final String QUEST_WOLF = "Q3";
-    private static final String MISSING_HUSBAND = "??";
-    private static final String PLAYER = "☧";
-    
-    private static final String ROCK = " ⛰ ";
-    private static final String WALL = "[/]";
-    private static final String BLACKSMITH = " B ";
-    private static final String SHOP = " S ";
-    private static final String CHEST = "!?";
-    private static final String GOLD = "$";
-    private static final String ITEM = "!^";
-    private static final String TREE = " ¥";
-    private static final String UP = "w";
-    private static final String DOWN = "s";
-    private static final String LEFT = "a";
-    private static final String RIGHT = "d";
+    public static final Shop SHOP = new Shop();
+    public static final int PLAYER_INITIAL_ROW = 7;
+    public static final int PLAYER_INITIAL_COL = 7;
+    public static final int PLAYER_VISUAL = 3;
+    public static final String TOWN = "town";
+    public static final String DESSERT = "dessert";
+    public static final String SPIDER_CAVE = "spidercave";
+    public static final int LEVEL_1 = 1;
+    public static final int LEVEL_5 = 5;
+    public static final int LEVEL_10 = 10;
+    public static final int LEVEL_15 = 15;
+    public static final int LEVEL_20 = 20;
+    public static final int LEVEL_25 = 25;
+    public static final int LEVEL_30 = 30;
+    public static final int LEVEL_35 = 35;
+    public static final int LEVEL_40 = 40;
+    public static final int LEVEL_45 = 45;
+    public static final int LEVEL_50 = 50;
+    public static final int LEVEL_55 = 55;
+    public static final int LEVEL_9 = 9;
+    public static final int LEVEL_14 = 14;
+    public static final int LEVEL_19 = 19;
+    public static final int LEVEL_34 = 34;
+    public static final int LEVEL_49 = 49;
+    public static final int LEVEL_60 = 60;
+    public static final int LEVEL_70 = 70;
+    public static final String UP = "w";
+    public static final String DOWN = "s";
+    public static final String LEFT = "a";
+    public static final String RIGHT = "d";
+        
     private String square = "   ";
-    private int monsterLevel = 1;;
+    private int monsterLevel = 1;
+    
     //A list of monsters name, level
-    private HashMap <String, Integer> monsters = new HashMap<String, Integer>();
+    private HashMap <String, Integer> monsters = new HashMap<>();
+    
+    //interactions with game objects
+    private HashMap<String, String> interactions = new HashMap<>();
+    
+    private Database database = new Database();
+    private Menu menu = new Menu();
+    private Blacksmith blacksmith;
+    private Characters character;
+    private Commands command;
     private Player player;
+    private Item weapon;
+    private Item armour;
+    private Item potion;
+    private Item amulet;
+    
     private World world = new World("World of Zull");
     
     private boolean shopDescription =  false;
@@ -115,11 +90,24 @@ public class Game
     private boolean spiderCaveDescription =  false;
     private boolean firstDeathDescription =  false;
     
-    private Blacksmith blacksmith;
     private Random rand = new Random();
     private Input reader = new Input();
+    
     private int playerRowCoord = 6;
     private int playerColCoord = 6;
+    
+    private String[] list = 
+        {
+            command.UP_INSTRUCTION.getCommand(),
+            command.DOWN_INSTRUCTION.getCommand(),
+            command.LEFT_INSTRUCTION.getCommand(),
+            command.RIGHT_INSTRUCTION.getCommand(),
+            command.QUIT.getCommand(),
+            command.POTION.getCommand(),
+            command.HELP.getCommand(),
+            command.DATABASE.getCommand(),
+            command.SEE_STATS.getCommand()
+        };
     
     public Game()
     {
@@ -138,10 +126,18 @@ public class Game
         runStory(partOne);
         
         System.out.println(CLEAR);
+        
         System.out.println("\n\n\n\t\tPlease enter the player's name:");
+        
         String playerName = reader.getString();
-        player = new Player(playerName);
-        blacksmith = new Blacksmith(player, player.getWeapon(), player.getArmour(), player.getPotion());
+        player = new Player(playerName, 1);
+        
+        weapon = player.getWeapon();
+        armour = player.getArmour();
+        potion = player.getPotion();
+        amulet = player.getAmulet();
+        
+        blacksmith = new Blacksmith("Gerald");
         
         String [] partTwo = new String[] 
         {
@@ -155,66 +151,88 @@ public class Game
         runStory(partTwo);
                         
         // create monsters
-        monsters.put(BLACK_BEAR,LEVEL_1);
-        monsters.put(WHITE_TIGER, LEVEL_5);
-        monsters.put(APE_THROWER, LEVEL_10);
-        monsters.put(POISON_SPIDER, LEVEL_15);
-        monsters.put(RED_SCORPION,LEVEL_20);
-        monsters.put(ALBINO_SNAKE,LEVEL_25);
-        monsters.put(POLAR_BEAR,LEVEL_30);
-        monsters.put(YETI,LEVEL_35);
-        monsters.put(ABOMINABLE_SNOWMAN,LEVEL_40);
-        monsters.put(DEMON,LEVEL_45);
-        monsters.put(CURSED_VAMPIRE,LEVEL_50);
-        monsters.put(WITCH,LEVEL_55);
-        monsters.put(BERA,LEVEL_9);
-        monsters.put(TIGRIS,LEVEL_14);
-        monsters.put(APE_KING,LEVEL_19);
-        monsters.put(SPIDER_QUEEN,LEVEL_34);
-        monsters.put(NINE_TAILS,LEVEL_49);
-        monsters.put(DEATH,LEVEL_60);
-        monsters.put(RED_DRAGON,70);
+        monsters.put(character.BLACK_BEAR.getCharacter(), LEVEL_1);
+        monsters.put(character.WHITE_TIGER.getCharacter(), LEVEL_5);
+        monsters.put(character.APE_THROWER.getCharacter(), LEVEL_10);
+        monsters.put(character.POISON_SPIDER.getCharacter(), LEVEL_15);
+        monsters.put(character.RED_SCORPION.getCharacter(),LEVEL_20);
+        monsters.put(character.ALBINO_SNAKE.getCharacter(),LEVEL_25);
+        monsters.put(character.POLAR_BEAR.getCharacter(),LEVEL_30);
+        monsters.put(character.YETI.getCharacter(),LEVEL_35);
+        monsters.put(character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40);
+        monsters.put(character.DEMON.getCharacter(),LEVEL_45);
+        monsters.put(character.CURSED_VAMPIRE.getCharacter(),LEVEL_50);
+        monsters.put(character.WITCH.getCharacter(),LEVEL_55);
+        monsters.put(character.BERA.getCharacter(),LEVEL_9);
+        monsters.put(character.TIGRIS.getCharacter(),LEVEL_14);
+        monsters.put(character.APE_KING.getCharacter(),LEVEL_19);
+        monsters.put(character.SPIDER_QUEEN.getCharacter(),LEVEL_34);
+        monsters.put(character.NINE_TAILS.getCharacter(),LEVEL_49);
+        monsters.put(character.DEATH.getCharacter(),LEVEL_60);
+        monsters.put(character.RED_DRAGON.getCharacter(),70);
+        
+        interactions.put(character.SHOP.getCharacter(), "There is a shop there, you can buy health potions and other things from there");
+        interactions.put(character.BLACKSMITH.getCharacter(),"There is a blacksmith there, you can ask him to improve your items for a price.\n" +
+                                "Ask him \"enchance armour\" or \"enchance weapon\" or \"enchance potion\".");
+        interactions.put(character.STABLE.getCharacter(), "There is a stable there, you soon be able to buy a horse from there");
+        interactions.put(character.GUARD.getCharacter(), "Town guard: \t\tHey, You! \n\t\tCome here. \n\tAre you that warrior " + 
+                                "everyone is talking about?\n\tIf you are that brave, why don't you go" + 
+                                "and kill some wolves for us?\n\tThey have been killing our people for a while.\n");
+        interactions.put(character.TELEPORT.getCharacter(), "There is a teleporter there, you can go to a different map.");    
+        interactions.put(DESSERT, "This was once a beautifull forrest. Now it's a dangerous death field. Be aware!");
+        interactions.put(SPIDER_CAVE, "A cave? You should be carefull.. Who knows what monsters lives in here.");
+        
         run();
                 
     }
     
+    /**
+     * Display a given list as a story.
+     */
     public void runStory(String[] part)
     {
         for(int i = 0; i < part.length; i ++)
         {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(command.PRESS_ANY.getCommand());
             reader.getAny();
             
             System.out.println(CLEAR);
+            
             System.out.println(part[i]);
         }
     }
-    
         
     /**
      * Main options.
      */
     public void run()
     {
-        world.printVisualField(playerRowCoord, playerColCoord);
+        updateVisualField();
         
-        System.out.println("\t\tEnter \'w\' to move forward");  
-        System.out.println("\t\tEnter \'s\' to move back");  
-        System.out.println("\t\tEnter \'a\' to move left");  
-        System.out.println("\t\tEnter \'d\' to move right");  
+        System.out.println(command.UP_INSTRUCTION.getCommand());  
+        System.out.println(command.DOWN_INSTRUCTION.getCommand());  
+        System.out.println(command.LEFT_INSTRUCTION.getCommand());  
+        System.out.println(command.RIGHT_INSTRUCTION.getCommand());  
+        System.out.println(command.HELP.getCommand());
         
         boolean finished = false;
         while(!finished)
         {
             String choice = reader.getString();
-            if (choice.toLowerCase().replaceAll("\\s+","").equals("quit"))
+            if (choice.toLowerCase().replaceAll("\\s+","").equals(QUIT))
             {
                 finished = true;
             }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("potion"))
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals(POTION))
             {
                 player.drinkPotion();
             }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HELP))
+                menu.listOptions(list);
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_DATABASE))
+                database.printAll();
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_STATS))
+                database.getMonsterList(monsters);
             else
                 runMenu(choice);
         }
@@ -227,6 +245,15 @@ public class Game
     {
         System.out.println("Chose direction");
         movePlayer(choice);
+    }
+    
+    /**
+     * Update and print the player's visual field.
+     */
+    private void updateVisualField()
+    {
+        player.updateVisualField(world.getMapAsArray());
+        
     }
     
     /**
@@ -295,19 +322,22 @@ public class Game
             }
             
         }
-        // else
-            // System.out.println("\n\tNot a direction");
         
-        playerRowCoord = player.getRowCoord();
-        playerColCoord = player.getColCoord();
+        showInfo();
         
-        System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase() + "\n");
-        System.out.println(player.getPlayerAttributes()); 
-        System.out.println(player.getItemsAttributes());
-        
-        world.printVisualField(playerRowCoord,playerColCoord);
+        updateVisualField();
         
         checkFirstInteraction();       
+    }
+    
+    public void showInfo()
+    {
+        System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase() + "\n");
+        System.out.println(player.getStats()); 
+        ((Weapon) weapon).print();
+        ((Armour) armour).print();
+        ((Potion) potion).print();
+        ((Amulet) amulet).print();
     }
     
     /**
@@ -319,39 +349,40 @@ public class Game
         {
             return 1;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(WALL) || world.getSquareValue(nextRow,nextCol).equals(ROCK))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.WALL.getCharacter()) || world.getSquareValue(nextRow,nextCol).equals(character.ROCK.getCharacter()))
         {
             System.out.println("Cannot go through walls");
+            
             return 0;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(SHOP))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.SHOP.getCharacter()))
         {
             runShop();
             
             return 0;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(BLACKSMITH))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.BLACKSMITH.getCharacter()))
         {
             runBlacksmith();
             
             return 0;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(CHEST))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.CHEST.getCharacter()))
         {
             //SEE CHEST
             return 1;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(GOLD))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.GOLD.getCharacter()))
         {
             //take gold
             return 1;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(ITEM))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.ITEM.getCharacter()))
         {
             //take random item
             return 1;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(TELEPORT))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.TELEPORT.getCharacter()))
         {
             teleport();
             return 0;
@@ -360,7 +391,7 @@ public class Game
         {
             String character = (world.getSquareValue(nextRow,nextCol));
             
-            Monster monster = findMonster(character);
+            Actor monster = findMonster(character);
             
             if (monster != null)
             {
@@ -385,7 +416,7 @@ public class Game
         {
             System.err.println("\t\t\t\tYou Win!");
                     
-            world.addAnotherMonster(character);
+            world.addAnother(character);
             int gold = dropGold();
                     
             player.addScore(1);
@@ -416,7 +447,7 @@ public class Game
     /**
      * Find which monster we are dealing with.
      */
-    private Monster findMonster(String character)
+    private Actor findMonster(String character)
     {
         for (String monsterName : monsters.keySet())     
         {
@@ -424,7 +455,7 @@ public class Game
             {
                 monsterLevel = monsters.get(monsterName);
                 
-                Monster monster = new Monster(monsterName,monsterLevel);
+                Actor monster = new Monster(monsterName,monsterLevel);
                 
                 return monster;
             }
@@ -435,19 +466,21 @@ public class Game
     /**
      * Fast-forward fight
      */
-    public int action(Monster monster)
+    public int action(Actor monster)
     {
         do
         {
-            int playerAttack = player.attack();
-            int monsterAttack = monster.attack();
-        
-            monster.receiveDmg(playerAttack);
+            monster.receiveDmg(player.attack());
             
-            player.receiveDmg(monsterAttack);
+            player.receiveDmg(monster.attack());
                 
         }
         while(player.checkHealth() == true && monster.checkHealth() == true);
+        
+        if(player.getCurrentHealth() <= player.getFullHealth() / 2)
+            player.changeImage(character.PLAYER2.getCharacter());
+        else
+            player.changeImage(character.PLAYER.getCharacter());
         
         return player.getHitPoints();
     }
@@ -475,63 +508,73 @@ public class Game
      */
     public void checkFirstInteraction()
     {
-        if(world.checkVisualField(SHOP) == true && shopDescription == false)
+        if(player.checkVisualField(character.SHOP.getCharacter()) == true && shopDescription == false)
         {
-            System.out.println("There is a shop there, you can buy health potions from there");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
-            reader.getAny();
+            System.out.println(interactions.get(character.SHOP.getCharacter()));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             shopDescription = true;
+            
+            reader.getAny();
         }
         
-        if(world.checkVisualField(BLACKSMITH) == true && blacksmithDescription == false)
+        if(player.checkVisualField(character.BLACKSMITH.getCharacter()) == true && blacksmithDescription == false)
         {
-            System.out.println("There is a blacksmith there, you can ask him to improve your items for a price.\n" +
-                                "Ask him \"enchance armour\" or \"enchance weapon\" or \"enchance potion\"." );
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(interactions.get(character.BLACKSMITH.getCharacter()));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             reader.getAny();
+            
             blacksmithDescription = true;
         }
         
-        if(world.checkVisualField(STABLE) == true && stableDescription == false)
+        if(player.checkVisualField(character.STABLE.getCharacter()) == true && stableDescription == false)
         {
-            System.out.println("There is a stable there, you soon be able to buy a horse from there");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(interactions.get(character.STABLE.getCharacter()));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             reader.getAny();
+            
             stableDescription = true;
         }
         
-        if(world.checkVisualField(GUARD) == true && guardDescription == false)
+        if(player.checkVisualField(character.GUARD.getCharacter()) == true && guardDescription == false)
         {
-            System.out.println("Town guard: \t\tHey, You! \n\t\tCome here. \n\tAre you that warrior " + 
-                                "everyone is talking about?\n\tIf you are that brave, why don't you go" + 
-                                "and kill some wolves for us?\n\tThey have been killing our people for a while.\n" +
-                                "\tActually I'll pay you if for each monster you kill.\n\t\tDeal?");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(interactions.get(character.GUARD.getCharacter()));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             reader.getAny();
+            
             guardDescription = true;
         }
         
-        if(world.checkVisualField(TELEPORT) == true && teleporterDescription == false)
+        if(player.checkVisualField(character.TELEPORT.getCharacter()) == true && teleporterDescription == false)
         {
-            System.out.println("There is a teleporter there, you can go to a different map.");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(interactions.get(character.TELEPORT.getCharacter()));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             reader.getAny();
+            
             teleporterDescription = true;
         }
         
-        if(world.getCurrentMapName().toLowerCase().equals("dessert") && dessertDescription == false)
+        if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && dessertDescription == false)
         {
-            System.out.println("This was once a beautifull forrest. Now it's a dangerous death field. Be aware!");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(interactions.get(DESSERT));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             reader.getAny();
+            
             dessertDescription = true;
         }
         
-        if(world.getCurrentMapName().toLowerCase().equals("spidercave") && spiderCaveDescription == false)
+        if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && spiderCaveDescription == false)
         {
-            System.out.println("A cave? You should be carefull.. Who knows what monsters lives in here.");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            System.out.println(interactions.get(SPIDER_CAVE));
+            System.out.println(command.PRESS_ANY.getCommand());
+            
             reader.getAny();
+            
             spiderCaveDescription = true;
         }
     }
@@ -545,7 +588,7 @@ public class Game
             
         while(!finished)
         {
-            System.out.println("What can I do for you?");
+            System.out.println("\t\tWhat can I do for you?\n\n\n");
                 
             blacksmith.openBlacksmithShop();
                 
@@ -557,29 +600,25 @@ public class Game
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceweapon"))
             {
-                int weaponCost = blacksmith.getWeaponCost();
-                   
-                if (blacksmith.enchanceWeapon(player.getGold()) == true)
-                {
-                    player.pay(weaponCost);
-                }
+                                 
+                blacksmith.enchance(weapon, player.getGold());
                 
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancearmour"))
             {
-                int armourCost = blacksmith.getArmourCost();
-                    
-                if (blacksmith.enchanceArmour(player.getGold()) == true)
-                    player.pay(armourCost);
-                    
+                blacksmith.enchance(armour,player.getGold());
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancepotion"))
             {
-                int potionCost = blacksmith.getPotionCost();
-                   
-                if (blacksmith.enchancePotion(player.getGold()) == true)
-                    player.pay(potionCost);
+                
+                blacksmith.enchance(potion, player.getGold());
                     
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceamulet"))
+            {
+                
+                blacksmith.enchance(amulet, player.getGold());
+                
             }
             else
                 System.out.println("Not an option");
@@ -597,9 +636,9 @@ public class Game
             
         while(!finished)
         {
-            System.out.println("Have a look at what I got!");
+            System.out.println("\t\tHave a look at what I got!\n\n\n");
                
-            OBJECT_SHOP.openShop();
+            SHOP.openShop();
                 
             String choice = reader.getString();
             
@@ -609,12 +648,12 @@ public class Game
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("buypotion"))
             {
-                System.out.println("How many do you want to buy?");
+                System.out.println("\n\nHow many do you want to buy?\n\n");
                 int amount = reader.getInteger();
                     
-                if (player.getGold() >= (OBJECT_SHOP.getPotionPrice() * amount))
+                if (player.getGold() >= (SHOP.getPotionPrice() * amount))
                 {
-                    player.pay(OBJECT_SHOP.getPotionPrice() * amount);
+                    player.pay(SHOP.getPotionPrice() * amount);
                     
                     player.increasePotionAmount(amount);
                 }
@@ -623,33 +662,34 @@ public class Game
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyattack"))
             {
                 
-                if (player.getGold() >= (OBJECT_SHOP.getAttackPrice()))
+                if (player.getGold() >= (SHOP.getAttackPrice()))
                 {
-                    player.pay(OBJECT_SHOP.getAttackPrice());
+                    player.pay(SHOP.getAttackPrice());
                     
-                    player.increaseAttackForce(OBJECT_SHOP.getAtackValue());
+                    player.increaseAttackForce(SHOP.getAtackValue());
                 }
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyshield"))
             {
                 
-                if (player.getGold() >= (OBJECT_SHOP.getShieldPrice()))
+                if (player.getGold() >= (SHOP.getShieldPrice()))
                 {
-                    player.pay(OBJECT_SHOP.getShieldPrice());
+                    player.pay(SHOP.getShieldPrice());
                     
-                    player.increaseShield(OBJECT_SHOP.getShieldValue());
+                    player.increaseShield(SHOP.getShieldValue());
                 }
                     
             }
             else if(choice.toLowerCase().replaceAll("\\s+","").equals("buyhealth"))
             {
                 
-                if (player.getGold() >= (OBJECT_SHOP.getHealthPrice()))
+                if (player.getGold() >= (SHOP.getHealthPrice()))
                 {
-                    player.pay(OBJECT_SHOP.getHealthPrice());
+                    player.pay(SHOP.getHealthPrice());
                     
-                    player.increaseHitPoints(OBJECT_SHOP.getHealthValue());
+                    player.increaseHealthPoints(SHOP.getHealthValue());
                 }
+                
             }
             else
                 System.out.println("Not an option");

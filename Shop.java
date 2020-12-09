@@ -1,13 +1,13 @@
 
 /**
- * Write a description of class Shop here.
+ * Write a description of class ShopTest here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
 public class Shop
 {
-    private static final Potion POTION = new Potion(); 
+    private static final String QUIT = "quit";
     private static final int POTION_PRICE = 5;
     private static final int ATTACK_PRICE = 500;
     private static final int SHIELD_PRICE = 500;
@@ -16,30 +16,40 @@ public class Shop
     private static final int SHIELD = 25;
     private static final int HEALTH = 150;
     
+    private Menu menu = new Menu();
+    private Commands command;
+    private Item potion = new Potion("HP Potion", 200, 1, 200);
     
-    public void openShop()
-    {
-        String[] list = new String[]
+    private String name;
+    
+    String[] list = new String[]
         {
-            "\tBuy Potion \t\t" + POTION_PRICE + " Gold",
-            "\tBuy Attack +" + ATTACK + "\t\t" + ATTACK_PRICE + " Gold",
-            "\tBuy Deffence +" + SHIELD + "\t\t" + SHIELD_PRICE + " Gold",            
-            "\tBuy Health +" + HEALTH + "\t\t" + HEALTH_PRICE + " Gold"            
+            command.BUY_POTION.getCommand() + "\t\t" + POTION_PRICE + " Gold",
+            command.BUY_ATTACK.getCommand() + ATTACK + "\t\t" + ATTACK_PRICE + " Gold",
+            command.BUY_DEFFENCE.getCommand() + SHIELD + "\t\t" + SHIELD_PRICE + " Gold",            
+            command.BUY_HEALTH.getCommand() + HEALTH + "\t\t" + HEALTH_PRICE + " Gold" ,
+            command.QUIT.getCommand()
         };
-        
-        for(int i = 0; i < list.length; i++)
-        {
-            System.err.println(list[i]);
-        }
+    
+    public Shop()
+    {
+        this.name = name;
         
     }
     
+    public void openShop()
+    {
+        menu.listOptions(list);
+        
+    }
+        
     /**
      * return potion price.
      */
     public int getPotionPrice()
     {
         return POTION_PRICE;    
+        
     }
     
     /**
@@ -48,6 +58,7 @@ public class Shop
     public int getAttackPrice()
     {
         return ATTACK_PRICE;    
+        
     }
     
     /**
@@ -56,6 +67,7 @@ public class Shop
     public int getAtackValue()
     {
         return ATTACK;
+        
     }
     
     /**
@@ -64,6 +76,7 @@ public class Shop
     public int getShieldPrice()
     {
         return SHIELD_PRICE;    
+        
     }
     
     /**
@@ -72,6 +85,7 @@ public class Shop
     public int getShieldValue()
     {
         return SHIELD;
+        
     }
     
     /**
@@ -80,6 +94,7 @@ public class Shop
     public int getHealthPrice()
     {
         return HEALTH_PRICE;    
+        
     }
     
     /**
@@ -88,5 +103,7 @@ public class Shop
     public int getHealthValue()
     {
         return HEALTH;
+        
     }
+    
 }

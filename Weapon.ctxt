@@ -1,19 +1,9 @@
 #BlueJ class context
 comment0.target=Weapon
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Weapon\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=
-comment1.target=Weapon()
-comment1.text=\r\n\ constructor\ for\ weapon.\r\n
+comment1.params=name\ baseStats\ enchantLevel\ bonusPerLevel
+comment1.target=Weapon(java.lang.String,\ int,\ int,\ int)
 comment2.params=
-comment2.target=void\ enchance()
-comment2.text=\r\n\ Increment\ a\ weapon\ level.\r\n\ Every\ 9\ levels\ the\ name\ changes\r\n
-comment3.params=
-comment3.target=int\ getAttackValue()
-comment3.text=\r\n\ @return\ attack\ value.\r\n
-comment4.params=
-comment4.target=java.lang.String\ getWeaponAttributes()
-comment4.text=\r\n\ @return\ weapon\ attributes\r\n
-comment5.params=
-comment5.target=int\ getAttackPerLevel()
-comment5.text=\r\n\ @return\ attack\ per\ level\r\n
-numComments=6
+comment2.target=void\ print()
+comment2.text=\r\n\ Print\ the\ weapon's\ stats.\r\n
+numComments=3
