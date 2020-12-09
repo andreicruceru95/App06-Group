@@ -5,63 +5,17 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Potion
+public class Potion extends Item
 {
-    private static final int HEAL_PER_LEVEL = 50;
-    private String name;
-    private int heal;
-    private int level;
-    private int displayLevel;
-        
-    /**
-     * constructor for potion.
-     */
-    public Potion()
+            
+    public Potion(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {
-        this.name = "Health Potion";
-        this.heal = HEAL_PER_LEVEL;
-        this.level = 1;
-        this.displayLevel = 1;
+        super(name, baseStats, enchantLevel, bonusPerLevel);
     }
     
-    /**
-     * Increment the potion level.
-     * Every 9 levels the potion name changes.
-     */
-    public void enchance()
+    public void print()
     {
-        int basic = 9;
-        int advanced = 18;
-        this.heal += HEAL_PER_LEVEL;
-        this.level ++;
-        if(level > basic)
-            this.name = "Advanced Health Potion";
-        else if(level > advanced)
-            this.name = "Extreme Health Potion";
-        
+        System.out.println(displayName + " + " + displayLevel + "\tHeal: " + (enchantStats));
     }
     
-    /**
-     * @return the heal amount
-     */
-    public  int getHeal()
-    {
-        return level * HEAL_PER_LEVEL;
-    }
-    
-    /**
-     * @return the name of the potion
-     */
-    public String getName()
-    {
-        return name;
-    }
-    
-    /**
-     * @return heal value per level
-     */
-    public int getHealPerLevel()
-    {
-        return HEAL_PER_LEVEL;
-    }
 }
