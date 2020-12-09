@@ -1,119 +1,35 @@
-import java.util.*;
 
 /**
- * A player for our game.
- * Each new player receives a basic armour, weapon and 5 health potions.
- * 
- * @author Andrei Cruceru
- * @version 21112020
+ * Write a description of class Player here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
  */
-public class Player
+public class Player extends Actor
 {
-    private Random random;
-    private Weapon weapon ;
-    private Armour armour ;
-    private Potion potion ;
+    private static final VisualField VISUAL_FIELD = new VisualField();
     
-    private int maxHitPoints = 0;
-    private int currentHitPoints = 0;
+    private Characters character;
+    
+    public static final Item SWORD = new Weapon("Steel Sword", 20, 1, 12);
+    public static final Item ARMOUR = new Armour("Steel Armour", 10, 1, 8);
+    public static final Item POTION = new Potion("HP Potion", 200, 1, 200);
+    public static final Item AMULET = new Amulet("Hellen's Gift", 50, 1, 100);
+    
     private int potionAmount = 15;
-    
-    private int attackForce = 0;
-    private int shield = 0;
-    
     private int goldAmount = 1000;
-            
-    private String name;
     private int score = 0;
-    private int deathScore = 0;
+       
     private int playerRowCoord = 6;
     private int playerColCoord = 6;
-    /**
-     * Add a name for the player.
-     * @param name is the input name.
-     */
-    public Player(String name)
-    {
-        this.name = name;
-        weapon = new Weapon();
-        armour = new Armour();
-        potion = new Potion();
-        
-        this.attackForce = weapon.getAttackValue();
-        this.shield = armour.getArmourShield();
-        this.maxHitPoints += armour.getArmourHItPoints();
-        this.currentHitPoints += armour.getArmourHItPoints();
-        
-        random = new Random();
-        goldAmount = 0;
-                
-    }
-        
-    /**
-     * Verify that the curent Hp isn't bigger then max Hp.
-     */
-    private void verify()
-    {
-        if (currentHitPoints > maxHitPoints)
-        {
-            currentHitPoints = maxHitPoints;
-        }
-    }
     
     /**
-     * add score to the player
+     * Constructor for player class.
      */
-    public void addScore(int score)
+    public Player(String name, int level)
     {
-        this.score += score;
-    }
+        super(name, level);
         
-    /**
-     * @return the score.
-     */
-    public int getScore()
-    {
-        return score;
-    }
-    
-    /**
-     * Send an attack.
-     * @param value is the a random value.
-     */
-    public int attack()
-    {
-        int chance = 5;//%
-        
-        int minAttackForce = attackForce - (attackForce - chance);
-        int maxAttackForce = attackForce + (attackForce - chance);
-        
-        int value = random.nextInt(maxAttackForce - minAttackForce) + minAttackForce;
-         
-        return value;
-    }
-    
-    /**
-     * receive an attack.
-     * @param value is the value we receive.
-     * @return the value we received.
-     */
-    public int receiveDmg(int value)
-    {
-        int received = 0;
-        
-        if (shield >= value)
-        {
-            received = -1;
-            currentHitPoints -= 1;
-        }
-        else
-        { 
-            received = value - shield;
-            
-            currentHitPoints -= (value - shield);
-        }
-        //System.out.println("player:" + received);
-        return received;   
     }
     
     /**
@@ -145,27 +61,33 @@ public class Player
     {
         goldAmount -= cost;
         
-        updateStats();
+        update();
     }
     
-    /**
-     * Update Player stats.
-     */
-    private void updateStats()
-    {
-        this.attackForce = weapon.getAttackValue();
-        this.shield = armour.getArmourShield();
-        this.maxHitPoints = armour.getArmourHItPoints();
-        this.currentHitPoints = armour.getArmourHItPoints();
-        
-    }
-        
     /**
      * Increase attack force.
      */
     public void increaseAttackForce(int value)
     {
         this.attackForce += value;
+        
+    }
+    
+    /**
+     * set player's health to 100%
+     */
+    public void setFullHealth()
+    {
+        currentHealthPoints = maxHealthPoints;
+        
+    }
+    
+    /**
+     * @return the hit points
+     */
+    public int getHitPoints()
+    {
+        return currentHealthPoints;
         
     }
     
@@ -181,9 +103,9 @@ public class Player
     /**
      * Increase maximum hit points.
      */
-    public void increaseHitPoints(int value)
+    public void increaseHealthPoints(int value)
     {
-        this.maxHitPoints += value;
+        this.maxHealthPoints += value;
         
     }
     
@@ -197,65 +119,82 @@ public class Player
     }
     
     /**
-     * Check the health status.
-     * @return false if player died.
-     * @return true if player is still alive.
+     * add score to the player
      */
-    public boolean checkHealth()
+    public void addScore(int score)
     {
-        if (currentHitPoints <= 0)
+        this.score += score;
+    }
+    
+    /**
+     * @return score.
+     */
+    public int getScore()
+    {
+        return score;
+    }
+    
+    /**
+     * update the visual field.
+     */
+    public void updateVisualField(String[][] map)
+    {
+        VISUAL_FIELD.setVisualField(map, playerRowCoord, playerColCoord);
+        
+    }
+    
+    /**
+     * Update the player's stats.
+     */
+    public void update()
+    {
+        attackForce = initialAttackForce + SWORD.getStats();
+        shield = initialShield + ARMOUR.getStats();
+        maxHealthPoints = initialMaxHealthPoints + AMULET.getStats();
+        currentHealthPoints += AMULET.getStats();
+        
+        check();
+    }
+    
+    /**
+     * Keep the current health points lower or equal then maximum.
+     */
+    public void check()
+    {
+        if(maxHealthPoints < currentHealthPoints)
         {
-            return false;
+            currentHealthPoints = maxHealthPoints;
         }
-        else
-            return true;
-            
-    }
-        
-    /**
-     * @return the hit points
-     */
-    public int getHitPoints()
-    {
-        return currentHitPoints;
         
     }
     
-    /**
-     * set player's health to 100%
-     */
-    public void setFullHealth()
+    public Item getWeapon()
     {
-        currentHitPoints = maxHitPoints;
-        
+        return SWORD;
     }
     
-    /**
-     * @return name
-     */
-    public String getName()
+    public Item getArmour()
     {
-        return name;
-        
+        return ARMOUR;
     }
     
-    /**
-     * return the player's attributes
-     */
-    public String getPlayerAttributes()
+    public Item getPotion()
     {
-        return "\n\tName: " + name + "\t Score: " + score + "\tGold: " + goldAmount +
-                "\n\tAttack: " + attackForce + "\tDefense" + shield + "\tCurrent HP: " 
-                + currentHitPoints + "/" + maxHitPoints + "\n\n";
+        return POTION;
+    }
+    
+    public Item getAmulet()
+    {
+        return AMULET;
     }
     
     /**
      * set player's coordinates
      */
-    public void setCoordinates(int rowCoord, int colCoord)
+    public void setCoordinates(int playerRowCoord, int playerColCoord)
     {
-        this.playerRowCoord = rowCoord;
-        this.playerColCoord = colCoord;
+        this.playerRowCoord = playerRowCoord;
+        this.playerColCoord = playerColCoord;
     }
     
     /**
@@ -281,43 +220,50 @@ public class Player
     {
         if(potionAmount > 0)
         {
-            currentHitPoints += potion.getHeal();
+            currentHealthPoints += POTION.getStats();
             potionAmount --;
-            verify();
+            check();
         }
         else
             System.err.println("Not enough potions");
+            
+        if(currentHealthPoints > maxHealthPoints)
+            changeImage(character.PLAYER2.toString());
     }
     
     /**
-     * @return items attributes
+     * Check the visual field for an object
      */
-    public String getItemsAttributes()
+    public boolean checkVisualField(String object)
     {
-        return weapon.getWeaponAttributes() + "\n" + armour.getArmourAttributes() + "\n" + potion.getName() + ":" + potion.getHeal() + " " + potionAmount;
+        return VISUAL_FIELD.checkVisualField(object);
+        
     }
     
     /**
-     * @return weapon
+     * Change the player's image.
      */
-    public Weapon getWeapon()
+    public void changeImage(String image)
     {
-        return weapon;
+        VISUAL_FIELD.changeImage(image);
+        
     }
     
     /**
-     * @return armour
+     * @return current health.
      */
-    public Armour getArmour()
+    public int getCurrentHealth()
     {
-        return armour;
+        return currentHealthPoints;
+        
     }
     
     /**
-     * @return potion
+     * @return full health.
      */
-    public Potion getPotion()
+    public int getFullHealth()
     {
-        return potion;
+        return maxHealthPoints;
+        
     }
 }
