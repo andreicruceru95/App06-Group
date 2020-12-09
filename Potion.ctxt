@@ -1,19 +1,8 @@
 #BlueJ class context
 comment0.target=Potion
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Potion\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=
-comment1.target=Potion()
-comment1.text=\r\n\ constructor\ for\ potion.\r\n
+comment1.params=name\ baseStats\ enchantLevel\ bonusPerLevel
+comment1.target=Potion(java.lang.String,\ int,\ int,\ int)
 comment2.params=
-comment2.target=void\ enchance()
-comment2.text=\r\n\ Increment\ the\ potion\ level.\r\n\ Every\ 9\ levels\ the\ potion\ name\ changes.\r\n
-comment3.params=
-comment3.target=int\ getHeal()
-comment3.text=\r\n\ @return\ the\ heal\ amount\r\n
-comment4.params=
-comment4.target=java.lang.String\ getName()
-comment4.text=\r\n\ @return\ the\ name\ of\ the\ potion\r\n
-comment5.params=
-comment5.target=int\ getHealPerLevel()
-comment5.text=\r\n\ @return\ heal\ value\ per\ level\r\n
-numComments=6
+comment2.target=void\ print()
+numComments=3
