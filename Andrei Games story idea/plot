@@ -1,0 +1,34 @@
+Andrei's Story line;
+KEY:
+User input --
+Notes/comments/questions for Andrie ()
+Explanation {}
+when to implement the text ~
+
+-Player enters name-
+
+Welcome young adventurer "name", this is where your story begins.
+
+You find yourself in the last settlement of humankind.
+
+In this land of trepidations you must slay your way though the now uncharted territory
+and retrieve the mythical stone and place it back in the centre of town where it belongs.
+
+Upon your quest you will have to fight monsters, upgrade your gear and level up.
+
+(you have the monster scaling with levels, is this possible with the player? if so
+i know we talked about the equipment stats as well, would it be possible for them to add
+a rng [randomly generated] number to attack for the sword, defence for armour, potion with a static increase value to restore health
+and maximum dose capacity, amulet to increase the chance of hitting the monster twice before getting hit back)
+
+{this gives the player a clear objective on how to complete the game, and a
+general idea on progression without providing to much information to spoil it}
+
+Guard at the gate "ahh, young adventurer, while I was having a drink in the pub last night I overheard some shady characters
+talking about a teleporter somewhere in the north of the forest"
+{this directs the player on where they should go next}
+
+~upon seeing the Blacksmith "This is where you can upgrade your equipment to provide a better chance of survival"
+
+~upon seeing the shop "This is where you can restock your health potion"
+(you would have to give the health potion an int for uses)
