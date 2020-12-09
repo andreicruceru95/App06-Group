@@ -83,9 +83,9 @@ public class Map
     public void createMap(String walls,int height, int length, int mapEdge)
     {
         //map walls and empty center
-        for(int i = 0; i < height;i++)
+        for(int i = 0; i < map.length;i++)
         {
-            for(int j = 0; j < length; j++)
+            for(int j = 0; j < map[i].length; j++)
             {
                 map[i][j] = SQUARE;
             }
