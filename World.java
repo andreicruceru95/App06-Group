@@ -11,7 +11,8 @@ public class World
     private static final String TOWN[][] = new String[47][35];
     private static final String DESSERT[][] = new String[47][35];
     private static final String SPIDER_CAVE[][]  = new String[47][35];
-    private static final String EMPTY[][] = new String[47][35];
+    private static final String USER_HELP[][] = new String[47][35];
+    private static final String TEST[][] = new String[47][35];
     
     private static final int MAP_EDGE = 3;
     private static final int MAP_L = 27;
@@ -25,6 +26,12 @@ public class World
     private static final int initialPlayerCol = 2;
     
     //objects that apear in the game
+    private static final int S_TEST_ROW = 6;
+    private static final int S_TEST_COL = 5;
+    private static final int B_TEST_ROW = 6;
+    private static final int B_TEST_COL = 7;
+    private static final int T_TEST_ROW = 6;
+    private static final int T_TEST_COL = 9;
     
     private static final int PERSON_1_ROW = 17;
     private static final int PERSON_1_COL = 4;
@@ -69,6 +76,7 @@ public class World
     private Map dessert;
     private Map spiderCave;
     private Map userHelp;
+    private Map test;
     
     private Random rand;
     private Characters character;
@@ -97,7 +105,11 @@ public class World
         spiderCave = new Map("SpiderCave",SPIDER_CAVE,"The home of the Spider Queen", FULL_H, FULL_L);
         spiderCave.createMap(character.ROCK.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
         addObjectsToSpiderCave();
-                
+        
+        test = new Map("test", TEST, "Developers only", FULL_H,FULL_L);
+        test.createMap(character.ROCK.getCharacter(),FULL_H, FULL_L,MAP_EDGE);
+        addObjectsToTestMap();
+        
         setCurrentMap("town");
     } 
      
@@ -122,6 +134,10 @@ public class World
         else if(name.toLowerCase().equals("spidercave"))
         {
             currentMap = spiderCave;
+        }
+        else if(name.toLowerCase().equals("test"))
+        {
+            currentMap = test;
         }
         else
              System.out.println("error");
@@ -191,6 +207,9 @@ public class World
         }
         
         town.setOne(TOWN_TELEPORT_ROW, TOWN_TELEPORT_COL, character.TELEPORT.getCharacter());
+        
+        town.setOne(T_TEST_ROW, T_TEST_COL, character.TELEPORT.getCharacter());
+
     }
     
     /**
@@ -333,11 +352,46 @@ public class World
      */
     public void printHelpMap(int row, int col)
     {
-        userHelp = new Map("Location", EMPTY, "Player's location on the map", FULL_H, FULL_L);
+        userHelp = new Map("Location", USER_HELP, "Player's location on the map", FULL_H, FULL_L);
         userHelp.createMap(character.WALL.getCharacter(), FULL_H,FULL_L,MAP_EDGE);
         
         userHelp.setOne(row, col, character.PLAYER3.getCharacter());
         
         userHelp.printMap();
     }
-}
+    
+    private void addObjectsToTestMap()
+    {
+        int townR = 4;
+        
+        test.setOne(B_TEST_ROW,B_TEST_COL, character.BLACKSMITH.getCharacter());
+        test.setOne(S_TEST_ROW,S_TEST_COL, character.SHOP.getCharacter());
+        test.setOne(townR,townR, character.TELEPORT.getCharacter());
+
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.BLACK_BEAR.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.WHITE_TIGER.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.APE_THROWER.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ALBINO_SNAKE.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POLAR_BEAR.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.YETI.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ABOMINABLE_SNOWMAN.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.DEMON.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.CURSED_VAMPIRE.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.WITCH.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.BERA.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.TIGRIS.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.APE_KING.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.SPIDER_QUEEN.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.NINE_TAILS.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.DEATH.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_DRAGON.getCharacter(), 10);
+          
+    }
+    
+    public boolean goTest()
+    {
+        return true;
+    }
+} 
