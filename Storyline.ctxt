@@ -5,4 +5,6 @@ comment1.params=
 comment1.target=java.lang.String[]\ getPartOne()
 comment2.params=playerName
 comment2.target=java.lang.String[]\ getPartTwo(java.lang.String)
-numComments=3
+comment3.params=
+comment3.target=java.lang.String[]\ getHelp()
+numComments=4
