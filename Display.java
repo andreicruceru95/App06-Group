@@ -13,6 +13,7 @@ public class Display
     
     public void listOptions(String[] list)
     {
+        System.out.println(CLEAR);
         
         for(int i = 0; i < list.length; i++)
         {
@@ -26,6 +27,7 @@ public class Display
      */
     public void runStory(String[] part)
     {
+        System.out.println(CLEAR);
         
         for(int i = 0; i < part.length; i ++)
         {
