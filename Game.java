@@ -73,9 +73,11 @@ public class Game
     private Database database = new Database();
     private Display display = new Display();
     private Storyline story = new Storyline();
-    private Blacksmith blacksmith;
+    private Blacksmith blacksmith = new Blacksmith();
+    
     private Characters character;
     private Commands command;
+    
     private Player player;
     private Item weapon;
     private Item armour;
@@ -99,19 +101,6 @@ public class Game
     private int playerRowCoord = 6;
     private int playerColCoord = 6;
     
-    private String[] list = 
-        {
-            command.UP_INSTRUCTION.getCommand(),
-            command.DOWN_INSTRUCTION.getCommand(),
-            command.LEFT_INSTRUCTION.getCommand(),
-            command.RIGHT_INSTRUCTION.getCommand(),
-            command.QUIT.getCommand(),
-            command.POTION.getCommand(),
-            command.HELP.getCommand(),
-            command.DATABASE.getCommand(),
-            command.SEE_STATS.getCommand()
-        };
-    
     public Game()
     {
                                 
@@ -128,8 +117,6 @@ public class Game
         armour = player.getArmour();
         potion = player.getPotion();
         amulet = player.getAmulet();
-        
-        blacksmith = new Blacksmith();
         
         display.runStory(story.getPartTwo(playerName));
                         
@@ -153,9 +140,7 @@ public class Game
         monsters.put(character.NINE_TAILS.getCharacter(),LEVEL_49);
         monsters.put(character.DEATH.getCharacter(),LEVEL_60);
         monsters.put(character.RED_DRAGON.getCharacter(),70);
-        
-        
-        
+         
         run();
                 
     }
@@ -168,12 +153,6 @@ public class Game
         System.out.println(CLEAR);
         
         updateVisualField();
-        
-        System.out.println(command.UP_INSTRUCTION.getCommand());  
-        System.out.println(command.DOWN_INSTRUCTION.getCommand());  
-        System.out.println(command.LEFT_INSTRUCTION.getCommand());  
-        System.out.println(command.RIGHT_INSTRUCTION.getCommand());  
-        System.out.println(command.HELP.getCommand());
         
         boolean finished = false;
         while(!finished)
@@ -193,7 +172,7 @@ public class Game
                 player.drinkPotion();
                 
             else if(choice.toLowerCase().replaceAll("\\s","").contains(HELP))
-                display.listOptions(list);
+                display.listOptions(story.getHelp());
                 
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_DATABASE))
                 database.printAll();
