@@ -7,6 +7,8 @@
  */
 public class Storyline
 {
+    private Commands command;
+    
     public String[] getPartOne()
     {
         String [] partOne = new String[] 
@@ -32,10 +34,28 @@ public class Storyline
             "\t\tOne day, a young warrior stepped in our town.\n\tThe only safe place left for humans..",
             "\t\tPeople loved this warrior.\n\tThey called him " + playerName + "..",
             "\t\tHe promised that he will travel the world \n\tand find the root of this evil",
-            "\t\tBut will he be able to do it..?\n\tOr is he just another scared cat..?"
+            "\t\tBut will he be able to do it..?\n\tOr is he just another scared cat..?\n\n",
+            command.HELP.getCommand()
             
         };    
         
         return partTwo;
+    }
+    
+    public String[] getHelp()
+    {
+        String[] help = 
+        {
+            command.UP_INSTRUCTION.getCommand(),
+            command.DOWN_INSTRUCTION.getCommand(),
+            command.LEFT_INSTRUCTION.getCommand(),
+            command.RIGHT_INSTRUCTION.getCommand(),
+            command.QUIT.getCommand(),
+            command.POTION.getCommand(),
+            command.DATABASE.getCommand(),
+            command.SEE_STATS.getCommand()
+        };
+        
+        return help;
     }
 }
