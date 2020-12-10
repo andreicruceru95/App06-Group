@@ -14,7 +14,7 @@ public class Blacksmith
         
     private int potionCost = 100;
         
-    private Menu menu = new Menu();
+    private Display menu = new Display();
     private Commands command;
     
     private String name; 
@@ -28,13 +28,7 @@ public class Blacksmith
             command.QUIT.getCommand()
         };                                  
         
-    
-    public Blacksmith(String name)
-    {
-       this.name = name;
-       
-    }
-    
+      
     /**
      * Enchance an item.
      */
