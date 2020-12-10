@@ -16,7 +16,7 @@ public class Shop
     private static final int SHIELD = 25;
     private static final int HEALTH = 150;
     
-    private Menu menu = new Menu();
+    private Display display = new Display();
     private Commands command;
     private Item potion = new Potion("HP Potion", 200, 1, 200);
     
@@ -33,7 +33,7 @@ public class Shop
            
     public void openShop()
     {
-        menu.listOptions(list);
+        display.listOptions(list);
         
     }
         
