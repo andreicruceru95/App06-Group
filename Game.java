@@ -209,6 +209,8 @@ public class Game
      */
     public void run()
     {
+        System.out.println(CLEAR);
+        
         updateVisualField();
         
         System.out.println(command.UP_INSTRUCTION.getCommand());  
@@ -220,8 +222,11 @@ public class Game
         boolean finished = false;
         while(!finished)
         {
+            System.out.println(CLEAR);
+        
             changeImage();
             showInfo();
+            updateVisualField();
             
             String choice = reader.getString();
             
@@ -271,7 +276,6 @@ public class Game
      */
     public void movePlayer(String direction)
     {
-        System.out.println(CLEAR);
               
         playerRowCoord = player.getRowCoord();
         playerColCoord = player.getColCoord();
@@ -333,9 +337,9 @@ public class Game
             
         }
         
-        updateVisualField();
+        //updateVisualField();
         
-        checkFirstInteraction();       
+        //checkFirstInteraction();       
     }
     
     /**
@@ -490,9 +494,11 @@ public class Game
         do
         {
             monster.receiveDmg(player.attack());
-            
+            System.out.println("Monster received " + monster.receiveDmg(player.attack()));
+                        
             player.receiveDmg(monster.attack());
-                
+            System.out.println("Player received " + player.receiveDmg(monster.attack()));    
+            
         }
         while(player.checkHealth() == true && monster.checkHealth() == true);
         
@@ -762,11 +768,23 @@ public class Game
      */
     private void teleport()
     {
-        if(world.getCurrentMapName().toLowerCase().equals("town"))
+        if(world.getCurrentMapName().toLowerCase().equals("town") && world.goTest())
+        {
+            player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
+            
+            world.setCurrentMap("test");
+        }
+        else if(world.getCurrentMapName().toLowerCase().equals("town"))
         {
             player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
             
             world.setCurrentMap("dessert");
+        }
+        else if(world.getCurrentMapName().toLowerCase().equals("test"))
+        {
+            player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
+            
+            world.setCurrentMap("town");
         }
         else if(world.getCurrentMapName().toLowerCase().equals("dessert"))
         {
