@@ -71,7 +71,8 @@ public class Game
     private HashMap<String, String> interactions = new HashMap<>();
     
     private Database database = new Database();
-    private Menu menu = new Menu();
+    private Display display = new Display();
+    private Storyline story = new Storyline();
     private Blacksmith blacksmith;
     private Characters character;
     private Commands command;
@@ -113,19 +114,8 @@ public class Game
     
     public Game()
     {
-        String [] partOne = new String[] 
-        {
-            "\t\tOnce upon a time the world was once a beautiful and peaceful place,\n" + 
-            "\tbut one day things changed when evil creatures start appearing everywhere..",
-            "\t\tPeople of the lands known as gladiators,\n\tthe best of the human race had to offer " + 
-            "were ready for such a day to come \n\tbut when their people needed them most...they vanished....",
-            "\t\tNow people talk about the next \"gladiators\" known as reborns ",
-            "\t\tAlthough they are of unknown origin, they have the power\n\tto take on the darkness looming over our world...",
-            "\t\tBut I believe they will save the world....."
-            
-        };
-                        
-        runStory(partOne);
+                                
+        display.runStory(story.getPartOne());
         
         System.out.println(CLEAR);
         
@@ -139,18 +129,9 @@ public class Game
         potion = player.getPotion();
         amulet = player.getAmulet();
         
-        blacksmith = new Blacksmith("Gerald");
+        blacksmith = new Blacksmith();
         
-        String [] partTwo = new String[] 
-        {
-            "\t\tOne day, a young warrior stepped in our town.\n\tThe only safe place left for humans..",
-            "\t\tPeople loved this warrior.\n\tThey called him " + player.getName() + "..",
-            "\t\tHe promised that he will travel the world \n\tand find the root of this evil",
-            "\t\tBut will he be able to do it..?\n\tOr is he just another scared cat..?"
-            
-        };
-        
-        runStory(partTwo);
+        display.runStory(story.getPartTwo(playerName));
                         
         // create monsters
         monsters.put(character.BLACK_BEAR.getCharacter(), LEVEL_1);
@@ -189,22 +170,6 @@ public class Game
     }
     
     /**
-     * Display a given list as a story.
-     */
-    public void runStory(String[] part)
-    {
-        for(int i = 0; i < part.length; i ++)
-        {
-            System.out.println(command.PRESS_ANY.getCommand());
-            reader.getAny();
-            
-            System.out.println(CLEAR);
-            
-            System.out.println(part[i]);
-        }
-    }
-        
-    /**
      * Main options.
      */
     public void run()
@@ -237,7 +202,7 @@ public class Game
                 player.drinkPotion();
                 
             else if(choice.toLowerCase().replaceAll("\\s","").contains(HELP))
-                menu.listOptions(list);
+                display.listOptions(list);
                 
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_DATABASE))
                 database.printAll();
