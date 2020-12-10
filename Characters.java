@@ -32,8 +32,7 @@ public enum Characters
     RED_DRAGON (" Ⓡ "),
     PLAYER ("☺"),
     PLAYER2("☠"),
-    PLAYER3(" ⚉ "),
-    
+    PLAYER3(" ⚉ "),    
     ROCK (" ⛰ "),
     WALL ("[/]"),
     BLACKSMITH (" B "),
