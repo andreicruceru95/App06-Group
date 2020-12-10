@@ -156,17 +156,16 @@ public class Game
     {
         System.out.println(CLEAR);
         
-        updateVisualField();
+        // showInfo();
+        // updateVisualField();
         
         boolean finished = false;
         while(!finished)
         {
             System.out.println(CLEAR);
-        
             changeImage();
             showInfo();
             updateVisualField();
-            
             
             String choice = reader.getString();
             
@@ -222,8 +221,6 @@ public class Game
                 
         if(direction.replaceAll("\\s+","").equals(UP))
         {
-            // int nextRowUp = playerRowCoord - 1;
-            // int check = checkNextSquare((playerRowCoord - 1), playerColCoord);
             
             if(checkNextSquare((playerRowCoord - 1), playerColCoord))
             {
@@ -236,8 +233,6 @@ public class Game
         }
         else if(direction.replaceAll("\\s+","").equals(DOWN))
         {
-            // int nextRowDown = playerRowCoord + 1;
-            // int check = checkNextSquare((playerRowCoord + 1), playerColCoord);
             
             if(checkNextSquare((playerRowCoord + 1), playerColCoord))
             {
@@ -250,8 +245,6 @@ public class Game
         }
         else if(direction.replaceAll("\\s+","").equals(LEFT))
         {
-            // int nextColLeft = playerColCoord - 1;
-            // int check = checkNextSquare(playerRowCoord, (playerColCoord - 1));
             
             if(checkNextSquare(playerRowCoord, (playerColCoord - 1)))
             {
@@ -264,8 +257,6 @@ public class Game
         }
         else if(direction.replaceAll("\\s+","").equals(RIGHT))
         {
-            // int nextColRight = playerColCoord + 1;
-            // int check = checkNextSquare(playerRowCoord, (playerColCoord + 1));
             
             if(checkNextSquare(playerRowCoord, (playerColCoord + 1)))
             {
@@ -277,7 +268,10 @@ public class Game
             
         }
         
-        //updateVisualField();
+        System.out.println(CLEAR);
+        changeImage();
+        showInfo();
+        updateVisualField();
         
         checkFirstInteraction();       
     }
@@ -434,6 +428,7 @@ public class Game
     {
         do
         {
+            
             monster.receiveDmg(player.attack());
             System.out.println("Monster received " + monster.receiveDmg(player.attack()));
                         
@@ -441,7 +436,7 @@ public class Game
             System.out.println("Player received " + player.receiveDmg(monster.attack()));    
             
         }
-        while(player.checkHealth() == true && monster.checkHealth() == true);
+        while(player.checkHealth() && monster.checkHealth());
         
         return player.getHealthPoints();
     }
@@ -515,6 +510,8 @@ public class Game
             
         while(!finished)
         {
+            blacksmith.createList();
+            
             System.out.println("\n\n\t\tWhat can I do for you?\n\n");
                 
             blacksmith.openBlacksmithShop();
@@ -551,6 +548,20 @@ public class Game
                 
                 if(blacksmith.enchance(amulet, player.getGold()))
                     player.pay(blacksmith.getCost(amulet));
+                
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancering"))
+            {
+                
+                if(blacksmith.enchance(ring, player.getGold()))
+                    player.pay(blacksmith.getCost(ring));
+                
+            }
+            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancebracelet"))
+            {
+                
+                if(blacksmith.enchance(bracelet, player.getGold()))
+                    player.pay(blacksmith.getCost(bracelet));
                 
             }
             else
