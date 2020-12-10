@@ -25,15 +25,14 @@ public class Blacksmith
     
     private String name; 
     
-    private String[] blacksmithMenu;
+    private String[] blacksmithMenu = new String[7];
       
     /**
      * Enchance an item.
      */
     public boolean enchance(Item item, int gold)
     {
-        createList();
-        
+               
         if(item.getName().toLowerCase().contains("sword"))
         {
             
@@ -41,7 +40,7 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                System.out.println(SUCCESS + item.getName());
+                System.err.println(SUCCESS + item.getName());
                 
                 weaponCost += itemMultiplier;
                 
@@ -56,7 +55,7 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                System.out.println(SUCCESS + item.getName());
+                System.err.println(SUCCESS + item.getName());
                 
                 armourCost += itemMultiplier;
                 
@@ -71,7 +70,7 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                System.out.println(SUCCESS + item.getName());
+                System.err.println(SUCCESS + item.getName());
                 
                 potionCost += potionMultiplier;
                 
@@ -86,7 +85,7 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                System.out.println(SUCCESS + item.getName());
+                System.err.println(SUCCESS + item.getName());
                 
                 amuletCost += itemMultiplier;
                 
@@ -101,7 +100,7 @@ public class Blacksmith
             {
                 item.enchance();
                 
-                System.out.println(SUCCESS + item.getName());
+                System.err.println(SUCCESS + item.getName());
                 
                 ringCost += specialMultiplier;
                 
@@ -109,14 +108,14 @@ public class Blacksmith
             }
             
         }
-        else if(item.getName().toLowerCase().contains("bracelet"))
+        else if(item.getName().toLowerCase().contains("trinket"))
         {
             
             if(checkGold(gold, braceletCost) == true)
             {
                 item.enchance();
                 
-                System.out.println(SUCCESS + item.getName());
+                System.err.println(SUCCESS + item.getName());
                 
                 braceletCost += specialMultiplier;
                 
@@ -143,17 +142,14 @@ public class Blacksmith
     
     public void createList()
     {
-        String[] list = new String[] 
-        {
-            command.ENCHANCE_WEAPON.getCommand() + "\t\t" + weaponCost + " Gold",
-            command.ENCHANCE_ARMOUR.getCommand() + "\t\t" + armourCost + " Gold",
-            command.ENCHANCE_POTION.getCommand() + "\t\t" + potionCost + " Gold",
-            command.ENCHANCE_RING.getCommand() + "\t\t" + amuletCost + "Gold",
-            command.ENCHANCE_AMULET.getCommand() + "\t\t" + amuletCost + "Gold\n",
-            command.QUIT.getCommand()
-        }; 
+        blacksmithMenu[0] = command.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weaponCost   + " Gold";
+        blacksmithMenu[1] = command.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armourCost   + " Gold";
+        blacksmithMenu[2] = command.ENCHANCE_POTION.getCommand()   + "\t\t\t" + potionCost   + " Gold";
+        blacksmithMenu[3] = command.ENCHANCE_RING.getCommand()     + "\t\t\t" + ringCost     + "Gold";
+        blacksmithMenu[4] = command.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amuletCost   + "Gold";
+        blacksmithMenu[5] = command.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold\n";
+        blacksmithMenu[6] = command.QUIT.getCommand();
         
-        blacksmithMenu = list;
     }
     
     public void openBlacksmithShop()
