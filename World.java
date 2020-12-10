@@ -94,20 +94,20 @@ public class World
     {
         this.name = name;
         
-        town = new Map("Town", TOWN,"The only safe place left in the world", FULL_H, FULL_L);
-        town.createMap(character.WALL.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
+        town = new Map("Town", TOWN,"The only safe place left in the world");
+        town.createMap(character.WALL.getCharacter(),MAP_EDGE);
         addObjectsToTown();
         
-        dessert = new Map("Dessert",DESSERT,"One of the most dangerous places", FULL_H, FULL_L);
-        dessert.createMap(character.ROCK.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
+        dessert = new Map("Dessert",DESSERT,"One of the most dangerous places");
+        dessert.createMap(character.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToDessert();
         
-        spiderCave = new Map("SpiderCave",SPIDER_CAVE,"The home of the Spider Queen", FULL_H, FULL_L);
-        spiderCave.createMap(character.ROCK.getCharacter(), FULL_H, FULL_L,MAP_EDGE);
+        spiderCave = new Map("SpiderCave",SPIDER_CAVE,"The home of the Spider Queen");
+        spiderCave.createMap(character.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToSpiderCave();
         
-        test = new Map("test", TEST, "Developers only", FULL_H,FULL_L);
-        test.createMap(character.ROCK.getCharacter(),FULL_H, FULL_L,MAP_EDGE);
+        test = new Map("test", TEST, "Developers only");
+        test.createMap(character.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToTestMap();
         
         setCurrentMap("town");
@@ -352,8 +352,8 @@ public class World
      */
     public void printHelpMap(int row, int col)
     {
-        userHelp = new Map("Location", USER_HELP, "Player's location on the map", FULL_H, FULL_L);
-        userHelp.createMap(character.WALL.getCharacter(), FULL_H,FULL_L,MAP_EDGE);
+        userHelp = new Map("Location", USER_HELP, "Player's location on the map");
+        userHelp.createMap(character.WALL.getCharacter(),MAP_EDGE);
         
         userHelp.setOne(row, col, character.PLAYER3.getCharacter());
         
