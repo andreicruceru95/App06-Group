@@ -15,8 +15,14 @@ public class Player extends Actor
     public static final Item ARMOUR = new Armour("Steel Armour", 10, 1, 8);
     public static final Item POTION = new Potion("HP Potion", 200, 1, 200);
     public static final Item AMULET = new Amulet("Hellen's Gift", 50, 1, 100);
+    public static final Item RING = new Ring("Potus's Ring", 10, 1, 1);
+    public static final Item BRACELET = new Bracelet("Spirit Bracelet", 10,1,1);
     
-    private int potionAmount = 15;
+    private int doubleHitChance = 0;
+    private int initialDoubleHitChance = 0;
+    private int evasionChance = 0;
+    private int initialEvasionChance = 0;
+    
     private int goldAmount = 1000;
     private int score = 0;
        
@@ -30,6 +36,7 @@ public class Player extends Actor
     {
         super(name, level);
         
+        update();
     }
     
     /**
@@ -85,9 +92,12 @@ public class Player extends Actor
     /**
      * @return the hit points
      */
-    public int getHitPoints()
+    public boolean getHealthPoints()
     {
-        return currentHealthPoints;
+        if (currentHealthPoints > 0)
+            return true;
+        else
+            return false;           
         
     }
     
@@ -114,7 +124,13 @@ public class Player extends Actor
      */
     public void increasePotionAmount (int amount)
     {
-        this.potionAmount += amount;
+        ((Potion) POTION).increaseAmount(amount);
+        
+    }
+    
+    public int getPotionAmount()
+    {
+        return ((Potion) POTION).getAmount();
         
     }
     
@@ -124,6 +140,7 @@ public class Player extends Actor
     public void addScore(int score)
     {
         this.score += score;
+        
     }
     
     /**
@@ -132,6 +149,7 @@ public class Player extends Actor
     public int getScore()
     {
         return score;
+        
     }
     
     /**
@@ -152,7 +170,8 @@ public class Player extends Actor
         shield = initialShield + ARMOUR.getStats();
         maxHealthPoints = initialMaxHealthPoints + AMULET.getStats();
         currentHealthPoints += AMULET.getStats();
-        
+        doubleHitChance = initialDoubleHitChance + RING.getStats();
+        evasionChance = initialEvasionChance + BRACELET.getStats();
         check();
     }
     
@@ -188,6 +207,16 @@ public class Player extends Actor
         return AMULET;
     }
     
+    public Item getRing()
+    {
+        return RING;
+    }
+    
+    public Item getBracelet()
+    {
+        return BRACELET;
+    }
+    
     /**
      * set player's coordinates
      */
@@ -213,22 +242,27 @@ public class Player extends Actor
         return playerColCoord;
     }
     
+    public int getHitChance()
+    {
+        return doubleHitChance;
+    }
+    
     /**
      * Drink a health potion.
      */
     public void drinkPotion()
     {
-        if(potionAmount > 0)
+        if(((Potion) POTION).getAmount() > 0)
         {
             currentHealthPoints += POTION.getStats();
-            potionAmount --;
+            
+            ((Potion) POTION).decreaseAmount();
+            
             check();
         }
         else
             System.err.println("Not enough potions");
-            
-        if(currentHealthPoints > maxHealthPoints)
-            changeImage(character.PLAYER2.toString());
+        
     }
     
     /**
