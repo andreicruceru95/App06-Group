@@ -68,7 +68,7 @@ public class Game
     private HashMap <String, Integer> monsters = new HashMap<>();
     
     //interactions with game objects
-    private HashMap<String, String> interactions = new HashMap<>();
+    private Interactions interaction = new Interactions();
     
     private Database database = new Database();
     private Display display = new Display();
@@ -154,16 +154,7 @@ public class Game
         monsters.put(character.DEATH.getCharacter(),LEVEL_60);
         monsters.put(character.RED_DRAGON.getCharacter(),70);
         
-        interactions.put(character.SHOP.getCharacter(), "There is a shop there, you can buy health potions and other things from there");
-        interactions.put(character.BLACKSMITH.getCharacter(),"There is a blacksmith there, you can ask him to improve your items for a price.\n" +
-                                "Ask him \"enchance armour\" or \"enchance weapon\" or \"enchance potion\".");
-        interactions.put(character.STABLE.getCharacter(), "There is a stable there, you soon be able to buy a horse from there");
-        interactions.put(character.GUARD.getCharacter(), "Town guard: \t\tHey, You! \n\t\tCome here. \n\tAre you that warrior " + 
-                                "everyone is talking about?\n\tIf you are that brave, why don't you go" + 
-                                "and kill some wolves for us?\n\tThey have been killing our people for a while.\n");
-        interactions.put(character.TELEPORT.getCharacter(), "There is a teleporter there, you can go to a different map.");    
-        interactions.put(DESSERT, "This was once a beautifull forrest. Now it's a dangerous death field. Be aware!");
-        interactions.put(SPIDER_CAVE, "A cave? You should be carefull.. Who knows what monsters lives in here.");
+        
         
         run();
                 
@@ -508,74 +499,26 @@ public class Game
     public void checkFirstInteraction()
     {
         if(player.checkVisualField(character.SHOP.getCharacter()) == true && shopDescription == false)
-        {
-            System.out.println(interactions.get(character.SHOP.getCharacter()));
-            System.out.println(command.PRESS_ANY.getCommand());
+            shopDescription = interaction.getInteraction(character.SHOP.getCharacter());            
             
-            shopDescription = true;
+        else if(player.checkVisualField(character.BLACKSMITH.getCharacter()) == true && blacksmithDescription == false)
+            blacksmithDescription = interaction.getInteraction(character.BLACKSMITH.getCharacter()); 
             
-            reader.getAny();
-        }
-        
-        if(player.checkVisualField(character.BLACKSMITH.getCharacter()) == true && blacksmithDescription == false)
-        {
-            System.out.println(interactions.get(character.BLACKSMITH.getCharacter()));
-            System.out.println(command.PRESS_ANY.getCommand());
+        else if(player.checkVisualField(character.STABLE.getCharacter()) == true && stableDescription == false)
+            stableDescription = interaction.getInteraction(character.STABLE.getCharacter());
+                  
+        else if(player.checkVisualField(character.GUARD.getCharacter()) == true && guardDescription == false)
+            guardDescription = interaction.getInteraction(character.GUARD.getCharacter());
             
-            reader.getAny();
+        else if(player.checkVisualField(character.TELEPORT.getCharacter()) == true && teleporterDescription == false)
+            teleporterDescription = interaction.getInteraction(character.TELEPORT.getCharacter());
             
-            blacksmithDescription = true;
-        }
-        
-        if(player.checkVisualField(character.STABLE.getCharacter()) == true && stableDescription == false)
-        {
-            System.out.println(interactions.get(character.STABLE.getCharacter()));
-            System.out.println(command.PRESS_ANY.getCommand());
+        else if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && dessertDescription == false)
+            dessertDescription = interaction.getInteraction(DESSERT);
+                        
+        else if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && spiderCaveDescription == false)
+            spiderCaveDescription = interaction.getInteraction(SPIDER_CAVE);
             
-            reader.getAny();
-            
-            stableDescription = true;
-        }
-        
-        if(player.checkVisualField(character.GUARD.getCharacter()) == true && guardDescription == false)
-        {
-            System.out.println(interactions.get(character.GUARD.getCharacter()));
-            System.out.println(command.PRESS_ANY.getCommand());
-            
-            reader.getAny();
-            
-            guardDescription = true;
-        }
-        
-        if(player.checkVisualField(character.TELEPORT.getCharacter()) == true && teleporterDescription == false)
-        {
-            System.out.println(interactions.get(character.TELEPORT.getCharacter()));
-            System.out.println(command.PRESS_ANY.getCommand());
-            
-            reader.getAny();
-            
-            teleporterDescription = true;
-        }
-        
-        if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && dessertDescription == false)
-        {
-            System.out.println(interactions.get(DESSERT));
-            System.out.println(command.PRESS_ANY.getCommand());
-            
-            reader.getAny();
-            
-            dessertDescription = true;
-        }
-        
-        if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && spiderCaveDescription == false)
-        {
-            System.out.println(interactions.get(SPIDER_CAVE));
-            System.out.println(command.PRESS_ANY.getCommand());
-            
-            reader.getAny();
-            
-            spiderCaveDescription = true;
-        }
     }
     
     /**
