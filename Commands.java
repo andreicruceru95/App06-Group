@@ -26,7 +26,9 @@ public enum Commands
     ENCHANCE_WEAPON ("\t\tEnter \'enchance weapon\' to enchance your weapon"),
     ENCHANCE_ARMOUR ("\t\tEnter \'enchance armour\' to enchance your armour"),
     ENCHANCE_POTION ("\t\tEnter \'enchance potion\' to enchance your potion"),
-    ENCHANCE_AMULET ("\t\tEnter \'enchance amulet\' to enchance your amulet");
+    ENCHANCE_AMULET ("\t\tEnter \'enchance amulet\' to enchance your amulet"),
+    ENCHANCE_RING ("\t\tEnter\'enchance ring\' to enchance your ring"),
+    ENCHANCE_BRACELET ("\t\tEnter\'enchance bracelet\' to enchance your bracelet");
     
     private final String command;
  
