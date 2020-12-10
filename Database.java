@@ -8,6 +8,8 @@ import java.util.*;
  */
 public class Database
 {
+    public static final char CLEAR = '\u000c';
+    
     public static final HashMap<String, String> DATABASE_OBJECTS = new HashMap<>();
     public static final HashMap<String, String> DATABASE_MONSTERS = new HashMap<>();
     public static final HashMap<String, String> DATABASE_BOSSES = new HashMap<>();
@@ -109,6 +111,8 @@ public class Database
      */
     public void printAll()
     {
+        System.out.println(CLEAR);
+        
         printDatabase(DATABASE_MONSTERS);
         printDatabase(DATABASE_BOSSES);
         printDatabase(DATABASE_OBJECTS);
@@ -120,7 +124,8 @@ public class Database
      */
     public void getMonsterList(HashMap<String,Integer> list)
     {
-              
+        System.out.println(CLEAR);
+        
         for (String objectName : list.keySet()) 
         {
             Actor monster = new Monster(objectName, list.get(objectName));
