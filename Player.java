@@ -14,14 +14,9 @@ public class Player extends Actor
     public static final Item SWORD = new Weapon("Steel Sword", 20, 1, 12);
     public static final Item ARMOUR = new Armour("Steel Armour", 10, 1, 8);
     public static final Item POTION = new Potion("HP Potion", 200, 1, 200);
-    public static final Item AMULET = new Amulet("Hellen's Gift", 50, 1, 100);
-    public static final Item RING = new Ring("Potus's Ring", 10, 1, 1);
-    public static final Item BRACELET = new Bracelet("Spirit Bracelet", 10,1,1);
-    
-    private int doubleHitChance = 0;
-    private int initialDoubleHitChance = 0;
-    private int evasionChance = 0;
-    private int initialEvasionChance = 0;
+    public static final Item AMULET = new Amulet("Hellen's Gift", 50, 1, 1000);
+    public static final Item RING = new Ring("Potus's Ring", 10, 1, 10);
+    public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
     
     private int goldAmount = 1000;
     private int score = 0;
@@ -245,6 +240,11 @@ public class Player extends Actor
     public int getHitChance()
     {
         return doubleHitChance;
+    }
+    
+    public int getEvasionChance()
+    {
+        return evasionChance;
     }
     
     /**
