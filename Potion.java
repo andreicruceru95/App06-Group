@@ -7,7 +7,8 @@
  */
 public class Potion extends Item
 {
-            
+    int amount = 15;
+    
     public Potion(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {
         super(name, baseStats, enchantLevel, bonusPerLevel);
@@ -15,7 +16,25 @@ public class Potion extends Item
     
     public void print()
     {
-        System.out.println(displayName + " + " + displayLevel + "\tHeal: " + (enchantStats));
+        System.out.println(displayName + " + " + displayLevel + "\tHeal: " + enchantStats +
+                            "\t" + amount);
     }
     
+    public void increaseAmount(int amount)
+    {
+        this.amount += amount;
+        
+    }
+    
+    public void decreaseAmount()
+    {
+        amount --;
+        
+    }
+    
+    public int getAmount()
+    {
+        return amount;
+        
+    }
 }
