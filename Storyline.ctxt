@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Storyline
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Storyline\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=java.lang.String[]\ getPartOne()
+comment2.params=playerName
+comment2.target=java.lang.String[]\ getPartTwo(java.lang.String)
+numComments=3
