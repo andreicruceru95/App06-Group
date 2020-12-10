@@ -83,6 +83,8 @@ public class Game
     private Item armour;
     private Item potion;
     private Item amulet;
+    private Item ring;
+    private Item bracelet;
     
     private World world = new World("World of Zull");
     
@@ -117,6 +119,8 @@ public class Game
         armour = player.getArmour();
         potion = player.getPotion();
         amulet = player.getAmulet();
+        ring = player.getRing();
+        bracelet = player.getBracelet();
         
         display.runStory(story.getPartTwo(playerName));
                         
@@ -162,6 +166,7 @@ public class Game
             changeImage();
             showInfo();
             updateVisualField();
+            
             
             String choice = reader.getString();
             
@@ -217,56 +222,56 @@ public class Game
                 
         if(direction.replaceAll("\\s+","").equals(UP))
         {
-            int nextRowUp = playerRowCoord - 1;
-            int check = checkNextSquare(nextRowUp, playerColCoord);
+            // int nextRowUp = playerRowCoord - 1;
+            // int check = checkNextSquare((playerRowCoord - 1), playerColCoord);
             
-            if(check == 1)
+            if(checkNextSquare((playerRowCoord - 1), playerColCoord))
             {
                 world.setObject(playerRowCoord ,playerColCoord,"   ");
                 
-                player.setCoordinates(nextRowUp, playerColCoord);
+                player.setCoordinates((playerRowCoord - 1), playerColCoord);
                 
             }
                        
         }
         else if(direction.replaceAll("\\s+","").equals(DOWN))
         {
-            int nextRowDown = playerRowCoord + 1;
-            int check = checkNextSquare(nextRowDown, playerColCoord);
+            // int nextRowDown = playerRowCoord + 1;
+            // int check = checkNextSquare((playerRowCoord + 1), playerColCoord);
             
-            if(check == 1)
+            if(checkNextSquare((playerRowCoord + 1), playerColCoord))
             {
                 world.setObject(playerRowCoord ,playerColCoord,"   ");
                 
-                player.setCoordinates(nextRowDown, playerColCoord);
+                player.setCoordinates((playerRowCoord + 1), playerColCoord);
                 
             }
                
         }
         else if(direction.replaceAll("\\s+","").equals(LEFT))
         {
-            int nextColLeft = playerColCoord - 1;
-            int check = checkNextSquare(playerRowCoord, nextColLeft);
+            // int nextColLeft = playerColCoord - 1;
+            // int check = checkNextSquare(playerRowCoord, (playerColCoord - 1));
             
-            if(check == 1)
+            if(checkNextSquare(playerRowCoord, (playerColCoord - 1)))
             {
                 world.setObject(playerRowCoord ,playerColCoord,"   ");
                 
-                player.setCoordinates(playerRowCoord, nextColLeft);
+                player.setCoordinates(playerRowCoord, (playerColCoord - 1));
                 
             }
                
         }
         else if(direction.replaceAll("\\s+","").equals(RIGHT))
         {
-            int nextColRight = playerColCoord + 1;
-            int check = checkNextSquare(playerRowCoord, nextColRight);
+            // int nextColRight = playerColCoord + 1;
+            // int check = checkNextSquare(playerRowCoord, (playerColCoord + 1));
             
-            if(check == 1)
+            if(checkNextSquare(playerRowCoord, (playerColCoord + 1)))
             {
                 world.setObject(playerRowCoord ,playerColCoord,"   ");
                 
-                player.setCoordinates(playerRowCoord, nextColRight);
+                player.setCoordinates(playerRowCoord, (playerColCoord + 1));
                 
             }
             
@@ -274,7 +279,7 @@ public class Game
         
         //updateVisualField();
         
-        //checkFirstInteraction();       
+        checkFirstInteraction();       
     }
     
     /**
@@ -285,58 +290,62 @@ public class Game
         System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase() + "\n");
         System.out.println(player.getStats()); 
         System.out.println("\tGold: " + player.getGold() + "" + character.GOLD.getCharacter());
+        System.out.println("\tScore: " + player.getScore());
         ((Weapon) weapon).print();
         ((Armour) armour).print();
         ((Potion) potion).print();
         ((Amulet) amulet).print();
+        ((Ring) ring).print();
+        ((Bracelet) bracelet).print();
+        
     }
     
     /**
      * Check the next square
      */
-    public int checkNextSquare(int nextRow, int nextCol)
+    public boolean checkNextSquare(int nextRow, int nextCol)
     { 
         if (world.getSquareValue(nextRow,nextCol).equals(square))
         {
-            return 1;
+            return true;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.WALL.getCharacter()) || world.getSquareValue(nextRow,nextCol).equals(character.ROCK.getCharacter()))
         {
             System.out.println("Cannot go through walls");
             
-            return 0;
+            return false;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.SHOP.getCharacter()))
         {
             runShop();
             
-            return 0;
+            return false;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.BLACKSMITH.getCharacter()))
         {
             runBlacksmith();
             
-            return 0;
+            return false;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.CHEST.getCharacter()))
         {
             //SEE CHEST
-            return 1;
+            return true;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.GOLD.getCharacter()))
         {
             //take gold
-            return 1;
+            return true;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.ITEM.getCharacter()))
         {
             //take random item
-            return 1;
+            return true;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.TELEPORT.getCharacter()))
         {
             teleport();
-            return 0;
+            return false;
         }
         else 
         {
@@ -346,24 +355,20 @@ public class Game
             
             if (monster != null)
             {
-                int result = action(monster);
-                
-                int check = checkResult(result, character);
-                
-                return check;
+                return checkResult(action(monster), character);
             }
             
         }
-        return 0;
+        return false;
     }
     
     /**
      * Spawn another monster on the map if you won the fight.
      * If you die, you will be set back to the initial position.
      */
-    private int checkResult(int result, String character)
+    private boolean checkResult(boolean result, String character)
     {
-        if(result > 0)
+        if(result)
         {
             System.err.println("\t\t\t\tYou Win!");
                     
@@ -375,11 +380,12 @@ public class Game
             
             player.addGold(goldChance());
                     
-            return 1;
+            return true;
         }
                 
         else
         {
+            
             if(firstDeathDescription == false)
             {
                 System.out.println("You died! You will be sent back in town where someone will take care of you.");
@@ -394,7 +400,7 @@ public class Game
                     
             guardQuest();
         }
-        return 0;
+        return false;
     }
     
     /**
@@ -424,7 +430,7 @@ public class Game
     /**
      * Fast-forward fight
      */
-    public int action(Actor monster)
+    public boolean action(Actor monster)
     {
         do
         {
@@ -437,7 +443,7 @@ public class Game
         }
         while(player.checkHealth() == true && monster.checkHealth() == true);
         
-        return player.getHitPoints();
+        return player.getHealthPoints();
     }
     
     /**
@@ -473,29 +479,29 @@ public class Game
     }
     
     /**
-     * The first interaction with some of the most important game elements.
+     * The first interaction with some of the game elements.
      */
     public void checkFirstInteraction()
     {
-        if(player.checkVisualField(character.SHOP.getCharacter()) == true && shopDescription == false)
+        if(player.checkVisualField(character.SHOP.getCharacter()) && shopDescription)
             shopDescription = interaction.getInteraction(character.SHOP.getCharacter());            
             
-        else if(player.checkVisualField(character.BLACKSMITH.getCharacter()) == true && blacksmithDescription == false)
+        else if(player.checkVisualField(character.BLACKSMITH.getCharacter()) && blacksmithDescription)
             blacksmithDescription = interaction.getInteraction(character.BLACKSMITH.getCharacter()); 
             
-        else if(player.checkVisualField(character.STABLE.getCharacter()) == true && stableDescription == false)
+        else if(player.checkVisualField(character.STABLE.getCharacter()) && stableDescription)
             stableDescription = interaction.getInteraction(character.STABLE.getCharacter());
                   
-        else if(player.checkVisualField(character.GUARD.getCharacter()) == true && guardDescription == false)
+        else if(player.checkVisualField(character.GUARD.getCharacter()) && guardDescription)
             guardDescription = interaction.getInteraction(character.GUARD.getCharacter());
             
-        else if(player.checkVisualField(character.TELEPORT.getCharacter()) == true && teleporterDescription == false)
+        else if(player.checkVisualField(character.TELEPORT.getCharacter()) && teleporterDescription)
             teleporterDescription = interaction.getInteraction(character.TELEPORT.getCharacter());
             
-        else if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && dessertDescription == false)
+        else if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && dessertDescription)
             dessertDescription = interaction.getInteraction(DESSERT);
                         
-        else if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && spiderCaveDescription == false)
+        else if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && spiderCaveDescription)
             spiderCaveDescription = interaction.getInteraction(SPIDER_CAVE);
             
     }
