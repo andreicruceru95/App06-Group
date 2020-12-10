@@ -84,10 +84,12 @@ public class VisualField
         {
             for(int j = 0; j < VISUAL_FIELD[i].length; j++)
             {
+                
                 if (VISUAL_FIELD[i][j].contains(character))
                 {
                     return true;
                 }
+                
             }
         }
         return false;
