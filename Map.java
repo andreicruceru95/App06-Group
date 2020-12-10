@@ -21,9 +21,10 @@ public class Map
     /**
      * Constructor for the Map
      */
-     public Map(String name, String[][] map,String description, int height,int length)
+     public Map(String name, String[][] map,String description)
     {
         rand = new Random();
+        
         this.description = description;
         this.name = name;
         
@@ -80,7 +81,7 @@ public class Map
     /**
      * Create a the walls and center of a map.
      */
-    public void createMap(String walls,int height, int length, int mapEdge)
+    public void createMap(String walls,int mapEdge)
     {
         //map walls and empty center
         for(int i = 0; i < map.length;i++)
@@ -93,21 +94,21 @@ public class Map
         //top
         for(int i = 0; i < mapEdge; i++)
         {
-            for (int j = 0; j < length; j++)
+            for (int j = 0; j < map[i].length; j++)
             {
                 map[i][j] = walls;
             }
         }
         //bottom
-        for(int i = height - mapEdge; i < height; i++)
+        for(int i = map.length - mapEdge; i < map.length; i++)
         {
-            for (int j = 0; j < length; j++)
+            for (int j = 0; j < map[i].length; j++)
             {
                 map[i][j] = walls;
             }
         }
         //left
-        for(int i = 0; i < height; i++)
+        for(int i = 0; i < map.length; i++)
         {
             for (int j = 0; j < mapEdge; j++)
             {
@@ -115,9 +116,9 @@ public class Map
             }
         }
         //right
-        for(int i = 0; i < height; i++)
+        for(int i = 0; i < map.length; i++)
         {
-            for (int j = length - mapEdge; j < length; j++)
+            for (int j = map[i].length - mapEdge; j < map[i].length; j++)
             {
                 map[i][j] = walls;
             }
