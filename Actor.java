@@ -22,8 +22,8 @@ public abstract class Actor
     protected int maxHealthPoints = 1000;
     protected int currentHealthPoints = 1000;
     
-    private int chance = 5;//%
-    private int total = 100; //%
+    protected int chance = 5;//%
+    protected int total = 100; //%
     
     protected Random random = new Random();
     
