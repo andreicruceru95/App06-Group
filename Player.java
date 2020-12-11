@@ -78,9 +78,14 @@ public class Player extends Actor
             String key = object.toString();
             int value = INVENTORY.get(object);  
             
-            System.out.println("\t" + key + "\t" + value);            
+            if(value > 0)
+                System.out.println("\t" + key + "\t" + value);   
+            
+            else
+                System.out.println("Inventory is empty");
             
         }
+        
     }
     
     /**
