@@ -1,3 +1,4 @@
+import java.util.*;
 
 /**
  * Write a description of class Player here.
@@ -18,6 +19,8 @@ public class Player extends Actor
     public static final Item RING = new Ring("Potus's Ring", 10, 1, 10);
     public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
     
+    private static final HashMap<String, Integer> INVENTORY = new HashMap<>();
+    
     private boolean ring = false;
     private boolean bracelet = false;
     
@@ -35,6 +38,36 @@ public class Player extends Actor
         super(name, level);
         
         update();
+    }
+    
+    public void addToInventory(String string)
+    {
+        INVENTORY.put(string, INVENTORY.get(string) + 1);
+    }
+    
+    public void removeFromInventory(String string, int amount)
+    {
+        INVENTORY.put(string, INVENTORY.get(string) - amount);
+    }
+    
+    public boolean checkInventory(String string, int amount)
+    {
+        if(INVENTORY.get(string) > amount)
+            return true;
+            
+        return false;    
+    }
+    
+    public void printInventory()
+    {
+        for (String object : INVENTORY.keySet())
+        {
+            String key = object.toString();
+            int value = INVENTORY.get(object);  
+            
+            System.out.println("\t" + key + "\t" + value);            
+            
+        }
     }
     
     /**
