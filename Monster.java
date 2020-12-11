@@ -22,10 +22,10 @@ public class Monster extends Actor
         this.drop = drop;
     }
     
-    private int dropGold()
+    public int dropGold()
     {
         int goldDrop = 50; //%
-        int goldChance = random.nextInt(total - goldDrop) + goldDrop;
+        int goldChance = random.nextInt(total - 1) + 1;
         
         if(goldChance <= goldDrop)
                     return level;
@@ -34,10 +34,10 @@ public class Monster extends Actor
         
     }
     
-    private boolean dropItem()
+    public boolean dropItem()
     {
         int miskDrop = 40; //%
-        int miskChance = random.nextInt(total - miskDrop) + miskDrop;
+        int miskChance = random.nextInt(total - 1) + 1;
         
         if(miskChance <= miskDrop)
             return true;
@@ -49,7 +49,7 @@ public class Monster extends Actor
     /**
      * @return the item dropped.
      */
-    private String getDrop()
+    public String getDrop()
     {
         return drop;
     }
