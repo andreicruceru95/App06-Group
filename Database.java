@@ -122,16 +122,11 @@ public class Database
     /**
      * Print the stats of the game monsters.
      */
-    public void getMonsterList(HashMap<String,Integer> list)
+    public void getMonsterList(ArrayList< Monster> monsters)
     {
-        System.out.println(CLEAR);
-        
-        for (String objectName : list.keySet()) 
+        for(Monster monster : monsters)
         {
-            Actor monster = new Monster(objectName, list.get(objectName));
-            
-            System.out.println(objectName + " : \t" + monster.getStats() + "\n" + monster.getHealthInfo());
-            
+            System.out.println(monster.getName() + " : \t" + monster.getStats() + "\n" + monster.getHealthInfo());
         }
        
     }
