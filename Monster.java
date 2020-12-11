@@ -12,10 +12,11 @@ public class Monster extends Actor
     {
         super(name, level);
         
-        attackForce = initialAttackForce * level;//(level * 2);
-        shield = initialShield * level;//(level * 2);
-        currentHealthPoints = currentHealthPoints * level;//(level * 2);
-        maxHealthPoints = initialMaxHealthPoints * level;//(level * 2);
+        attackForce = initialAttackForce * level;
+        shield = initialShield * level;
+        currentHealthPoints = currentHealthPoints * level;
+        maxHealthPoints = initialMaxHealthPoints * level;
+        
     }
     
 }

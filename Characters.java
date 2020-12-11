@@ -30,9 +30,9 @@ public enum Characters
     NINE_TAILS (" Ⓝ "),
     DEATH (" Ⓓ "),
     RED_DRAGON (" Ⓡ "),
-    PLAYER ("☺"),
+    PLAYER ("⚉"),
     PLAYER2("☠"),
-    PLAYER3(" ⚉ "),    
+    //PLAYER3(" ⚉ "),    
     ROCK (" ⛰ "),
     WALL ("[/]"),
     BLACKSMITH (" B "),
@@ -41,7 +41,19 @@ public enum Characters
     GOLD (" $ "),
     ITEM (" !^"),
     TREE (" ⍋ "),
-    CACTUS (" ¥ ");
+    CACTUS (" ¥ "),
+    FLOWER_RED (" ⚘ "),
+    FLOWER_BLUE (" ⚙ "),
+    FLOWER_YELLOW (" ⚚ "),
+    FLOWER_PURPLE (" ⚛ "),
+    FLOWER_WHITE (" ⚜ "),
+    SNOW_FRAG (" ☃ "),
+    STAR_FRAG (" ⚝ "),
+    SPIDER_KEY (" ⚵ "),
+    TOWER_KEY (" ⚷ "), 
+    FOX_KEY (" ⚴ "),
+    CHEST_KEY (" ⚿ ");
+    
     
     private final String character;
  

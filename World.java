@@ -167,7 +167,8 @@ public class World
                 
             }
         }
-                  
+        
+        //Might be a mistake
         for(int i = 0; i < FULL_H; i++)
         {
             for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
@@ -355,7 +356,7 @@ public class World
         userHelp = new Map("Location", USER_HELP, "Player's location on the map");
         userHelp.createMap(character.WALL.getCharacter(),MAP_EDGE);
         
-        userHelp.setOne(row, col, character.PLAYER3.getCharacter());
+        userHelp.setOne(row, col, character.PLAYER.getCharacter());
         
         userHelp.printMap();
     }

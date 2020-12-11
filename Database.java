@@ -130,7 +130,7 @@ public class Database
         {
             Actor monster = new Monster(objectName, list.get(objectName));
             
-            System.out.println(objectName + " : \t" + monster.getStats() + "\n");
+            System.out.println(objectName + " : \t" + monster.getStats() + "\n" + monster.getHealthInfo());
             
         }
        

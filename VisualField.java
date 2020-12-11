@@ -9,7 +9,8 @@ public class VisualField
 {
     public final static String[][] VISUAL_FIELD = new String[7][7];
     
-    private String player = "☺";
+    private Characters character;
+    private String player = character.PLAYER.getCharacter();
     
     /**
      * Set values in the visual field.
@@ -43,7 +44,7 @@ public class VisualField
         VISUAL_FIELD[3][0] = map[playerRowCoord][playerColCoord - 3];
         VISUAL_FIELD[3][1] = map[playerRowCoord][playerColCoord - 2];
         VISUAL_FIELD[3][2] = map[playerRowCoord][playerColCoord - 1];
-        VISUAL_FIELD[3][3] = " " + player + " ";
+        VISUAL_FIELD[3][3] = " " + player +  " ";
         VISUAL_FIELD[3][4] = map[playerRowCoord][playerColCoord + 1];
         VISUAL_FIELD[3][5] = map[playerRowCoord][playerColCoord + 2];
         VISUAL_FIELD[3][6] = map[playerRowCoord][playerColCoord + 3];

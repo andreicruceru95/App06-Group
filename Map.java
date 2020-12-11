@@ -21,7 +21,7 @@ public class Map
     /**
      * Constructor for the Map
      */
-     public Map(String name, String[][] map,String description)
+     public Map(String name, String[][] givenMap, String description)
     {
         rand = new Random();
         
@@ -29,6 +29,7 @@ public class Map
         this.name = name;
         
         this.map = map;
+        
     }
     
     /**
@@ -40,7 +41,7 @@ public class Map
     }
     
     /**
-     * print a map
+     * Print a map. Developers only.
      */
     public void printMap()
     {

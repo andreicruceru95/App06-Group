@@ -98,8 +98,13 @@ public abstract class Actor
      */
     public String getStats()
     {
-        return "Attack: " + attackForce + "\n\tDeffence: " + shield +
-                "\n\tHealth: " + currentHealthPoints + " / " + maxHealthPoints;
+        return "\t\tAttack: " + attackForce + "\n\tDeffence: " + shield;
+                
+    }
+    
+    public String getHealthInfo()
+    {
+        return "\t\tHealth: " + currentHealthPoints + " / " + maxHealthPoints;
     }
     
     /**

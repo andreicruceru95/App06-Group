@@ -18,6 +18,9 @@ public class Player extends Actor
     public static final Item RING = new Ring("Potus's Ring", 10, 1, 10);
     public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
     
+    private boolean ring = false;
+    private boolean bracelet = false;
+    
     private int goldAmount = 1000;
     private int score = 0;
        
@@ -165,8 +168,12 @@ public class Player extends Actor
         shield = initialShield + ARMOUR.getStats();
         maxHealthPoints = initialMaxHealthPoints + AMULET.getStats();
         currentHealthPoints += AMULET.getStats();
-        doubleHitChance = initialDoubleHitChance + RING.getStats();
-        evasionChance = initialEvasionChance + BRACELET.getStats();
+        if(ring)
+            doubleHitChance = initialDoubleHitChance + RING.getStats();
+            
+        if(bracelet)
+            evasionChance = initialEvasionChance + BRACELET.getStats();
+            
         check();
     }
     
@@ -187,6 +194,26 @@ public class Player extends Actor
         return SWORD;
     }
     
+    public void setRing()
+    {
+        ring = true;
+    }
+    
+    public void setBracelet()
+    {
+        bracelet = true;
+    }
+    
+    public boolean braceletExists()
+    {
+        return bracelet;
+    }
+    
+    public boolean ringExists()
+    {
+        return ring;
+    }
+    
     public Item getArmour()
     {
         return ARMOUR;
@@ -204,7 +231,7 @@ public class Player extends Actor
     
     public Item getRing()
     {
-        return RING;
+        return RING;            
     }
     
     public Item getBracelet()
@@ -255,6 +282,10 @@ public class Player extends Actor
         if(((Potion) POTION).getAmount() > 0)
         {
             currentHealthPoints += POTION.getStats();
+            
+            ((Potion) POTION).printMessage();
+            System.out.println("Your heal regenerated " + POTION.getStats());
+            System.out.println("\nYour health is now " + currentHealthPoints + " / " + maxHealthPoints); 
             
             ((Potion) POTION).decreaseAmount();
             
