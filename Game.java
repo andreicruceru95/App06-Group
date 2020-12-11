@@ -69,8 +69,8 @@ public class Game
     private int monsterLevel = 1;
     
     //A list of monsters name, level
-    private HashMap <String, Integer> monsters = new HashMap<>();
-    
+    //private HashMap <String, Integer> monsters = new HashMap<>();
+    private ArrayList <Monster> monsters = new ArrayList<>();
     //interactions with game objects
     private Interactions interaction = new Interactions();
     private Database database = new Database();
@@ -131,25 +131,45 @@ public class Game
         display.runStory(story.getPartTwo(playerName));
                         
         // create monsters
-        monsters.put(character.BLACK_BEAR.getCharacter(), LEVEL_1);
-        monsters.put(character.WHITE_TIGER.getCharacter(), LEVEL_5);
-        monsters.put(character.APE_THROWER.getCharacter(), LEVEL_10);
-        monsters.put(character.POISON_SPIDER.getCharacter(), LEVEL_15);
-        monsters.put(character.RED_SCORPION.getCharacter(),LEVEL_20);
-        monsters.put(character.ALBINO_SNAKE.getCharacter(),LEVEL_25);
-        monsters.put(character.POLAR_BEAR.getCharacter(),LEVEL_30);
-        monsters.put(character.YETI.getCharacter(),LEVEL_35);
-        monsters.put(character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40);
-        monsters.put(character.DEMON.getCharacter(),LEVEL_45);
-        monsters.put(character.CURSED_VAMPIRE.getCharacter(),LEVEL_50);
-        monsters.put(character.WITCH.getCharacter(),LEVEL_55);
-        monsters.put(character.BERA.getCharacter(),LEVEL_9);
-        monsters.put(character.TIGRIS.getCharacter(),LEVEL_14);
-        monsters.put(character.APE_KING.getCharacter(),LEVEL_19);
-        monsters.put(character.SPIDER_QUEEN.getCharacter(),LEVEL_34);
-        monsters.put(character.NINE_TAILS.getCharacter(),LEVEL_49);
-        monsters.put(character.DEATH.getCharacter(),LEVEL_60);
-        monsters.put(character.RED_DRAGON.getCharacter(),70);
+        // monsters.put(character.BLACK_BEAR.getCharacter(), LEVEL_1);
+        // monsters.put(character.WHITE_TIGER.getCharacter(), LEVEL_5);
+        // monsters.put(character.APE_THROWER.getCharacter(), LEVEL_10);
+        // monsters.put(character.POISON_SPIDER.getCharacter(), LEVEL_15);
+        // monsters.put(character.RED_SCORPION.getCharacter(),LEVEL_20);
+        // monsters.put(character.ALBINO_SNAKE.getCharacter(),LEVEL_25);
+        // monsters.put(character.POLAR_BEAR.getCharacter(),LEVEL_30);
+        // monsters.put(character.YETI.getCharacter(),LEVEL_35);
+        // monsters.put(character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40);
+        // monsters.put(character.DEMON.getCharacter(),LEVEL_45);
+        // monsters.put(character.CURSED_VAMPIRE.getCharacter(),LEVEL_50);
+        // monsters.put(character.WITCH.getCharacter(),LEVEL_55);
+        // monsters.put(character.BERA.getCharacter(),LEVEL_9);
+        // monsters.put(character.TIGRIS.getCharacter(),LEVEL_14);
+        // monsters.put(character.APE_KING.getCharacter(),LEVEL_19);
+        // monsters.put(character.SPIDER_QUEEN.getCharacter(),LEVEL_34);
+        // monsters.put(character.NINE_TAILS.getCharacter(),LEVEL_49);
+        // monsters.put(character.DEATH.getCharacter(),LEVEL_60);
+        // monsters.put(character.RED_DRAGON.getCharacter(),70);
+        
+        monsters.add(new Monster (character.BLACK_BEAR.getCharacter(), LEVEL_1, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.WHITE_TIGER.getCharacter(), LEVEL_5, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.APE_THROWER.getCharacter(), LEVEL_10, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.POISON_SPIDER.getCharacter(), LEVEL_15, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.RED_SCORPION.getCharacter(),LEVEL_20, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.ALBINO_SNAKE.getCharacter(),LEVEL_25, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.POLAR_BEAR.getCharacter(),LEVEL_30, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.YETI.getCharacter(),LEVEL_35, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.DEMON.getCharacter(),LEVEL_45, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.CURSED_VAMPIRE.getCharacter(),LEVEL_50, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.WITCH.getCharacter(),LEVEL_55, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.BERA.getCharacter(),LEVEL_9, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.TIGRIS.getCharacter(),LEVEL_14, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.APE_KING.getCharacter(),LEVEL_19, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.SPIDER_QUEEN.getCharacter(),LEVEL_34, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.NINE_TAILS.getCharacter(),LEVEL_49, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.DEATH.getCharacter(),LEVEL_60, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.RED_DRAGON.getCharacter(),70, character.BLACK_BEAR.getCharacter()));
          
         run();
                 
@@ -481,17 +501,19 @@ public class Game
      */
     private Actor findMonster(String character)
     {
-        for (String monsterName : monsters.keySet())     
+        for (Monster monster : monsters)     
         {
-            if (monsterName.equals(character))
+            if (monster.getName().equals(character))
             {
-                monsterLevel = monsters.get(monsterName);
+                //monsterLevel = monsters.get(monsterName);
                 
-                Actor monster = new Monster(monsterName,monsterLevel);
+                //Actor monster = new Monster(monsterName,monsterLevel);
+                //Actor monster = monsters.get(monsterName);
                 
                 return monster;
             }
         }
+        
         return null;
     }
     
