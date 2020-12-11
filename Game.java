@@ -444,10 +444,13 @@ public class Game
             if(fight(character, monster))
             {
                 world.addAnother(character);
+                
                 pickUpGold = dropGold(monster);
-                dropItem(monster);        
+                player.addScore(pickUpGold);
                 player.addScore(monster.getLevel());
-            
+                
+                dropItem(monster);
+                
                 return true;
             }
             
