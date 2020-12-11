@@ -84,16 +84,14 @@ public class World
     private String square = "   ";
     
     
-    private String name;
+    private String name = "World of Zuul";
     private Map map;
     
     /**
      * initialising the World
      */
-    public World(String name)
+    public World()
     {
-        this.name = name;
-        
         town = new Map("Town", TOWN,"The only safe place left in the world");
         town.createMap(character.WALL.getCharacter(),MAP_EDGE);
         addObjectsToTown();
