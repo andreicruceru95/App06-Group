@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Map
 comment0.text=\r\n\ The\ player's\ visual\ field\ on\ the\ map.\r\n\ The\ rest\ of\ the\ map\ will\ be\ hidden.\r\n\r\n\ @author\ Andrei\ Cruceru\r\n\ @version\ 21112020\r\n
-comment1.params=name\ map\ description
+comment1.params=name\ givenMap\ description
 comment1.target=Map(java.lang.String,\ java.lang.String[][],\ java.lang.String)
 comment1.text=\r\n\ Constructor\ for\ the\ Map\r\n
 comment2.params=row\ col\ object
@@ -9,7 +9,7 @@ comment2.target=void\ setOne(int,\ int,\ java.lang.String)
 comment2.text=\r\n\ Set\ an\ object\ on\ the\ map\r\n
 comment3.params=
 comment3.target=void\ printMap()
-comment3.text=\r\n\ print\ a\ map\r\n
+comment3.text=\r\n\ Print\ a\ map.\ Developers\ only.\r\n
 comment4.params=
 comment4.target=java.lang.String[][]\ getmap()
 comment4.text=\r\n\ @return\ the\ current\ map\r\n
