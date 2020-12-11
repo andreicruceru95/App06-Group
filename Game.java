@@ -33,6 +33,7 @@ public class Game
     public static final String HIDE_STATS = ("hidestats");
     public static final String SHOW_ITEMS = ("showitems");
     public static final String HIDE_ITEMS = ("hideitems");
+    public static final String INVENTORY = ("inventory");
     
     public static final Shop SHOP = new Shop();
     public static final int PLAYER_INITIAL_ROW = 7;
@@ -109,6 +110,7 @@ public class Game
     
     private int playerRowCoord = 6;
     private int playerColCoord = 6;
+    private int pickUpGold = 0;
     
     public Game()
     {
@@ -142,25 +144,26 @@ public class Game
         misk.add(character.FOX_KEY.getCharacter());
         misk.add(character.CHEST_KEY.getCharacter());
         
-        monsters.add(new Monster (character.BLACK_BEAR.getCharacter(), LEVEL_1, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.WHITE_TIGER.getCharacter(), LEVEL_5, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.APE_THROWER.getCharacter(), LEVEL_10, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.POISON_SPIDER.getCharacter(), LEVEL_15, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.RED_SCORPION.getCharacter(),LEVEL_20, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.ALBINO_SNAKE.getCharacter(),LEVEL_25, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.POLAR_BEAR.getCharacter(),LEVEL_30, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.YETI.getCharacter(),LEVEL_35, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.DEMON.getCharacter(),LEVEL_45, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.CURSED_VAMPIRE.getCharacter(),LEVEL_50, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.WITCH.getCharacter(),LEVEL_55, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.BERA.getCharacter(),LEVEL_9, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.TIGRIS.getCharacter(),LEVEL_14, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.APE_KING.getCharacter(),LEVEL_19, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.SPIDER_QUEEN.getCharacter(),LEVEL_34, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.NINE_TAILS.getCharacter(),LEVEL_49, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.DEATH.getCharacter(),LEVEL_60, character.BLACK_BEAR.getCharacter()));
-        monsters.add(new Monster (character.RED_DRAGON.getCharacter(),70, character.BLACK_BEAR.getCharacter()));
+        monsters.add(new Monster (character.BLACK_BEAR.getCharacter(), LEVEL_1, character.FLOWER_RED.getCharacter()));
+        monsters.add(new Monster (character.WHITE_TIGER.getCharacter(), LEVEL_5, character.FLOWER_RED.getCharacter()));
+        monsters.add(new Monster (character.APE_THROWER.getCharacter(), LEVEL_10, character.FLOWER_BLUE.getCharacter()));
+        monsters.add(new Monster (character.POISON_SPIDER.getCharacter(), LEVEL_15, character.FLOWER_YELLOW.getCharacter()));
+        monsters.add(new Monster (character.RED_SCORPION.getCharacter(),LEVEL_20, character.FLOWER_YELLOW.getCharacter()));
+        monsters.add(new Monster (character.ALBINO_SNAKE.getCharacter(),LEVEL_25, character.FLOWER_PURPLE.getCharacter()));
+        monsters.add(new Monster (character.POLAR_BEAR.getCharacter(),LEVEL_30, character.FLOWER_WHITE.getCharacter()));
+        monsters.add(new Monster (character.YETI.getCharacter(),LEVEL_35, character.SNOW_FRAG.getCharacter()));
+        monsters.add(new Monster (character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40, character.SNOW_FRAG.getCharacter()));
+        monsters.add(new Monster (character.DEMON.getCharacter(),LEVEL_45, character.STAR_FRAG.getCharacter()));
+        monsters.add(new Monster (character.CURSED_VAMPIRE.getCharacter(),LEVEL_50, character.STAR_FRAG.getCharacter()));
+        monsters.add(new Monster (character.WITCH.getCharacter(),LEVEL_55, character.STAR_FRAG.getCharacter()));
+        monsters.add(new Monster (character.BERA.getCharacter(),LEVEL_9, character.SPIDER_KEY.getCharacter()));
+        monsters.add(new Monster (character.TIGRIS.getCharacter(),LEVEL_14, character.SPIDER_KEY.getCharacter()));
+        monsters.add(new Monster (character.APE_KING.getCharacter(),LEVEL_19, character.SPIDER_KEY.getCharacter()));
+        monsters.add(new Monster (character.SPIDER_QUEEN.getCharacter(),LEVEL_34, character.FOX_KEY.getCharacter()));
+        monsters.add(new Monster (character.NINE_TAILS.getCharacter(),LEVEL_49, character.TOWER_KEY.getCharacter()));
+        //drop to be changed
+        monsters.add(new Monster (character.DEATH.getCharacter(),LEVEL_60, character.CHEST_KEY.getCharacter()));
+        monsters.add(new Monster (character.RED_DRAGON.getCharacter(),70, character.CHEST_KEY.getCharacter()));
          
         run();
                 
@@ -225,6 +228,12 @@ public class Game
             else if(choice.toLowerCase().replaceAll("\\s","").contains(HIDE_ITEMS))
                 items = false;
             
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(INVENTORY))
+            {
+                System.out.println(CLEAR);
+                player.printInventory(); 
+                pressAny();
+            }
             else
                 runMenu(choice);
         }
@@ -419,52 +428,93 @@ public class Game
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.GOLD.getCharacter()))
         {
-            //take gold
+            player.addGold(pickUpGold);
+            
             return true;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(character.ITEM.getCharacter()))
+        else if(checkItem(world.getSquareValue(nextRow,nextCol)))//.equals(character.ITEM.getCharacter()))
         {
-            //take random item
+            player.addToInventory(world.getSquareValue(nextRow,nextCol));
+            
             return true;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.TELEPORT.getCharacter()))
         {
             teleport();
+            
             return false;
         }
         else 
         {
             String character = (world.getSquareValue(nextRow,nextCol));
-            
             Actor monster = findMonster(character);
             
-            if (monster != null)
+            if(fight(character, monster))
             {
-                return checkResult(action(monster), character);
+                world.addAnother(character);
+                pickUpGold = dropGold(monster);
+                dropItem(monster);        
+                player.addScore(monster.getLevel());
+            
+                return true;
             }
             
         }
         return false;
     }
     
+    private boolean fight(String character, Actor monster)
+    {
+        if (monster != null)
+        {
+            return checkResult(action(monster), monster, character);
+        }
+        
+        return false;
+    }
+    
+    private boolean checkItem(String value)
+    {
+        for(String string : misk)
+        {
+            if(string.equals(value))
+                return true;
+        }
+        
+        return false;
+    }
+    
+    private int dropGold(Actor monster)
+    {
+        if(((Monster) monster).dropGold() != 0)
+        {
+            world.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, character.GOLD.getCharacter()) ;           
+        }
+        
+        return monster.getLevel();
+    }
+    
+    private void dropItem(Actor monster)
+    {
+        if(((Monster) monster).dropItem())
+        {
+            world.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, ((Monster) monster).getDrop()) ;           
+        }
+           
+    }
+    
     /**
      * Spawn another monster on the map if you won the fight.
      * If you die, you will be set back to the initial position.
      */
-    private boolean checkResult(boolean result, String character)
+    private boolean checkResult(boolean result, Actor monster, String character)
     {
         if(result)
         {
             System.err.println("\t\t\t\tYou Win!");
-                    
-            world.addAnother(character);
             
-            //checkLuck();
-                    
-            player.addScore(1);
-            
-            player.addGold(goldChance());
-                    
             return true;
         }
         else
