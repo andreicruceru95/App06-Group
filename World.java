@@ -167,7 +167,8 @@ public class World
                 
             }
         }
-                  
+        
+        //Might be a mistake
         for(int i = 0; i < FULL_H; i++)
         {
             for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
