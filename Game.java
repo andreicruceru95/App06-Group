@@ -101,6 +101,8 @@ public class Game
     private boolean firstDeathDescription =  false;
     private boolean stats = false;
     private boolean items = false;
+    private boolean ringExists = false;
+    private boolean braceletExists = false;
     
     private Random rand = new Random();
     private Input reader = new Input();
@@ -124,8 +126,7 @@ public class Game
         armour = player.getArmour();
         potion = player.getPotion();
         amulet = player.getAmulet();
-        ring = player.getRing();
-        bracelet = player.getBracelet();
+        
         
         display.runStory(story.getPartTwo(playerName));
                         
@@ -324,16 +325,44 @@ public class Game
             
         }
         
+        createRing();
+        createBracelet();
+            
         if(items)
         {
             ((Weapon) weapon).print();
             ((Armour) armour).print();
             ((Potion) potion).print();
             ((Amulet) amulet).print();
-            ((Ring) ring).print();
-            ((Bracelet) bracelet).print();
+            
+            if(ringExists)
+                ((Ring) ring).print();
+            
+            if(braceletExists)
+                ((Bracelet) bracelet).print();
+                
+        }   
+            
+    }
+    
+    public void createRing()
+    {
+        if(((Player) player).ringExists())
+        {
+            ring = player.getRing();
+            
+            ringExists = true;
         }
-        
+    }
+    
+    public void createBracelet()
+    {
+        if(((Player) player).braceletExists())   
+        {
+            bracelet = player.getBracelet();
+            
+            braceletExists = true;
+        }   
     }
     
     public void getGold()
