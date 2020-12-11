@@ -112,6 +112,11 @@ public class World
         
         setCurrentMap("town");
     } 
+    
+    public void addObjects(int columnMin, int columnMax, int rowMin, int rowMax, String object)
+    {
+        currentMap.addObjects(columnMin, columnMax, rowMin, rowMax, object, 1);
+    }
      
     public String getCurrentMapName()
     {
