@@ -26,9 +26,13 @@ public class Game
     public static final String QUIT = "quit";
     public static final String POTION = "potion";
     public static final String SEE_DATABASE = "database";
-    public static final String SEE_STATS = "seestats";
+    public static final String SEE_MONSTERS = "seemonsters";
     public static final String SEE_LOCATION = "seelocation";
-    public static final String SUCCESS = "\t\tYou have successfully purchased: ";    
+    public static final String SUCCESS = "\t\tYou have successfully purchased: ";   
+    public static final String SHOW_STATS = ("showstats");
+    public static final String HIDE_STATS = ("hidestats");
+    public static final String SHOW_ITEMS = ("showitems");
+    public static final String HIDE_ITEMS = ("hideitems");
     
     public static final Shop SHOP = new Shop();
     public static final int PLAYER_INITIAL_ROW = 7;
@@ -69,7 +73,6 @@ public class Game
     
     //interactions with game objects
     private Interactions interaction = new Interactions();
-    
     private Database database = new Database();
     private Display display = new Display();
     private Storyline story = new Storyline();
@@ -96,6 +99,8 @@ public class Game
     private boolean dessertDescription =  false;
     private boolean spiderCaveDescription =  false;
     private boolean firstDeathDescription =  false;
+    private boolean stats = false;
+    private boolean items = false;
     
     private Random rand = new Random();
     private Input reader = new Input();
@@ -156,13 +161,11 @@ public class Game
     {
         System.out.println(CLEAR);
         
-        // showInfo();
-        // updateVisualField();
-        
         boolean finished = false;
         while(!finished)
         {
             System.out.println(CLEAR);
+                
             changeImage();
             showInfo();
             updateVisualField();
@@ -173,20 +176,43 @@ public class Game
                 finished = true;
             
             else if(choice.toLowerCase().replaceAll("\\s+","").equals(POTION))
+            {
                 player.drinkPotion();
-                
+            }    
             else if(choice.toLowerCase().replaceAll("\\s","").contains(HELP))
+            {
                 display.listOptions(story.getHelp());
-                
+                pressAny();
+            }
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_DATABASE))
+            {
                 database.printAll();
+                pressAny();
+            }
                 
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_STATS))
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_MONSTERS))
+            {
                 database.getMonsterList(monsters);
+                pressAny();
+            }
             
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_LOCATION))
+            {
                 world.printHelpMap(player.getRowCoord(), player.getColCoord());
+                pressAny();
+            }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(SHOW_STATS))
+                stats = true;
                 
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HIDE_STATS))
+                stats = false;
+                
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(SHOW_ITEMS))    
+                items = true;
+                
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HIDE_ITEMS))
+                items = false;
+            
             else
                 runMenu(choice);
         }
@@ -199,6 +225,13 @@ public class Game
     {
         System.out.println("Chose direction");
         movePlayer(choice);
+    }
+    
+    public void pressAny()
+    {
+        System.out.println("Press any to continue");
+        
+        reader.getAny();
     }
     
     /**
@@ -282,16 +315,30 @@ public class Game
     public void showInfo()
     {
         System.out.println("\tMap: " + world.getCurrentMapName().toUpperCase() + "\n");
-        System.out.println(player.getStats()); 
-        System.out.println("\tGold: " + player.getGold() + "" + character.GOLD.getCharacter());
-        System.out.println("\tScore: " + player.getScore());
-        ((Weapon) weapon).print();
-        ((Armour) armour).print();
-        ((Potion) potion).print();
-        ((Amulet) amulet).print();
-        ((Ring) ring).print();
-        ((Bracelet) bracelet).print();
+        System.out.println("\tPlayer: " + player.getName() + "\tScore: " + player.getScore() + "\n" + player.getHealthInfo());
         
+        if(stats)
+        {
+            System.out.println(player.getStats()); 
+            getGold();
+            
+        }
+        
+        if(items)
+        {
+            ((Weapon) weapon).print();
+            ((Armour) armour).print();
+            ((Potion) potion).print();
+            ((Amulet) amulet).print();
+            ((Ring) ring).print();
+            ((Bracelet) bracelet).print();
+        }
+        
+    }
+    
+    public void getGold()
+    {
+        System.out.println("\tGold: " + player.getGold() + "" + character.GOLD.getCharacter());
     }
     
     /**
@@ -478,27 +525,41 @@ public class Game
      */
     public void checkFirstInteraction()
     {
-        if(player.checkVisualField(character.SHOP.getCharacter()) && shopDescription)
-            shopDescription = interaction.getInteraction(character.SHOP.getCharacter());            
-            
-        else if(player.checkVisualField(character.BLACKSMITH.getCharacter()) && blacksmithDescription)
+        if(player.checkVisualField(character.SHOP.getCharacter()) && !shopDescription)
+        {
+            shopDescription = interaction.getInteraction(character.SHOP.getCharacter());    
+            pressAny();
+        }    
+        else if(player.checkVisualField(character.BLACKSMITH.getCharacter()) && !blacksmithDescription)
+        {
             blacksmithDescription = interaction.getInteraction(character.BLACKSMITH.getCharacter()); 
-            
-        else if(player.checkVisualField(character.STABLE.getCharacter()) && stableDescription)
+            pressAny();
+        }    
+        else if(player.checkVisualField(character.STABLE.getCharacter()) && !stableDescription)
+        {
             stableDescription = interaction.getInteraction(character.STABLE.getCharacter());
-                  
-        else if(player.checkVisualField(character.GUARD.getCharacter()) && guardDescription)
+            pressAny();
+        }          
+        else if(player.checkVisualField(character.GUARD.getCharacter()) && !guardDescription)
+        {
             guardDescription = interaction.getInteraction(character.GUARD.getCharacter());
-            
-        else if(player.checkVisualField(character.TELEPORT.getCharacter()) && teleporterDescription)
+            pressAny();
+        }    
+        else if(player.checkVisualField(character.TELEPORT.getCharacter()) && !teleporterDescription)
+        {
             teleporterDescription = interaction.getInteraction(character.TELEPORT.getCharacter());
-            
-        else if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && dessertDescription)
+            pressAny();
+        }    
+        else if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && !dessertDescription)
+        {
             dessertDescription = interaction.getInteraction(DESSERT);
-                        
-        else if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && spiderCaveDescription)
+            pressAny();
+        }                
+        else if(world.getCurrentMapName().toLowerCase().equals(SPIDER_CAVE) && !spiderCaveDescription)
+        {
             spiderCaveDescription = interaction.getInteraction(SPIDER_CAVE);
-            
+            pressAny();
+        }    
     }
     
     /**
