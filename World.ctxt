@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=World
 comment0.text=\r\n\ This\ class\ will\ make\ the\ conection\ between\ maps.\r\n\r\n\ @author\ Andrei\ Cruceru\r\n\ @version\ 28112020\r\n
-comment1.params=name
-comment1.target=World(java.lang.String)
+comment1.params=
+comment1.target=World()
 comment1.text=\r\n\ initialising\ the\ World\r\n
 comment10.params=playerRowCoord\ playerColCoord\ value
 comment10.target=void\ setObject(int,\ int,\ java.lang.String)
