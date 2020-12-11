@@ -38,6 +38,19 @@ public class Player extends Actor
         super(name, level);
         
         update();
+        
+        INVENTORY.put(character.FLOWER_RED.getCharacter(), 0);
+        INVENTORY.put(character.FLOWER_BLUE.getCharacter(), 0);
+        INVENTORY.put(character.FLOWER_PURPLE.getCharacter(), 0);
+        INVENTORY.put(character.FLOWER_YELLOW.getCharacter(), 0);
+        INVENTORY.put(character.FLOWER_WHITE.getCharacter(), 0);
+        INVENTORY.put(character.SNOW_FRAG.getCharacter(), 0);
+        INVENTORY.put(character.STAR_FRAG.getCharacter(), 0);
+        INVENTORY.put(character.SPIDER_KEY.getCharacter(), 0);
+        INVENTORY.put(character.TOWER_KEY.getCharacter(), 0);
+        INVENTORY.put(character.FOX_KEY.getCharacter(), 0);
+        INVENTORY.put(character.CHEST_KEY.getCharacter(), 0);
+        
     }
     
     public void addToInventory(String string)
