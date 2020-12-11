@@ -448,7 +448,7 @@ public class Game
                     
             world.addAnother(character);
             
-            checkLuck();
+            //checkLuck();
                     
             player.addScore(1);
             
@@ -456,7 +456,6 @@ public class Game
                     
             return true;
         }
-                
         else
         {
             
