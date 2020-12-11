@@ -9,8 +9,8 @@ import java.util.Random;
 public class Monster extends Actor
 {
     private String drop;
-    private Random random = new Random();
-    public Monster(String name, int level)
+        
+    public Monster(String name, int level, String drop)
     {
         super(name, level);
         
@@ -19,7 +19,38 @@ public class Monster extends Actor
         currentHealthPoints = currentHealthPoints * level;
         maxHealthPoints = initialMaxHealthPoints * level;
         
+        this.drop = drop;
     }
     
+    private int dropGold()
+    {
+        int goldDrop = 50; //%
+        int goldChance = random.nextInt(total - goldDrop) + goldDrop;
+        
+        if(goldChance <= goldDrop)
+                    return level;
+        
+        return 0;
+        
+    }
     
+    private boolean dropItem()
+    {
+        int miskDrop = 40; //%
+        int miskChance = random.nextInt(total - miskDrop) + miskDrop;
+        
+        if(miskChance <= miskDrop)
+            return true;
+        
+        return false;
+        
+    }
+    
+    /**
+     * @return the item dropped.
+     */
+    private String getDrop()
+    {
+        return drop;
+    }
 }
