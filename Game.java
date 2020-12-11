@@ -90,7 +90,7 @@ public class Game
     private Item ring;
     private Item bracelet;
     
-    private World world = new World("World of Zull");
+    private World world = new World();
     
     private boolean shopDescription =  false;
     private boolean blacksmithDescription =  false;
@@ -108,13 +108,10 @@ public class Game
     private Random rand = new Random();
     private Input reader = new Input();
     
-    private int playerRowCoord = 6;
-    private int playerColCoord = 6;
     private int pickUpGold = 0;
     
     public Game()
     {
-                                
         display.runStory(story.getPartOne());
         
         System.out.println(CLEAR);
@@ -128,7 +125,6 @@ public class Game
         armour = player.getArmour();
         potion = player.getPotion();
         amulet = player.getAmulet();
-        
         
         display.runStory(story.getPartTwo(playerName));
         
@@ -269,18 +265,14 @@ public class Game
      */
     public void movePlayer(String direction)
     {
-              
-        playerRowCoord = player.getRowCoord();
-        playerColCoord = player.getColCoord();
-                
         if(direction.replaceAll("\\s+","").equals(UP))
         {
             
-            if(checkNextSquare((playerRowCoord - 1), playerColCoord))
+            if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
             {
-                world.setObject(playerRowCoord ,playerColCoord,"   ");
+                world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates((playerRowCoord - 1), playerColCoord);
+                player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
                 
             }
                        
@@ -288,11 +280,11 @@ public class Game
         else if(direction.replaceAll("\\s+","").equals(DOWN))
         {
             
-            if(checkNextSquare((playerRowCoord + 1), playerColCoord))
+            if(checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
             {
-                world.setObject(playerRowCoord ,playerColCoord,"   ");
+                world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates((playerRowCoord + 1), playerColCoord);
+                player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
                 
             }
                
@@ -300,11 +292,11 @@ public class Game
         else if(direction.replaceAll("\\s+","").equals(LEFT))
         {
             
-            if(checkNextSquare(playerRowCoord, (playerColCoord - 1)))
+            if(checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
             {
-                world.setObject(playerRowCoord ,playerColCoord,"   ");
+                world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates(playerRowCoord, (playerColCoord - 1));
+                player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
                 
             }
                
@@ -312,11 +304,11 @@ public class Game
         else if(direction.replaceAll("\\s+","").equals(RIGHT))
         {
             
-            if(checkNextSquare(playerRowCoord, (playerColCoord + 1)))
+            if(checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
             {
-                world.setObject(playerRowCoord ,playerColCoord,"   ");
+                world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates(playerRowCoord, (playerColCoord + 1));
+                player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
                 
             }
             
