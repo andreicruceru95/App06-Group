@@ -1,3 +1,4 @@
+import java.util.Random;
 
 /**
  * Write a description of class Monster here.
@@ -7,7 +8,8 @@
  */
 public class Monster extends Actor
 {
-        
+    private String drop;
+    private Random random = new Random();
     public Monster(String name, int level)
     {
         super(name, level);
@@ -18,5 +20,6 @@ public class Monster extends Actor
         maxHealthPoints = initialMaxHealthPoints * level;
         
     }
+    
     
 }
