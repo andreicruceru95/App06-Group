@@ -31,7 +31,7 @@ public class Interactions
     
     public boolean getInteraction(String object)
     {
-         System.err.println(interactions.get(object));
+         System.out.println(interactions.get(object));
          
          return true;
     }
