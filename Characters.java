@@ -54,7 +54,6 @@ public enum Characters
     FOX_KEY (" ⚴ "),
     CHEST_KEY (" ⚿ ");
     
-    
     private final String character;
  
     Characters(String character) 
