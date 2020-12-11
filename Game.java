@@ -68,9 +68,9 @@ public class Game
     private String square = "   ";
     private int monsterLevel = 1;
     
-    //A list of monsters name, level
-    //private HashMap <String, Integer> monsters = new HashMap<>();
+    
     private ArrayList <Monster> monsters = new ArrayList<>();
+    private ArrayList <String> misk = new ArrayList<>(); 
     //interactions with game objects
     private Interactions interaction = new Interactions();
     private Database database = new Database();
@@ -129,27 +129,18 @@ public class Game
         
         
         display.runStory(story.getPartTwo(playerName));
-                        
-        // create monsters
-        // monsters.put(character.BLACK_BEAR.getCharacter(), LEVEL_1);
-        // monsters.put(character.WHITE_TIGER.getCharacter(), LEVEL_5);
-        // monsters.put(character.APE_THROWER.getCharacter(), LEVEL_10);
-        // monsters.put(character.POISON_SPIDER.getCharacter(), LEVEL_15);
-        // monsters.put(character.RED_SCORPION.getCharacter(),LEVEL_20);
-        // monsters.put(character.ALBINO_SNAKE.getCharacter(),LEVEL_25);
-        // monsters.put(character.POLAR_BEAR.getCharacter(),LEVEL_30);
-        // monsters.put(character.YETI.getCharacter(),LEVEL_35);
-        // monsters.put(character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40);
-        // monsters.put(character.DEMON.getCharacter(),LEVEL_45);
-        // monsters.put(character.CURSED_VAMPIRE.getCharacter(),LEVEL_50);
-        // monsters.put(character.WITCH.getCharacter(),LEVEL_55);
-        // monsters.put(character.BERA.getCharacter(),LEVEL_9);
-        // monsters.put(character.TIGRIS.getCharacter(),LEVEL_14);
-        // monsters.put(character.APE_KING.getCharacter(),LEVEL_19);
-        // monsters.put(character.SPIDER_QUEEN.getCharacter(),LEVEL_34);
-        // monsters.put(character.NINE_TAILS.getCharacter(),LEVEL_49);
-        // monsters.put(character.DEATH.getCharacter(),LEVEL_60);
-        // monsters.put(character.RED_DRAGON.getCharacter(),70);
+        
+        misk.add(character.FLOWER_RED.getCharacter());
+        misk.add(character.FLOWER_BLUE.getCharacter());        
+        misk.add(character.FLOWER_YELLOW.getCharacter());
+        misk.add(character.FLOWER_PURPLE.getCharacter());
+        misk.add(character.FLOWER_WHITE.getCharacter());
+        misk.add(character.SNOW_FRAG.getCharacter());
+        misk.add(character.STAR_FRAG.getCharacter());
+        misk.add(character.SPIDER_KEY.getCharacter());
+        misk.add(character.TOWER_KEY.getCharacter());
+        misk.add(character.FOX_KEY.getCharacter());
+        misk.add(character.CHEST_KEY.getCharacter());
         
         monsters.add(new Monster (character.BLACK_BEAR.getCharacter(), LEVEL_1, character.BLACK_BEAR.getCharacter()));
         monsters.add(new Monster (character.WHITE_TIGER.getCharacter(), LEVEL_5, character.BLACK_BEAR.getCharacter()));
@@ -505,12 +496,8 @@ public class Game
         {
             if (monster.getName().equals(character))
             {
-                //monsterLevel = monsters.get(monsterName);
-                
-                //Actor monster = new Monster(monsterName,monsterLevel);
-                //Actor monster = monsters.get(monsterName);
-                
                 return monster;
+                
             }
         }
         
