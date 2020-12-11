@@ -347,22 +347,26 @@ public class Game
     
     public void createRing()
     {
+        
         if(((Player) player).ringExists())
         {
             ring = player.getRing();
             
             ringExists = true;
         }
+        
     }
     
     public void createBracelet()
     {
+        
         if(((Player) player).braceletExists())   
         {
             bracelet = player.getBracelet();
             
             braceletExists = true;
-        }   
+        }  
+        
     }
     
     public void getGold()
