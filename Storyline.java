@@ -53,7 +53,12 @@ public class Storyline
             command.QUIT.getCommand(),
             command.POTION.getCommand(),
             command.DATABASE.getCommand(),
-            command.SEE_STATS.getCommand()
+            command.SEE_STATS.getCommand(),
+            command.SEE_LOCATION.getCommand(),
+            command.SHOW_STATS.getCommand(),
+            command.HIDE_STATS.getCommand(),
+            command.SHOW_ITEMS.getCommand(),
+            command.HIDE_ITEMS.getCommand()
         };
         
         return help;
