@@ -14,8 +14,12 @@ public enum Commands
     LEFT_INSTRUCTION ("\t\tEnter \'a\' to move left"),  
     RIGHT_INSTRUCTION ("\t\tEnter \'d\' to move right"),
     HELP ("\t\tEnter \'help\' for a list of commands"),
-    SEE_STATS ("\t\tEnter \'see stats\' for a list of monster stats"),
+    SEE_STATS ("\t\tEnter \'see monsters\' for a list of monster stats"),
     SEE_LOCATION ("\t\tEnter \'see location\' to see the location of the player on the big map"),
+    SHOW_STATS ("\t\tEnter \'show stats\' to show player's stats"),
+    HIDE_STATS ("\t\tEnter \'hide stats\' to hide player's stats"),
+    SHOW_ITEMS ("\t\tEnter \'show items\' to show player's items"),
+    HIDE_ITEMS ("\t\tEnter \'hide items\' to hide player's items"),
     
     QUIT ("\t\tEnter \'quit\' to quit game or quit window"),
     POTION ("\t\tEnter \'potion\' to use health potion and restore health"),
