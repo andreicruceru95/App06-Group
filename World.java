@@ -70,6 +70,8 @@ public class World
     private static final int WALL_START = 10;
     private static final int WALL_END = 13;
     
+    private int row = 3;
+    private int col = 3;
     
     private Map currentMap;
     private Map town;
@@ -107,6 +109,9 @@ public class World
         test = new Map("test", TEST, "Developers only");
         test.createMap(character.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToTestMap();
+        
+        userHelp = new Map("Location", USER_HELP, "Player's location on the map");
+        userHelp.createMap(character.WALL.getCharacter(),MAP_EDGE);
         
         setCurrentMap("town");
     } 
@@ -354,14 +359,24 @@ public class World
     /**
      * Print a empty map for the user with the player's location.
      */
-    public void printHelpMap(int row, int col)
+    public void printHelpMap(int pRow, int pCol)
     {
-        userHelp = new Map("Location", USER_HELP, "Player's location on the map");
-        userHelp.createMap(character.WALL.getCharacter(),MAP_EDGE);
+        userHelp.setOne(row, col, "   ");
+        userHelp.setOne(pRow, pCol, character.PLAYER.getCharacter());
         
-        userHelp.setOne(row, col, character.PLAYER.getCharacter());
+        row = pRow;
+        col = pCol;
         
         userHelp.printMap();
+    }
+    
+    /**
+     * Set values in the help map.
+     */
+    public void addToHelpMap(int row, int col, String object)
+    {
+        userHelp.setOne(row, col, object);
+        
     }
     
     private void addObjectsToTestMap()
