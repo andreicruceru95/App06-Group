@@ -37,7 +37,7 @@ public enum Characters
     WALL ("[/]"),
     BLACKSMITH (" B "),
     SHOP (" S "),
-    CHEST ("!? "),
+    CHEST (" ⛋ "),
     GOLD (" $ "),
     ITEM (" !^"),
     TREE (" ⍋ "),
