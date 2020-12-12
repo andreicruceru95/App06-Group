@@ -10,16 +10,14 @@ public class Player extends Actor
 {
     private static final VisualField VISUAL_FIELD = new VisualField();
     
-    private Characters character;
-    
-    public static final Item SWORD = new Weapon("Steel Sword", 20, 1, 12);
-    public static final Item ARMOUR = new Armour("Steel Armour", 10, 1, 8);
-    public static final Item POTION = new Potion("HP Potion", 200, 1, 200);
-    public static final Item AMULET = new Amulet("Hellen's Gift", 50, 1, 1000);
+    public static final Item SWORD = new Weapon("Steel Sword", 20000, 1, 12);
+    public static final Item ARMOUR = new Armour("Steel Armour", 10000, 1, 8);
+    public static final Item POTION = new Potion("HP Potion", 20000, 1, 200);
+    public static final Item AMULET = new Amulet("Hellen's Gift", 50000, 1, 1000);
     public static final Item RING = new Ring("Potus's Ring", 10, 1, 10);
     public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
     
-    private static final HashMap<String, Integer> INVENTORY = new HashMap<>();
+    public static final Inventory INVENTORY = new Inventory();
     
     private boolean ring = false;
     private boolean bracelet = false;
@@ -39,53 +37,26 @@ public class Player extends Actor
         
         update();
         
-        INVENTORY.put(character.FLOWER_RED.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_BLUE.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_PURPLE.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_YELLOW.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_WHITE.getCharacter(), 0);
-        INVENTORY.put(character.SNOW_FRAG.getCharacter(), 0);
-        INVENTORY.put(character.STAR_FRAG.getCharacter(), 0);
-        INVENTORY.put(character.SPIDER_KEY.getCharacter(), 0);
-        INVENTORY.put(character.TOWER_KEY.getCharacter(), 0);
-        INVENTORY.put(character.FOX_KEY.getCharacter(), 0);
-        INVENTORY.put(character.CHEST_KEY.getCharacter(), 0);
-        
     }
     
-    public void addToInventory(String string)
+    public void addToInventory(String string, int amount)
     {
-        INVENTORY.put(string, INVENTORY.get(string) + 1);
+        INVENTORY.addToInventory(string,amount);
     }
     
     public void removeFromInventory(String string, int amount)
     {
-        INVENTORY.put(string, INVENTORY.get(string) - amount);
+        INVENTORY.removeFromInventory(string , amount);
     }
     
     public boolean checkInventory(String string, int amount)
     {
-        if(INVENTORY.get(string) > amount)
-            return true;
-            
-        return false;    
+        return INVENTORY.checkInventory(string,amount);
     }
     
     public void printInventory()
     {
-        for (String object : INVENTORY.keySet())
-        {
-            String key = object.toString();
-            int value = INVENTORY.get(object);  
-            
-            if(value > 0)
-                System.out.println("\t" + key + "\t" + value);   
-            
-            else
-                System.out.println("Inventory is empty");
-            
-        }
-        
+        INVENTORY.printInventory();    
     }
     
     /**
