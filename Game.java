@@ -82,6 +82,7 @@ public class Game
     private Characters character;
     private Commands command;
     
+    private Actor monster;
     private Player player;
     private Item weapon;
     private Item armour;
@@ -210,6 +211,7 @@ public class Game
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SEE_LOCATION))
             {
                 world.printHelpMap(player.getRowCoord(), player.getColCoord());
+                
                 pressAny();
             }
             else if(choice.toLowerCase().replaceAll("\\s","").contains(SHOW_STATS))
@@ -270,10 +272,12 @@ public class Game
             
             if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
             {
+                updateHelpMap(UP);
+                
                 world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
                 player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
-                
+                      
             }
                        
         }
@@ -282,6 +286,8 @@ public class Game
             
             if(checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
             {
+                updateHelpMap(DOWN);
+                
                 world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
                 player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
@@ -294,6 +300,8 @@ public class Game
             
             if(checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
             {
+                updateHelpMap(LEFT);
+                
                 world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
                 player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
@@ -306,6 +314,8 @@ public class Game
             
             if(checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
             {
+                updateHelpMap(RIGHT);
+                
                 world.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
                 player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
@@ -322,6 +332,55 @@ public class Game
         checkFirstInteraction();       
     }
     
+    private void updateHelpMap(String direction)
+    {
+        if(direction.equals(UP))
+        {
+            //center
+            world.addToHelpMap((player.getRowCoord() - 1),player.getColCoord(), "   ");
+            //left
+            world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
+                                world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+            //right         
+            world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
+                                world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+        }
+        else if(direction.equals(DOWN))
+        {
+            //center
+            world.addToHelpMap((player.getRowCoord() + 1),player.getColCoord(), "   ");
+            //left
+            world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
+                                world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+            //right         
+            world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
+                                world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+        }
+        else if(direction.equals(LEFT))
+        {
+            //center
+            world.addToHelpMap((player.getRowCoord()),player.getColCoord() - 1, "   ");
+            //down
+            world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
+                                world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+            //up         
+            world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
+                                world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+        }
+        else if(direction.equals(RIGHT))
+        {
+            //center
+            world.addToHelpMap((player.getRowCoord()),player.getColCoord() + 1, "   ");
+            //down
+            world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
+                                world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+            //up         
+            world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
+                                world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+        }
+        
+    } 
+     
     /**
      * Display information about the player and map.
      */
@@ -415,7 +474,8 @@ public class Game
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.CHEST.getCharacter()))
         {
-            //SEE CHEST
+            openChest();
+            
             return true;
         }
         else if(world.getSquareValue(nextRow,nextCol).equals(character.GOLD.getCharacter()))
@@ -424,9 +484,9 @@ public class Game
             
             return true;
         }
-        else if(checkItem(world.getSquareValue(nextRow,nextCol)))//.equals(character.ITEM.getCharacter()))
+        else if(checkItem(world.getSquareValue(nextRow,nextCol)))
         {
-            player.addToInventory(world.getSquareValue(nextRow,nextCol));
+            player.addToInventory(world.getSquareValue(nextRow,nextCol), 1);
             
             return true;
         }
@@ -439,23 +499,53 @@ public class Game
         else 
         {
             String character = (world.getSquareValue(nextRow,nextCol));
-            Actor monster = findMonster(character);
+            monster = findMonster(character);
             
             if(fight(character, monster))
             {
                 world.addAnother(character);
                 
-                pickUpGold = dropGold(monster);
+                pickUpGold = dropGold();
                 player.addScore(pickUpGold);
                 player.addScore(monster.getLevel());
                 
-                dropItem(monster);
+                dropItem();
+                dropChest();
                 
                 return true;
             }
             
         }
         return false;
+    }
+    
+    public void dropChest()
+    {
+        if(((Monster) monster).dropChest())
+        {
+            world.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, character.CHEST.getCharacter()) ;  
+        }
+    }
+    
+    /**
+     * 50% chance to obtain (1, 5) x monster level items or gold.
+     */
+    private void openChest()
+    {
+        if((rand.nextInt(1 - 0) +0) == 0)
+        {
+            player.addToInventory(((Monster) monster).getDrop(), ((Monster) monster).getDropAmount());
+            
+            System.err.println("Recieved " + ((Monster) monster).getDropAmount() + " " + ((Monster) monster).getDrop());
+        }
+        else
+        {
+            player.addGold(((Monster) monster).getDropAmount() * monster.getLevel());
+            
+            System.err.println("Recieved " + ((Monster) monster).getDropAmount() * monster.getLevel() + character.GOLD.getCharacter());
+        }
+        
     }
     
     private boolean fight(String character, Actor monster)
@@ -479,7 +569,7 @@ public class Game
         return false;
     }
     
-    private int dropGold(Actor monster)
+    private int dropGold()
     {
         if(((Monster) monster).dropGold() != 0)
         {
@@ -490,7 +580,7 @@ public class Game
         return monster.getLevel();
     }
     
-    private void dropItem(Actor monster)
+    private void dropItem()
     {
         if(((Monster) monster).dropItem())
         {
@@ -514,22 +604,28 @@ public class Game
         }
         else
         {
+            checkFirstDeath();
             
-            if(firstDeathDescription == false)
-            {
-                System.out.println("You died! You will be sent back in town where someone will take care of you.");
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
-                reader.getAny();
-                firstDeathDescription = true;
-            }
             System.err.println("\t\t\t\tYou Lost!");
                     
             player.setCoordinates(PLAYER_INITIAL_ROW, PLAYER_INITIAL_COL);
             player.setFullHealth();
                     
-            guardQuest();
+            //guardQuest();
         }
         return false;
+    }
+    
+    public void checkFirstDeath()
+    {
+        if(firstDeathDescription == false)
+        {
+            System.out.println("You died! You will be sent back in town where someone will take care of you.");
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+            reader.getAny();
+            
+            firstDeathDescription = true;
+        }
     }
     
     /**
@@ -797,22 +893,22 @@ public class Game
         
     }
     
-    /**
-     * Guardian Quest
-     */
-    public void guardQuest()
-    {
-        int min = 1;
-        int max = player.getScore() + 10;
+    // /**
+     // * Guardian Quest
+     // */
+    // public void guardQuest()
+    // {
+        // int min = 1;
+        // int max = player.getScore() + 10;
         
-        int guardGold = rand.nextInt(max - min) + min;
+        // int guardGold = rand.nextInt(max - min) + min;
         
-        player.addGold(guardGold);
+        // player.addGold(guardGold);
         
-        System.out.println("You have recieved " + guardGold + " Gold from the guard");
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
-        reader.getAny();
-    }
+        // System.out.println("You have recieved " + guardGold + " Gold from the guard");
+        // System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
+        // reader.getAny();
+    // }
     
     /**
      * Teleport to a different map
