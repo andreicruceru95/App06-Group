@@ -46,6 +46,26 @@ public class Monster extends Actor
         
     }
     
+    public boolean dropChest()
+    {
+        int chestDrop = 15;
+        int chestChance = random.nextInt(total - 1) + 1;
+        
+        if(chestChance <= chestDrop)
+            return true;
+        
+        return false;
+        
+    }
+    
+    public int getDropAmount()
+    {
+        int multiplier = 5;
+        
+        return random.nextInt(multiplier - 1) + 1;
+        
+    }
+    
     /**
      * @return the item dropped.
      */
