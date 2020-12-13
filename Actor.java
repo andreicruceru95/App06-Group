@@ -36,7 +36,7 @@ public abstract class Actor
         
     /**
      * Send an attack.
-     * @param value is the a random value.
+     *
      */
     protected int attack()
     {
@@ -71,7 +71,7 @@ public abstract class Actor
             currentHealthPoints -= received;
             
         }
-        else if(hitChance >= 1 && hitChance <= evasionChance)
+        else if(hitChance <= evasionChance)
         {
             received = 0;
         }
@@ -98,7 +98,7 @@ public abstract class Actor
      */
     public String getStats()
     {
-        return "\tAttack: " + attackForce + "\n\tDeffence: " + shield;
+        return "\tAttack: " + attackForce + "\n\tDefence: " + shield;
                 
     }
     
@@ -114,13 +114,7 @@ public abstract class Actor
      */
     public boolean checkHealth()
     {
-        if (currentHealthPoints <= 0)
-        {
-            return false;
-        }
-        else
-            
-            return true;
+        return currentHealthPoints > 0;
     }
     
     /**
