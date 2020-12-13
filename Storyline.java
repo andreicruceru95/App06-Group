@@ -13,13 +13,29 @@ public class Storyline
     {
         String [] partOne = new String[] 
         {
-            "\t\tOnce upon a time the world was once a beautiful and peaceful place,\n" + 
-            "\tbut one day things changed when evil creatures start appearing everywhere..",
-            "\t\tPeople of the lands known as gladiators,\n\tthe best of the human race had to offer " + 
-            "were ready for such a day to come \n\tbut when their people needed them most...they vanished....",
-            "\t\tNow people talk about the next \"gladiators\" known as reborns ",
-            "\t\tAlthough they are of unknown origin, they have the power\n\tto take on the darkness looming over our world...",
-            "\t\tBut I believe they will save the world....."
+            "\t\tOnce upon a time the world was a beautiful and peaceful place,\n" +
+            "\t\tBut one day evil creatures start appearing out of knowhere..",
+            
+            "\t\tThe animals become violent, enraged, attacking anyone on sight..\n" +
+            "\t\tMilions have died, cities were wiped off the face of the earth",
+            
+            "\t\tThe king, Potus, sent armies to slay the creatures,\n" +
+            "\t\tbut whenever a creature was defeated, more would apear out of knowhere..\n" +
+            "\t\tHis armies were eventualy outnumbered and defeated",
+            
+            "\t\tKing Potus turned to the gods and the gods responded..\n" + 
+            "\t\tThe gods themself come to battle this creatures..",
+            
+            "\t\tBut it was not easy at all, and one by one, the gods fell in battle..",
+            
+            "\t\tWith no other choice, Zeus, the strongest of the gods, used his last powers to \n" +
+            "\t\trip a piece of the heart of the sun and sent it to earth",
+            
+            "\t\tThis mythical stone was so pure and powerfull that it would distroy\n" +
+            "\t\tany evil creature if placed in the gods house - the church.",
+            
+            "\t\tThe stone is now out there between armies of demons, ready to be found \n" +
+            "\t\t and brought to the city, where it belongs."
             
         };
         
@@ -31,16 +47,22 @@ public class Storyline
             
         String [] partTwo = new String[] 
         {
-            "\t\tOne day, a young warrior stepped in our town.\n\tThe only safe place left for humans..",
-            "\t\tPeople loved this warrior.\n\tThey called him " + playerName + "..",
-            "\t\tHe promised that he will travel the world \n\tand find the root of this evil",
-            "\t\tBut will he be able to do it..?\n\tOr is he just another scared cat..?\n\n",
+            "\t\tWelcome young adventurer " + playerName + ", this is where your story begins.",
+            
+            "\t\tYou find yourself in the last settlement of humankind.\n" +
+            "\t\tIn this land of trepidations you must slay your way\n" +
+            "\t\tthough the now uncharted territory and retrieve the mythical stone\n" +
+            "\t\tand place it back in the centre of town where it belongs.",
+            
+            "\t\tUpon your quest you will have to fight monsters, upgrade your gear and level up.",
+        
             command.HELP.getCommand()
             
         };    
-        
+    
         return partTwo;
     }
+    
     
     public String[] getHelp()
     {
