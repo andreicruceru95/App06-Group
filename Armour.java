@@ -16,6 +16,6 @@ public class Armour extends Item
     
     public void print()
     {
-        System.out.println(displayName + "\t + " + displayLevel + "\tDeffence: " + (enchantStats));
+        System.out.println(displayName + "\t + " + displayLevel + "\tDefence: " + (enchantStats));
     }
 }

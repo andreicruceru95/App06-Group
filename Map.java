@@ -11,25 +11,21 @@ public class Map
 {
     private static final String SQUARE = "   ";
    
-    private String map[][]  = new String[47][35];
+    private static final String [][] MAP  = new String[47][35];
         
-    private Random rand;
+    public static final Random rand = new Random();
     
-    private String description;
-    private String name;
+    //private String description;
+    private final String name;
     
     /**
      * Constructor for the Map
      */
-     public Map(String name, String[][] givenMap, String description)
+     public Map(String name)//String description)
     {
-        rand = new Random();
-        
-        this.description = description;
+       // this.description = description;
         this.name = name;
-        
-        this.map = map;
-        
+
     }
     
     /**
@@ -37,7 +33,7 @@ public class Map
      */
     public void setOne(int row, int col,String object)
     {
-        map[row][col] = object;
+        MAP[row][col] = object;
     }
     
     /**
@@ -45,11 +41,11 @@ public class Map
      */
     public void printMap()
     {
-        for (int i = 0; i < map.length; i++)
+        for (String[] strings : MAP)
         {
-            for (int j = 0; j < map[i].length; j++)
+            for (String string : strings)
             {
-                System.out.print(map[i][j]);
+                System.out.print(string);
             }
             System.out.println("");
         }
@@ -58,19 +54,11 @@ public class Map
     /**
      * @return the current map
      */
-    public String[][] getmap()
+    public String[][] getMap()
     {
-        return map;
+        return MAP;
     }
-    
-    /**
-     * get the map description
-     */
-    public void getDescription()
-    {
-        System.out.println(description);
-    }
-    
+
     /**
      * Get the map name
      */
@@ -85,43 +73,34 @@ public class Map
     public void createMap(String walls,int mapEdge)
     {
         //map walls and empty center
-        for(int i = 0; i < map.length;i++)
+        for (String[] strings : MAP)
         {
-            for(int j = 0; j < map[i].length; j++)
-            {
-                map[i][j] = SQUARE;
-            }
+            Arrays.fill(strings, SQUARE);
         }
         //top
         for(int i = 0; i < mapEdge; i++)
         {
-            for (int j = 0; j < map[i].length; j++)
-            {
-                map[i][j] = walls;
-            }
+            Arrays.fill(MAP[i], walls);
         }
         //bottom
-        for(int i = map.length - mapEdge; i < map.length; i++)
+        for(int i = MAP.length - mapEdge; i < MAP.length; i++)
         {
-            for (int j = 0; j < map[i].length; j++)
-            {
-                map[i][j] = walls;
-            }
+            Arrays.fill(MAP[i], walls);
         }
         //left
-        for(int i = 0; i < map.length; i++)
+        for(int i = 0; i < MAP.length; i++)
         {
             for (int j = 0; j < mapEdge; j++)
             {
-                map[i][j] = walls;
+                MAP[i][j] = walls;
             }
         }
         //right
-        for(int i = 0; i < map.length; i++)
+        for(int i = 0; i < MAP.length; i++)
         {
-            for (int j = map[i].length - mapEdge; j < map[i].length; j++)
+            for (int j = MAP[i].length - mapEdge; j < MAP[i].length; j++)
             {
-                map[i][j] = walls;
+                MAP[i][j] = walls;
             }
         }
         
@@ -138,14 +117,14 @@ public class Map
         for(int i = 0; i < amount; i++)
         {
             
-            while(map[randomRow][randomCol] != SQUARE)
+            while(!MAP[randomRow][randomCol].equals(SQUARE))
             {
                 randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
                 randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
             
             }
-            
-            map[randomRow][randomCol] = object;
+
+            MAP[randomRow][randomCol] = object;
         }
         
     }
@@ -155,7 +134,7 @@ public class Map
      */
     public String getSquareValue(int row, int col)
     {
-        return map[row][col];
+        return MAP[row][col];
         
     }
 }    

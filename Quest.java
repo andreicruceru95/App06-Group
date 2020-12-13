@@ -7,11 +7,11 @@
  */
 public class Quest
 {
-    private String name;
-    private String requirement;
-    private int requirementAmount;
-    private String reward;
-    private int amount;
+    private final String name;
+    private final String requirement;
+    private final int requirementAmount;
+    private final String reward;
+    private final int amount;
     private boolean finished = false;
     private boolean started = false;
     

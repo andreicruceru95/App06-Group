@@ -9,26 +9,24 @@ import java.util.*;
 public class Inventory
 {
     private static final HashMap<String, Integer> INVENTORY = new HashMap<>();
-    
-    private Characters character;
 
     /**
      * Constructor for objects of class Inventory
      */
     public Inventory()
     {
-        INVENTORY.put(character.FLOWER_RED.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_BLUE.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_PURPLE.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_YELLOW.getCharacter(), 0);
-        INVENTORY.put(character.FLOWER_WHITE.getCharacter(), 0);
-        INVENTORY.put(character.SNOW_FRAG.getCharacter(), 0);
-        INVENTORY.put(character.STAR_FRAG.getCharacter(), 0);
-        INVENTORY.put(character.SPIDER_KEY.getCharacter(), 0);
-        INVENTORY.put(character.TOWER_KEY.getCharacter(), 0);
-        INVENTORY.put(character.FOX_KEY.getCharacter(), 0);
-        INVENTORY.put(character.CHEST_KEY.getCharacter(), 0);
-        INVENTORY.put(character.HUSBAND_REMAINS.getCharacter(), 0);
+        INVENTORY.put(Characters.FLOWER_RED.getCharacter(), 0);
+        INVENTORY.put(Characters.FLOWER_BLUE.getCharacter(), 0);
+        INVENTORY.put(Characters.FLOWER_PURPLE.getCharacter(), 0);
+        INVENTORY.put(Characters.FLOWER_YELLOW.getCharacter(), 0);
+        INVENTORY.put(Characters.FLOWER_WHITE.getCharacter(), 0);
+        INVENTORY.put(Characters.SNOW_FRAG.getCharacter(), 0);
+        INVENTORY.put(Characters.STAR_FRAG.getCharacter(), 0);
+        INVENTORY.put(Characters.SPIDER_KEY.getCharacter(), 0);
+        INVENTORY.put(Characters.TOWER_KEY.getCharacter(), 0);
+        INVENTORY.put(Characters.FOX_KEY.getCharacter(), 0);
+        INVENTORY.put(Characters.CHEST_KEY.getCharacter(), 0);
+        INVENTORY.put(Characters.HUSBAND_REMAINS.getCharacter(), 0);
         
     }
 

@@ -7,7 +7,6 @@
  */
 public class Shop
 {
-    private static final String QUIT = "quit";
     private static final int POTION_PRICE = 5;
     private static final int ATTACK_PRICE = 500;
     private static final int SHIELD_PRICE = 500;
@@ -16,24 +15,20 @@ public class Shop
     private static final int SHIELD = 25;
     private static final int HEALTH = 150;
     
-    private Display display = new Display();
-    private Commands command;
-    private Item potion = new Potion("HP Potion", 200, 1, 200);
-    
-    private String name;
-    
+    private static final Display DISPLAY = new Display();
+
     String[] list = new String[]
         {
-            command.BUY_POTION.getCommand() + "\t\t" + POTION_PRICE + " Gold",
-            command.BUY_ATTACK.getCommand() + ATTACK + "\t\t" + ATTACK_PRICE + " Gold",
-            command.BUY_DEFFENCE.getCommand() + SHIELD + "\t\t" + SHIELD_PRICE + " Gold",            
-            command.BUY_HEALTH.getCommand() + HEALTH + "\t\t" + HEALTH_PRICE + " Gold" ,
-            command.QUIT.getCommand()
+                Commands.BUY_POTION.getCommand() + "\t\t" + POTION_PRICE + " Gold",
+                Commands.BUY_ATTACK.getCommand() + ATTACK + "\t\t" + ATTACK_PRICE + " Gold",
+                Commands.BUY_DEFENCE.getCommand() + SHIELD + "\t\t" + SHIELD_PRICE + " Gold",
+                Commands.BUY_HEALTH.getCommand() + HEALTH + "\t\t" + HEALTH_PRICE + " Gold" ,
+                Commands.QUIT.getCommand()
         };
            
     public void openShop()
     {
-        display.listOptions(list);
+        DISPLAY.listOptions(list);
         
     }
         
@@ -47,7 +42,7 @@ public class Shop
     }
     
     /**
-     * return atack price.
+     * return attack price.
      */
     public int getAttackPrice()
     {
@@ -58,7 +53,7 @@ public class Shop
     /**
      * @return attack value
      */
-    public int getAtackValue()
+    public int getAttackValue()
     {
         return ATTACK;
         

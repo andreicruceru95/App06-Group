@@ -7,36 +7,34 @@
  */
 public class Blacksmith
 {
-    public static final String SUCCESS = "\t\tYou have succesfully enchanted: ";
+    public static final String SUCCESS = "\t\tYou have successfully enchanted: ";
     private int weaponCost = 5;
     private int armourCost = 5;
-    private int amuletCost = 5; 
-    private int itemMultiplier = 10;
-    
+    private int amuletCost = 5;
+
     private int ringCost = 15;
     private int braceletCost = 15;
-    private int specialMultiplier = 15;
-        
+
     private int potionCost = 100;
-    private int potionMultiplier = 50;
-        
-    private Display menu = new Display();
-    private Commands command;
-    
-    private String name; 
-    
-    private String[] blacksmithMenu = new String[7];
-      
+
+    private final Display menu = new Display();
+
+    private final String[] blacksmithMenu = new String[7];
+
+
+
     /**
-     * Enchance an item.
+     * Enhance an item.
      */
     public boolean enchance(Item item, int gold)
     {
-               
+
+        int itemMultiplier = 10;
+        int specialMultiplier = 15;
         if(item.getName().toLowerCase().contains("sword"))
         {
             
-            if(checkGold(gold, weaponCost) == true)
+            if(checkGold(gold, weaponCost))
             {
                 item.enchance();
                 
@@ -51,7 +49,7 @@ public class Blacksmith
         else if(item.getName().toLowerCase().contains("armour"))
         {
             
-            if(checkGold(gold, armourCost) == true)
+            if(checkGold(gold, armourCost))
             {
                 item.enchance();
                 
@@ -66,12 +64,13 @@ public class Blacksmith
         else if(item.getName().toLowerCase().contains("potion"))
         {
             
-            if(checkGold(gold, potionCost) == true)
+            if(checkGold(gold, potionCost))
             {
                 item.enchance();
                 
                 System.err.println(SUCCESS + item.getName());
-                
+
+                int potionMultiplier = 50;
                 potionCost += potionMultiplier;
                 
                 return true;
@@ -81,7 +80,7 @@ public class Blacksmith
         else if(item.getName().toLowerCase().contains("amulet"))
         {
             
-            if(checkGold(gold, amuletCost) == true)
+            if(checkGold(gold, amuletCost))
             {
                 item.enchance();
                 
@@ -96,7 +95,7 @@ public class Blacksmith
         else if(item.getName().toLowerCase().contains("ring"))
         {
             
-            if(checkGold(gold, ringCost) == true)
+            if(checkGold(gold, ringCost))
             {
                 item.enchance();
                 
@@ -111,7 +110,7 @@ public class Blacksmith
         else if(item.getName().toLowerCase().contains("trinket"))
         {
             
-            if(checkGold(gold, braceletCost) == true)
+            if(checkGold(gold, braceletCost))
             {
                 item.enchance();
                 
@@ -132,32 +131,27 @@ public class Blacksmith
      */
     public boolean checkGold(int gold, int cost)
     {
-        if(gold >= cost)
-        {
-            return true;
-        }
-        else   
-            return false;
+        return gold >= cost;
     }
     
     public void createList(boolean ringExists, boolean braceletExists)
     {
-        blacksmithMenu[0] = command.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weaponCost   + " Gold";
-        blacksmithMenu[1] = command.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armourCost   + " Gold";
-        blacksmithMenu[2] = command.ENCHANCE_POTION.getCommand()   + "\t\t\t" + potionCost   + " Gold";
-        blacksmithMenu[3] = command.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amuletCost   + "Gold";
+        blacksmithMenu[0] = Commands.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weaponCost   + " Gold";
+        blacksmithMenu[1] = Commands.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armourCost   + " Gold";
+        blacksmithMenu[2] = Commands.ENCHANCE_POTION.getCommand()   + "\t\t\t" + potionCost   + " Gold";
+        blacksmithMenu[3] = Commands.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amuletCost   + "Gold";
         
         if(ringExists)
-            blacksmithMenu[4] = command.ENCHANCE_RING.getCommand()     + "\t\t\t" + ringCost     + "Gold";
+            blacksmithMenu[4] = Commands.ENCHANCE_RING.getCommand()     + "\t\t\t" + ringCost     + "Gold";
         else
             blacksmithMenu[4] = " ";
              
         if(braceletExists)
-            blacksmithMenu[5] = command.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold";
+            blacksmithMenu[5] = Commands.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold";
         else
             blacksmithMenu[5] = " ";
             
-        blacksmithMenu[6] = "\n\n" + command.QUIT.getCommand();
+        blacksmithMenu[6] = "\n\n" + Commands.QUIT.getCommand();
         
     }
     

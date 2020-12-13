@@ -1,4 +1,3 @@
-import java.util.*;
 
 /**
  * This class will make the conection between maps.
@@ -8,24 +7,12 @@ import java.util.*;
  */
 public class World
 {
-    private static final String TOWN[][] = new String[47][35];
-    private static final String DESSERT[][] = new String[47][35];
-    private static final String SPIDER_CAVE[][]  = new String[47][35];
-    private static final String USER_HELP[][] = new String[47][35];
-    private static final String TEST[][] = new String[47][35];
-    
+
     private static final int MAP_EDGE = 3;
-    private static final int MAP_L = 27;
-    private static final int MAP_H = 39;
     private static final int FULL_L = 34;
     private static final int FULL_H = 46;
-    
-    //player's visual field
-    
-    private static final int initialPlayerRow = 4;
-    private static final int initialPlayerCol = 2;
-    
-    //objects that apear in the game
+
+    //objects that appear in the game
     private static final int S_TEST_ROW = 6;
     private static final int S_TEST_COL = 5;
     private static final int B_TEST_ROW = 6;
@@ -69,44 +56,41 @@ public class World
     private int col = 3;
     
     private Map currentMap;
-    private Map town;
-    private Map dessert;
-    private Map spiderCave;
-    private Map userHelp;
-    private Map test;
+    private final Map town;
+    private final Map dessert;
+    private final Map spiderCave;
+    private final Map userHelp;
+    private final Map test;
     
-    private Random rand;
-    private Characters character;
-       
-    private String square = "   ";
+    private static final String square = "   ";
     
     
-    private String name = "World of Zuul";
-    private Map map;
+    //private static final String NAME = "World of Zuul";
+    //private Map map;
     
     /**
      * initialising the World
      */
     public World()
     {
-        town = new Map("Town", TOWN,"The only safe place left in the world");
-        town.createMap(character.WALL.getCharacter(),MAP_EDGE);
+        town = new Map("Town");//,"The only safe place left in the world");
+        town.createMap(Characters.WALL.getCharacter(),MAP_EDGE);
         addObjectsToTown();
         
-        dessert = new Map("Dessert",DESSERT,"One of the most dangerous places");
-        dessert.createMap(character.ROCK.getCharacter(),MAP_EDGE);
+        dessert = new Map("Dessert");//,"One of the most dangerous places");
+        dessert.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToDessert();
         
-        spiderCave = new Map("SpiderCave",SPIDER_CAVE,"The home of the Spider Queen");
-        spiderCave.createMap(character.ROCK.getCharacter(),MAP_EDGE);
+        spiderCave = new Map("SpiderCave");//,"The home of the Spider Queen");
+        spiderCave.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToSpiderCave();
         
-        test = new Map("test", TEST, "Developers only");
-        test.createMap(character.ROCK.getCharacter(),MAP_EDGE);
+        test = new Map("test");//, "Developers only");
+        test.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
         addObjectsToTestMap();
         
-        userHelp = new Map("Location", USER_HELP, "Player's location on the map");
-        userHelp.createMap(character.WALL.getCharacter(),MAP_EDGE);
+        userHelp = new Map("Location");//, "Player's location on the map");
+        userHelp.createMap(Characters.WALL.getCharacter(),MAP_EDGE);
         
         setCurrentMap("town");
     } 
@@ -122,28 +106,18 @@ public class World
     }
            
     /**
-     * set the curent map to a given map name
+     * set the current map to a given map name
      */
     public void setCurrentMap(String name)
     {
-        if (name.toLowerCase().equals("town"))
+        switch (name.toLowerCase())
         {
-            currentMap = town;
+            case "town" -> currentMap = town;
+            case "dessert" -> currentMap = dessert;
+            case "spidercave" -> currentMap = spiderCave;
+            case "test" -> currentMap = test;
+            default -> System.out.println("error");
         }
-        else if(name.toLowerCase().equals("dessert"))
-        {
-            currentMap = dessert;
-        }
-        else if(name.toLowerCase().equals("spidercave"))
-        {
-            currentMap = spiderCave;
-        }
-        else if(name.toLowerCase().equals("test"))
-        {
-            currentMap = test;
-        }
-        else
-             System.out.println("error");
         
     }
     
@@ -157,7 +131,7 @@ public class World
         {
             for(int j = WALL_START; j < WALL_END; j++)
             {
-                town.setOne(i, j, character.WALL.getCharacter());
+                town.setOne(i, j, Characters.WALL.getCharacter());
                 
             }
         }
@@ -176,44 +150,44 @@ public class World
         {
             for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
             {
-                town.setOne(i, j, character.TREE.getCharacter());
+                town.setOne(i, j, Characters.TREE.getCharacter());
                 
             }
         }
         //add instances in town
-        town.setOne(SHOP_ROW, SHOP_COL, character.SHOP.getCharacter());
-        town.setOne(BLACKSMITH_ROW, BLACKSMITH_COL, character.BLACKSMITH.getCharacter());
+        town.setOne(SHOP_ROW, SHOP_COL, Characters.SHOP.getCharacter());
+        town.setOne(BLACKSMITH_ROW, BLACKSMITH_COL, Characters.BLACKSMITH.getCharacter());
                 
-        town.setOne(PERSON_1_ROW,PERSON_1_COL, character.PERSON_1.getCharacter());
-        town.setOne(PERSON_2_ROW,PERSON_2_COL,character.PERSON_1.getCharacter());
-        town.setOne(PERSON_3_ROW,PERSON_3_COL,character.PERSON_1.getCharacter());
-        town.setOne(PERSON_4_ROW,PERSON_4_COL,character.PERSON_1.getCharacter());
-        town.setOne(PERSON_5_ROW,PERSON_5_COL,character.PERSON_1.getCharacter());
-        town.setOne(GUARD_ROW,GUARD_COL,character.GUARD.getCharacter());
-        town.setOne(STABLE_ROW,STABLE_COL,character.STABLE.getCharacter());
-        town.setOne(STABLE_ROW -2,STABLE_COL,character.BIOLOGIST.getCharacter());
+        town.setOne(PERSON_1_ROW,PERSON_1_COL, Characters.PERSON_1.getCharacter());
+        town.setOne(PERSON_2_ROW,PERSON_2_COL,Characters.PERSON_1.getCharacter());
+        town.setOne(PERSON_3_ROW,PERSON_3_COL,Characters.PERSON_1.getCharacter());
+        town.setOne(PERSON_4_ROW,PERSON_4_COL,Characters.PERSON_1.getCharacter());
+        town.setOne(PERSON_5_ROW,PERSON_5_COL,Characters.PERSON_1.getCharacter());
+        town.setOne(GUARD_ROW,GUARD_COL,Characters.GUARD.getCharacter());
+        town.setOne(STABLE_ROW,STABLE_COL,Characters.STABLE.getCharacter());
+        town.setOne(STABLE_ROW -2,STABLE_COL,Characters.BIOLOGIST.getCharacter());
         
         //add monsters, trees, etc       
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.TREE.getCharacter(), 50);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.BLACK_BEAR.getCharacter(), 30);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.WHITE_TIGER.getCharacter(), 25);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.APE_THROWER.getCharacter(), 20);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.BERA.getCharacter(), 1);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.TIGRIS.getCharacter(), 1);
-        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.APE_KING.getCharacter(), 1);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.TREE.getCharacter(), 50);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BLACK_BEAR.getCharacter(), 30);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.WHITE_TIGER.getCharacter(), 25);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_THROWER.getCharacter(), 20);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BERA.getCharacter(), 1);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.TIGRIS.getCharacter(), 1);
+        town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_KING.getCharacter(), 1);
             
         //add trees to the right of the map
         for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
         {
             for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
             {
-                town.setOne(i ,j , character.TREE.getCharacter());
+                town.setOne(i ,j , Characters.TREE.getCharacter());
             }
         }
         
-        town.setOne(TOWN_TELEPORT_ROW, TOWN_TELEPORT_COL, character.TELEPORT.getCharacter());
+        town.setOne(TOWN_TELEPORT_ROW, TOWN_TELEPORT_COL, Characters.TELEPORT.getCharacter());
         
-        town.setOne(T_TEST_ROW, T_TEST_COL, character.TELEPORT.getCharacter());
+        town.setOne(T_TEST_ROW, T_TEST_COL, Characters.TELEPORT.getCharacter());
 
     }
     
@@ -229,26 +203,26 @@ public class World
         int potionRow = 4;
         int potionCol = 4;
          
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.CACTUS.getCharacter(), 50);
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 30);
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 30);
-        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ALBINO_SNAKE.getCharacter(), 30);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.CACTUS.getCharacter(), 50);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.POISON_SPIDER.getCharacter(), 30);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.RED_SCORPION.getCharacter(), 30);
+        dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.ALBINO_SNAKE.getCharacter(), 30);
         
         //add rocks to the right of the map
         for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
         {
             for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
             {
-                dessert.setOne(i, j,character.ROCK.getCharacter());
+                dessert.setOne(i, j,Characters.ROCK.getCharacter());
             }
         }
         
-        dessert.setOne(dessertTeleportRow, dessertTeleportCol, character.TELEPORT.getCharacter());
-        dessert.setOne(corpseRow, corpseCol, character.CORPSE.getCharacter());
+        dessert.setOne(dessertTeleportRow, dessertTeleportCol, Characters.TELEPORT.getCharacter());
+        dessert.setOne(corpseRow, corpseCol, Characters.CORPSE.getCharacter());
         
-        dessert.setOne(potionRow - 1, potionCol, character.TREE.getCharacter());
-        dessert.setOne(potionRow, potionCol, character.POTION.getCharacter());
-        dessert.setOne(potionRow + 1, potionCol, character.TREE.getCharacter());
+        dessert.setOne(potionRow - 1, potionCol, Characters.TREE.getCharacter());
+        dessert.setOne(potionRow, potionCol, Characters.POTION.getCharacter());
+        dessert.setOne(potionRow + 1, potionCol, Characters.TREE.getCharacter());
     }
     
     /**
@@ -264,7 +238,7 @@ public class World
         {
             for(int j = MAP_EDGE + opening; j < MAP_EDGE + opening + thickness; j++)
             {
-                spiderCave.setOne(i, j, character.ROCK.getCharacter());
+                spiderCave.setOne(i, j, Characters.ROCK.getCharacter());
             }
         }
         //add a wall to the right
@@ -272,7 +246,7 @@ public class World
         {
             for(int j = MAP_EDGE + opening; j < FULL_L - MAP_EDGE - opening - thickness; j++)
             {
-                spiderCave.setOne(i, j, character.ROCK.getCharacter());
+                spiderCave.setOne(i, j, Characters.ROCK.getCharacter());
             }
         }
         //add wall going up
@@ -280,7 +254,7 @@ public class World
         {
             for(int j = FULL_L - MAP_EDGE - opening - thickness; j < FULL_L - MAP_EDGE - opening; j++)
             {
-                spiderCave.setOne(i, j, character.ROCK.getCharacter());
+                spiderCave.setOne(i, j, Characters.ROCK.getCharacter());
             }
         }
         //add wall right to left
@@ -288,18 +262,18 @@ public class World
         {
             for(int j = MAP_EDGE + opening + thickness + opening; j < FULL_L - MAP_EDGE - opening - thickness; j++)
             {
-                spiderCave.setOne(i, j,character.ROCK.getCharacter());
+                spiderCave.setOne(i, j,Characters.ROCK.getCharacter());
             }
         }
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 40);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 40);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ALBINO_SNAKE.getCharacter(), 40);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.POISON_SPIDER.getCharacter(), 40);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.RED_SCORPION.getCharacter(), 40);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.ALBINO_SNAKE.getCharacter(), 40);
         
-        spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, character.SPIDER_QUEEN.getCharacter(), 1);
-        spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, character.TELEPORT.getCharacter(), 1);
+        spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, Characters.SPIDER_QUEEN.getCharacter(), 1);
+        spiderCave.addObjects(SPIDER_QUEEN_COL - 1, SPIDER_QUEEN_COL + 1,SPIDER_QUEEN_ROW - 1, SPIDER_QUEEN_ROW + 1, Characters.TELEPORT.getCharacter(), 1);
         
-        spiderCave.setOne(CAVE_SHOP_ROW,CAVE_SHOP_COL,character.SHOP.getCharacter());
-        spiderCave.setOne(CAVE_BLACKSMITH_ROW,CAVE_BLACKSMITH_COL,character.BLACKSMITH.getCharacter());
+        spiderCave.setOne(CAVE_SHOP_ROW,CAVE_SHOP_COL,Characters.SHOP.getCharacter());
+        spiderCave.setOne(CAVE_BLACKSMITH_ROW,CAVE_BLACKSMITH_COL,Characters.BLACKSMITH.getCharacter());
     }
         
     /**
@@ -315,9 +289,8 @@ public class World
      */
     public String getSquareValue(int row, int col)
     {
-        String value = currentMap.getSquareValue(row, col);
-        
-        return value;
+
+        return currentMap.getSquareValue(row, col);
     }
     
     /**
@@ -333,7 +306,7 @@ public class World
      */
     public String[][] getMapAsArray()
     {
-        return currentMap.getmap();
+        return currentMap.getMap();
     }
     
     /**
@@ -341,34 +314,21 @@ public class World
      */
     public void addAnother(String character)
     {
-        if (currentMap.getName().toLowerCase().equals("town"))
+        switch (currentMap.getName().toLowerCase())
         {
-            currentMap.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("dessert"))
-        {
-            dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("spidercave"))
-        {
-            spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+            case "town" -> currentMap.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+            case "dessert" -> dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+            case "spidercave" -> spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
         }
     }
-    
-    public void printMaps()
-    {
-        town.printMap();
-        dessert.printMap();
-        spiderCave.printMap();
-    }
-    
+
     /**
      * Print a empty map for the user with the player's location.
      */
     public void printHelpMap(int pRow, int pCol)
     {
         userHelp.setOne(row, col, "   ");
-        userHelp.setOne(pRow, pCol, character.PLAYER.getCharacter());
+        userHelp.setOne(pRow, pCol, Characters.PLAYER.getCharacter());
         
         row = pRow;
         col = pCol;
@@ -389,37 +349,34 @@ public class World
     {
         int townR = 4;
         
-        test.setOne(B_TEST_ROW,B_TEST_COL, character.BLACKSMITH.getCharacter());
-        test.setOne(S_TEST_ROW,S_TEST_COL, character.SHOP.getCharacter());
-        test.setOne(townR,townR, character.TELEPORT.getCharacter());
+        test.setOne(B_TEST_ROW,B_TEST_COL, Characters.BLACKSMITH.getCharacter());
+        test.setOne(S_TEST_ROW,S_TEST_COL, Characters.SHOP.getCharacter());
+        test.setOne(townR,townR, Characters.TELEPORT.getCharacter());
 
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.BLACK_BEAR.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.WHITE_TIGER.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.APE_THROWER.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ALBINO_SNAKE.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POLAR_BEAR.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.YETI.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.ABOMINABLE_SNOWMAN.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.DEMON.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.CURSED_VAMPIRE.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.WITCH.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.BERA.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.TIGRIS.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.APE_KING.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.SPIDER_QUEEN.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.NINE_TAILS.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.DEATH.getCharacter(), 10);
-        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_DRAGON.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BLACK_BEAR.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.WHITE_TIGER.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_THROWER.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.POISON_SPIDER.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.RED_SCORPION.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.ALBINO_SNAKE.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.POLAR_BEAR.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.YETI.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.ABOMINABLE_SNOWMAN.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.DEMON.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.CURSED_VAMPIRE.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.WITCH.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BERA.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.TIGRIS.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_KING.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.SPIDER_QUEEN.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.NINE_TAILS.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.DEATH.getCharacter(), 10);
+        test.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.RED_DRAGON.getCharacter(), 10);
           
     }
     
     public boolean goTest(int colCoord)
     {
-        if(colCoord == T_TEST_COL)
-            return true;
-        
-        return false;
+        return colCoord == T_TEST_COL;
     }
 } 

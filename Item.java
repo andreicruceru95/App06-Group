@@ -104,15 +104,7 @@ public class Item
         else
             return false;
     }
-        
-    /**
-     * @return the amount of gold required.
-     */
-    public int getGoldRequired()
-    {
-        return goldRequired;
-    }
-    
+
     /**
      * @return an item's name.
      */

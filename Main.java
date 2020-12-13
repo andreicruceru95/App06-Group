@@ -14,8 +14,8 @@ public class Main
     public Main()
     {
         System.out.println(CLEAR);
-        
-        Game game = new Game();
+
+        new Game();
     }
     
 }

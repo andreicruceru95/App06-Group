@@ -42,7 +42,7 @@ public class Database
     
     private static final String ROCK = " ⛰ ";
     private static final String WALL = " [/] ";
-    private static final String BLACKSMITH = " B ";
+    //private static final String BLACKSMITH = " B ";
     private static final String SHOP = " S ";
     private static final String CHEST = "!? ";
     private static final String GOLD = " $ ";
@@ -57,7 +57,7 @@ public class Database
         DATABASE_OBJECTS.put(GUARD, "\t\tThe town guardian. He protects the city from the evil creatures.");
         DATABASE_OBJECTS.put(STABLE, "\t\tA stable. You can buy a horse from there.");
         DATABASE_OBJECTS.put(PLAYER, "\t\tThe player location on the map.");
-        DATABASE_OBJECTS.put(PLAYER, "\t\tThe player location on the map, when the player's health drops under 50%");
+        DATABASE_OBJECTS.put(PLAYER2, "\t\tThe player location on the map, when the player's health drops under 50%");
         DATABASE_OBJECTS.put(ROCK, "\t\tRock wall");
         DATABASE_OBJECTS.put(WALL, "\t\tConcrete wall.");
         DATABASE_OBJECTS.put(SHOP, "\t\tLocal earning his living by selling things.");
@@ -81,12 +81,12 @@ public class Database
         DATABASE_MONSTERS.put(WITCH, "\t\tWitch - level 12 monster.");
         
         DATABASE_BOSSES.put(BERA, "\t\tBERA - The biggest and strongest bear humanity have ever seen.");
-        DATABASE_BOSSES.put(TIGRIS, "\t\tTIGRIS - A scarry, blood-stained tiger. King of the jungle.");
+        DATABASE_BOSSES.put(TIGRIS, "\t\tTIGRIS - A scary, blood-stained tiger. King of the jungle.");
         DATABASE_BOSSES.put(APE_KING, "\t\tAPE KING - The king of apes. Dominates a part of the jungle.");
         DATABASE_BOSSES.put(SPIDER_QUEEN, "\t\tSPIDER QUEEN - The queen of spiders. A dangerous creature no man can defeat.");
-        DATABASE_BOSSES.put(NINE_TAILS, "\t\tNINE TAILS - A cursed fox borned with 9 tails. She protects the ice land.");
-        DATABASE_BOSSES.put(DEATH, "\t\tDEATH - The death itself. A scarry creature unseen to human eye before.");
-        DATABASE_BOSSES.put(RED_DRAGON, "\t\tRED DRAGON - A dragon that spits fire and distroys everything around itself.");
+        DATABASE_BOSSES.put(NINE_TAILS, "\t\tNINE TAILS - A cursed fox born with 9 tails. She protects the ice land.");
+        DATABASE_BOSSES.put(DEATH, "\t\tDEATH - The death itself. A scary creature unseen to human eye before.");
+        DATABASE_BOSSES.put(RED_DRAGON, "\t\tRED DRAGON - A dragon that spits fire and destroys everything around itself.");
                                
     }
     

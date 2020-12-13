@@ -9,7 +9,7 @@ import java.util.Random;
 public class Potion extends Item
 {
     int amount = 15;
-    private Random random = new Random();
+    private static final Random random = new Random();
     
     public Potion(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {

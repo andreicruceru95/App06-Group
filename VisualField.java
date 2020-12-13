@@ -9,8 +9,8 @@ public class VisualField
 {
     public final static String[][] VISUAL_FIELD = new String[7][7];
     
-    private Characters character;
-    private String player = character.PLAYER.getCharacter();
+    //private Characters character;
+    private String player = Characters.PLAYER.getCharacter();
     
     /**
      * Set values in the visual field.
@@ -81,16 +81,16 @@ public class VisualField
      */
     public boolean checkVisualField(String character)
     {
-        for(int i = 0; i < VISUAL_FIELD.length; i++)
+        for (String[] strings : VISUAL_FIELD)
         {
-            for(int j = 0; j < VISUAL_FIELD[i].length; j++)
+            for (String string : strings)
             {
-                
-                if (VISUAL_FIELD[i][j].contains(character))
+
+                if (string.contains(character))
                 {
                     return true;
                 }
-                
+
             }
         }
         return false;
@@ -101,18 +101,18 @@ public class VisualField
      */
     public void printVisualField()
     {
-        for (int i = 0; i < VISUAL_FIELD.length; i++)
+        for (String[] strings : VISUAL_FIELD)
         {
-            for (int j = 0; j < VISUAL_FIELD[i].length; j++)
+            for (String string : strings)
             {
-                System.out.print(VISUAL_FIELD[i][j]);
+                System.out.print(string);
             }
             System.out.println("");
         }
     }
     
     /**
-     * Change player's immage.
+     * Change player's image.
      */
     public void changeImage(String image)
     {

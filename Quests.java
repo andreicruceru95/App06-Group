@@ -11,24 +11,24 @@ public class Quests
     public static final HashMap<String,Quest> QUESTS = new HashMap<>();
     //public static final HashMap<String,Quest> ACTIVE_QUESTS = new HashMap<>();
     
-    private Characters character;
+    //private Characters character;
     
     public Quests()
     {
-        QUESTS.put("Main[1][1]", new Quest("Main", "Speak to the shop owner",1,character.GOLD.getCharacter(), 50));        
-        QUESTS.put("biologist1", new Quest("Main", "Colect 10 Red Flowers (" + character.FLOWER_RED.getCharacter() + ")",10,
-                                character.GOLD.getCharacter(), 100));
-        QUESTS.put("biologist2", new Quest("Main", "Colect 10 Blue Flowers (" + character.FLOWER_BLUE.getCharacter() + ")",10,
-                                character.GOLD.getCharacter(), 200));
-        QUESTS.put("biologist3", new Quest("Main", "Colect 10 Yellow Flowers (" + character.FLOWER_YELLOW.getCharacter() + ")",10,
-                                character.GOLD.getCharacter(), 300));
-        QUESTS.put("biologist4", new Quest("Main", "Colect 10 Purple Flowers (" + character.FLOWER_PURPLE.getCharacter() + ")",10,
-                                character.GOLD.getCharacter(), 400));                        
-        QUESTS.put("biologist5", new Quest("Main", "Colect 10 White Flowers (" + character.FLOWER_WHITE.getCharacter() + ")",10,
-                                character.GOLD.getCharacter(), 100));
+        QUESTS.put("Main[1][1]", new Quest("Main", "Speak to the shop owner",1,Characters.GOLD.getCharacter(), 50));
+        QUESTS.put("biologist1", new Quest("Main", "Collect 10 Red Flowers (" + Characters.FLOWER_RED.getCharacter() + ")",10,
+                Characters.GOLD.getCharacter(), 100));
+        QUESTS.put("biologist2", new Quest("Main", "Collect 10 Blue Flowers (" + Characters.FLOWER_BLUE.getCharacter() + ")",10,
+                Characters.GOLD.getCharacter(), 200));
+        QUESTS.put("biologist3", new Quest("Main", "Collect 10 Yellow Flowers (" + Characters.FLOWER_YELLOW.getCharacter() + ")",10,
+                Characters.GOLD.getCharacter(), 300));
+        QUESTS.put("biologist4", new Quest("Main", "Collect 10 Purple Flowers (" + Characters.FLOWER_PURPLE.getCharacter() + ")",10,
+                Characters.GOLD.getCharacter(), 400));
+        QUESTS.put("biologist5", new Quest("Main", "Collect 10 White Flowers (" + Characters.FLOWER_WHITE.getCharacter() + ")",10,
+                Characters.GOLD.getCharacter(), 100));
                                 
-        QUESTS.put("Main[1][2]", new Quest("Main", "Find missing husband in the forest (" + character.CORPSE.getCharacter() + ")",10,
-                                character.GOLD.getCharacter(), 100));                       
+        QUESTS.put("Main[1][2]", new Quest("Main", "Find missing husband in the forest (" + Characters.CORPSE.getCharacter() + ")",10,
+                Characters.GOLD.getCharacter(), 100));
                                 
     }
     
@@ -38,7 +38,7 @@ public class Quests
         
         for (String object : QUESTS.keySet())
         {
-            String key = object.toString();
+            //String key = object.toString();
             Quest quest = QUESTS.get(object);  
             
             if(quest.hasStarted())

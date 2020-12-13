@@ -7,65 +7,64 @@
  */
 public enum Characters
 {
-    TELEPORT (" ↈ "),
-    PERSON_1 (" ⛹"),
-    GUARD (" ⏳ "),
-    STABLE (" ♞ "),
-    BLACK_BEAR (" ① "),
-    WHITE_TIGER (" ② "),
-    APE_THROWER (" ③ "),
-    POISON_SPIDER (" ④ "),
-    RED_SCORPION (" ⑤ "),
-    ALBINO_SNAKE (" ⑥ "),
-    POLAR_BEAR (" ⑦ "),
-    YETI (" ⑧ "),
-    ABOMINABLE_SNOWMAN (" ⑨ "),
-    DEMON (" ⑩ "),
-    CURSED_VAMPIRE (" ⑪ "),
-    WITCH (" ⑫ "),
-    BERA (" Ⓑ "),
-    TIGRIS (" Ⓣ "),
-    APE_KING (" Ⓐ "),
-    SPIDER_QUEEN (" Ⓢ "),
-    NINE_TAILS (" Ⓝ "),
-    DEATH (" Ⓓ "),
-    RED_DRAGON (" Ⓡ "),
-    PLAYER ("⚉"),
-    PLAYER2("☠"),
-    CORPSE (" ☠ "),
-    POTION(" ⚱ "),
+    ABOMINABLE_SNOWMAN(" ⑨ "),
+    ALBINO_SNAKE(" ⑥ "),
+    APE_KING(" Ⓐ "),
+    APE_THROWER(" ③ "),
+    BERA(" Ⓑ "),
     BIOLOGIST(" ☣ "),
-    HUSBAND_REMAINS (" ⛆ "),
-           
-    ROCK (" ⛰ "),
-    WALL ("[/]"),
-    BLACKSMITH (" B "),
-    SHOP (" S "),
-    CHEST (" ⛋ "),
-    GOLD (" $ "),
-    ITEM (" !^"),
-    TREE (" ⍋ "),
-    CACTUS (" ¥ "),
-    FLOWER_RED (" ⚘ "),
-    FLOWER_BLUE (" ⚙ "),
-    FLOWER_YELLOW (" ⚚ "),
-    FLOWER_PURPLE (" ⚛ "),
-    FLOWER_WHITE (" ⚜ "),
-    SNOW_FRAG (" ☃ "),
-    STAR_FRAG (" ⚝ "),
-    SPIDER_KEY (" ⚵ "),
-    TOWER_KEY (" ⚷ "), 
-    FOX_KEY (" ⚴ "),
-    CHEST_KEY (" ⚿ ");
-    
+    BLACKSMITH(" B "),
+    BLACK_BEAR(" ① "),
+    CACTUS(" ¥ "),
+    CHEST(" ⛋ "),
+    CHEST_KEY(" ⚿ "),
+    CORPSE(" ☠ "),
+    CURSED_VAMPIRE(" ⑪ "),
+    DEATH(" Ⓓ "),
+    DEMON(" ⑩ "),
+    FLOWER_BLUE(" ⚙ "),
+    FLOWER_PURPLE(" ⚛ "),
+    FLOWER_RED(" ⚘ "),
+    FLOWER_WHITE(" ⚜ "),
+    FLOWER_YELLOW(" ⚚ "),
+    FOX_KEY(" ⚴ "),
+    GOLD(" $ "),
+    GUARD(" ⏳ "),
+    HUSBAND_REMAINS(" ⛆ "),
+    NINE_TAILS(" Ⓝ "),
+    PERSON_1(" ⛹"),
+    PLAYER("⚉"),
+    PLAYER2("☠"),
+
+    POISON_SPIDER(" ④ "),
+    POLAR_BEAR(" ⑦ "),
+    POTION(" ⚱ "),
+    RED_DRAGON(" Ⓡ "),
+    RED_SCORPION(" ⑤ "),
+    ROCK(" ⛰ "),
+    SHOP(" S "),
+    SNOW_FRAG(" ☃ "),
+    SPIDER_KEY(" ⚵ "),
+    SPIDER_QUEEN(" Ⓢ "),
+    STABLE(" ♞ "),
+    STAR_FRAG(" ⚝ "),
+    TELEPORT(" ↈ "),
+    TIGRIS(" Ⓣ "),
+    TOWER_KEY(" ⚷ "),
+    TREE(" ⍋ "),
+    WALL("[/]"),
+    WHITE_TIGER(" ② "),
+    WITCH(" ⑫ "),
+    YETI(" ⑧ ");
+
     private final String character;
- 
-    Characters(String character) 
+
+    Characters(String character)
     {
         this.character = character;
     }
- 
-    public String getCharacter() 
+
+    public String getCharacter()
     {
         return character;
     }

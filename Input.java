@@ -9,7 +9,7 @@ import java.lang.*;
  */
 public class Input
 {
-    private Scanner reader;
+    private final Scanner reader;
 
     /**
      * Create a new InputReader that reads text from the text terminal.
@@ -44,10 +44,8 @@ public class Input
     public String getAny()
     {
         //System.out.print("");
-        
-        String string = reader.nextLine();
-        
-        return string;
+
+        return reader.nextLine();
     }
       
     /**

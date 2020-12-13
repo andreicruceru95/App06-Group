@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Write a description of class Monster here.
  *
@@ -8,7 +6,7 @@ import java.util.Random;
  */
 public class Monster extends Actor
 {
-    private String drop;
+    private final String drop;
         
     public Monster(String name, int level, String drop)
     {
@@ -36,26 +34,20 @@ public class Monster extends Actor
     
     public boolean dropItem()
     {
-        int miskDrop = 40; //%
-        int miskChance = random.nextInt(total - 1) + 1;
-        
-        if(miskChance <= miskDrop)
-            return true;
-        
-        return false;
-        
+        int miscDrop = 40; //%
+        int miscChance = random.nextInt(total - 1) + 1;
+
+        return miscChance <= miscDrop;
+
     }
     
     public boolean dropChest()
     {
         int chestDrop = 15;
         int chestChance = random.nextInt(total - 1) + 1;
-        
-        if(chestChance <= chestDrop)
-            return true;
-        
-        return false;
-        
+
+        return chestChance <= chestDrop;
+
     }
     
     public int getDropAmount()

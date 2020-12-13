@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * Write a description of class Player here.
  *
@@ -61,7 +59,7 @@ public class Player extends Actor
     }
     
     /**
-     * Receieve gold.
+     * Receive gold.
      */
     public void addGold(int gold)
     {
@@ -115,10 +113,7 @@ public class Player extends Actor
      */
     public boolean getHealthPoints()
     {
-        if (currentHealthPoints > 0)
-            return true;
-        else
-            return false;           
+        return currentHealthPoints > 0;
         
     }
     
