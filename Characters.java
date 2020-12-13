@@ -32,7 +32,11 @@ public enum Characters
     RED_DRAGON (" Ⓡ "),
     PLAYER ("⚉"),
     PLAYER2("☠"),
-    //PLAYER3(" ⚉ "),    
+    CORPSE (" ☠ "),
+    POTION(" ⚱ "),
+    BIOLOGIST(" ☣ "),
+    HUSBAND_REMAINS (" ⛆ "),
+           
     ROCK (" ⛰ "),
     WALL ("[/]"),
     BLACKSMITH (" B "),
