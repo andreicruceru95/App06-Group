@@ -15,6 +15,6 @@ public class Ring extends Item
     
     public void print()
     {
-        System.out.println(displayName + " + " + displayLevel + "\tChance of double hit : " + enchantStats);
+        System.out.println(displayName + "\t + " + displayLevel + "\tChance of double hit : " + enchantStats);
     }
 }
