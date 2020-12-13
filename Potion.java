@@ -18,8 +18,8 @@ public class Potion extends Item
     
     public void print()
     {
-        System.out.println(displayName + " + " + displayLevel + "\tHeal: " + enchantStats +
-                            "\t" + amount);
+        System.out.println(displayName + "\t\t + " + displayLevel + "\tHeal: " + enchantStats +
+                            "\tAmount " + amount);
     }
     
     public void printMessage()
