@@ -98,7 +98,7 @@ public abstract class Actor
      */
     public String getStats()
     {
-        return "\t\tAttack: " + attackForce + "\n\tDeffence: " + shield;
+        return "\tAttack: " + attackForce + "\n\tDeffence: " + shield;
                 
     }
     
