@@ -140,15 +140,24 @@ public class Blacksmith
             return false;
     }
     
-    public void createList()
+    public void createList(boolean ringExists, boolean braceletExists)
     {
         blacksmithMenu[0] = command.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weaponCost   + " Gold";
         blacksmithMenu[1] = command.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armourCost   + " Gold";
         blacksmithMenu[2] = command.ENCHANCE_POTION.getCommand()   + "\t\t\t" + potionCost   + " Gold";
-        blacksmithMenu[3] = command.ENCHANCE_RING.getCommand()     + "\t\t\t" + ringCost     + "Gold";
-        blacksmithMenu[4] = command.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amuletCost   + "Gold";
-        blacksmithMenu[5] = command.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold\n";
-        blacksmithMenu[6] = command.QUIT.getCommand();
+        blacksmithMenu[3] = command.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amuletCost   + "Gold";
+        
+        if(ringExists)
+            blacksmithMenu[4] = command.ENCHANCE_RING.getCommand()     + "\t\t\t" + ringCost     + "Gold";
+        else
+            blacksmithMenu[4] = " ";
+             
+        if(braceletExists)
+            blacksmithMenu[5] = command.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold";
+        else
+            blacksmithMenu[5] = " ";
+            
+        blacksmithMenu[6] = "\n\n" + command.QUIT.getCommand();
         
     }
     
