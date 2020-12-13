@@ -29,11 +29,12 @@ public class Game
     public static final String SEE_MONSTERS = "seemonsters";
     public static final String SEE_LOCATION = "seelocation";
     public static final String SUCCESS = "\t\tYou have successfully purchased: ";   
-    public static final String SHOW_STATS = ("showstats");
-    public static final String HIDE_STATS = ("hidestats");
-    public static final String SHOW_ITEMS = ("showitems");
-    public static final String HIDE_ITEMS = ("hideitems");
-    public static final String INVENTORY = ("inventory");
+    public static final String SHOW_STATS = "showstats";
+    public static final String HIDE_STATS = "hidestats";
+    public static final String SHOW_ITEMS = "showitems";
+    public static final String HIDE_ITEMS = "hideitems";
+    public static final String INVENTORY = "inventory";
+    public static final String QUESTS = "seequests";
     
     public static final Shop SHOP = new Shop();
     public static final int PLAYER_INITIAL_ROW = 7;
@@ -101,10 +102,18 @@ public class Game
     private boolean dessertDescription =  false;
     private boolean spiderCaveDescription =  false;
     private boolean firstDeathDescription =  false;
+    private boolean firstBiologistInteraction = false;
+    private boolean firstLadyInteraction = false;
     private boolean stats = false;
     private boolean items = false;
     private boolean ringExists = false;
     private boolean braceletExists = false;
+    private boolean biologistQuest1 = false;
+    private boolean biologistQuest2 = false;
+    private boolean biologistQuest3 = false;
+    private boolean biologistQuest4 = false;
+    private boolean biologistQuest5 = false;
+    private boolean ladyQuest = false;
     
     private Random rand = new Random();
     private Input reader = new Input();
@@ -182,7 +191,7 @@ public class Game
             showInfo();
             updateVisualField();
             
-            String choice = reader.getString();
+            String choice = reader.getAny();
             
             if (choice.toLowerCase().replaceAll("\\s+","").equals(QUIT))
                 finished = true;
@@ -230,6 +239,12 @@ public class Game
             {
                 System.out.println(CLEAR);
                 player.printInventory(); 
+                pressAny();
+            }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(QUESTS))
+            {
+                System.out.println(CLEAR);
+                player.printQuestList(); 
                 pressAny();
             }
             else
@@ -496,6 +511,39 @@ public class Game
             
             return false;
         }
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.CORPSE.getCharacter()))
+        {
+            System.out.println(CLEAR);
+            
+            interaction.getInteraction(character.CORPSE.getCharacter());
+            
+            pressAny();
+            
+            return false;
+        }
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.BIOLOGIST.getCharacter()))
+        {
+            runBiologist();
+            
+            pressAny();
+            
+            return false;
+        }
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.PERSON_1.getCharacter()))
+        {
+            runLadyQuest();
+            pressAny();
+            
+            return false;
+        }
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.POTION.getCharacter()))
+        {
+            int potionAmount = 5;
+            
+            player.increasePotionAmount(potionAmount);
+            
+            return true;
+        }
         else 
         {
             String character = (world.getSquareValue(nextRow,nextCol));
@@ -598,7 +646,7 @@ public class Game
     {
         if(result)
         {
-            System.err.println("\t\t\t\tYou Win!");
+            //System.err.println("\t\t\t\tYou Win!");
             
             return true;
         }
@@ -606,7 +654,7 @@ public class Game
         {
             checkFirstDeath();
             
-            System.err.println("\t\t\t\tYou Lost!");
+           // System.err.println("\t\t\t\tYou Lost!");
                     
             player.setCoordinates(PLAYER_INITIAL_ROW, PLAYER_INITIAL_COL);
             player.setFullHealth();
@@ -644,12 +692,7 @@ public class Game
         
         return null;
     }
-    
-    private void checkLuck()
-    {
         
-    }
-    
     /**
      * Fast-forward fight
      */
@@ -659,10 +702,10 @@ public class Game
         {
             
             monster.receiveDmg(player.attack());
-            System.out.println("Monster received " + monster.receiveDmg(player.attack()));
+            //System.out.println("Monster received " + monster.receiveDmg(player.attack()));
                         
             player.receiveDmg(monster.attack());
-            System.out.println("Player received " + player.receiveDmg(monster.attack()));    
+            //System.out.println("Player received " + player.receiveDmg(monster.attack()));    
             
         }
         while(player.checkHealth() && monster.checkHealth());
@@ -744,6 +787,78 @@ public class Game
         }    
     }
     
+    public void runBiologist()
+    {
+        if(!firstBiologistInteraction)
+        {
+            firstBiologistInteraction = interaction.getInteraction(character.BIOLOGIST.getCharacter());
+            
+            player.startQuest("biologist1");
+            player.startQuest("biologist2");
+            player.startQuest("biologist3");
+            player.startQuest("biologist4");
+            player.startQuest("biologist5");
+        }
+        else
+        {
+            checkBiologistQuests();
+            
+        }
+        
+    }
+    
+    public void runLadyQuest()
+    {
+        if(!firstLadyInteraction)
+        {
+            firstLadyInteraction = interaction.getInteraction(character.PERSON_1.getCharacter());
+            
+            player.startQuest("Main[1][2]");
+        }
+        else
+            if(!ladyQuest)
+                runQuest("Main[1][2]");
+    }
+    
+    public void checkBiologistQuests()
+    {
+        if(!biologistQuest1)
+        {
+            runQuest("biologist1");
+        }
+        
+        if(!biologistQuest2)
+        {
+            runQuest("biologist2");
+        }
+        
+        if(!biologistQuest3)
+        {
+            runQuest("biologist3");
+        }
+        
+        if(!biologistQuest4)
+        {
+            runQuest("biologist4");
+        }
+        
+        if(!biologistQuest5)
+        {
+            runQuest("biologist5");
+        }
+        
+    }
+    
+    private void runQuest(String questName)
+    {
+        if(player.checkInventory(player.getRequirement(questName), player.getRequirementAmount(questName)))
+        {
+            player.addGold(player.getRewardAmount(questName));
+            
+        }
+        
+    }
+    
     /**
      * Enchance an item.
      */
@@ -753,7 +868,7 @@ public class Game
             
         while(!finished)
         {
-            blacksmith.createList();
+            blacksmith.createList(ringExists, braceletExists);
             
             System.out.println("\n\n\t\tWhat can I do for you?\n\n");
                 
@@ -893,29 +1008,12 @@ public class Game
         
     }
     
-    // /**
-     // * Guardian Quest
-     // */
-    // public void guardQuest()
-    // {
-        // int min = 1;
-        // int max = player.getScore() + 10;
-        
-        // int guardGold = rand.nextInt(max - min) + min;
-        
-        // player.addGold(guardGold);
-        
-        // System.out.println("You have recieved " + guardGold + " Gold from the guard");
-        // System.out.println("\n\n\n\n\n\n\n\n\n\n\t\tPress any to continue..");
-        // reader.getAny();
-    // }
-    
     /**
      * Teleport to a different map
      */
     private void teleport()
     {
-        if(world.getCurrentMapName().toLowerCase().equals("town") && world.goTest())
+        if(world.getCurrentMapName().toLowerCase().equals("town") && world.goTest(player.getColCoord()))
         {
             player.setCoordinates(PLAYER_INITIAL_ROW,PLAYER_INITIAL_COL);
             
