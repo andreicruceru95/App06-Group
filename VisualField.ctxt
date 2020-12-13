@@ -12,5 +12,5 @@ comment3.target=void\ printVisualField()
 comment3.text=\r\n\ Player's\ visual\ field\ 7x7\r\n
 comment4.params=image
 comment4.target=void\ changeImage(java.lang.String)
-comment4.text=\r\n\ Change\ player's\ immage.\r\n
+comment4.text=\r\n\ Change\ player's\ image.\r\n
 numComments=5
