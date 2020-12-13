@@ -14,6 +14,6 @@ public class Bracelet extends Item
     
     public void print()
     {
-        System.out.println(displayName + " + " + displayLevel + "\tChance of evasion : " + enchantStats);
+        System.out.println(displayName + "\t + " + displayLevel + "\tChance of evasion : " + enchantStats);
     }
 }
