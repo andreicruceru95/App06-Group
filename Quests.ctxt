@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=Quests
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Quests\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=Quests()
+comment2.params=
+comment2.target=void\ printQuestList()
+comment3.params=string
+comment3.target=void\ startQuest(java.lang.String)
+comment4.params=quest
+comment4.target=void\ finishQuest(Quest)
+comment5.params=string
+comment5.target=boolean\ checkQuestStatus(java.lang.String)
+comment6.params=string
+comment6.target=int\ getRewardAmount(java.lang.String)
+comment7.params=string
+comment7.target=int\ getRequirementAmount(java.lang.String)
+comment8.params=string
+comment8.target=java.lang.String\ getRequirement(java.lang.String)
+numComments=9
