@@ -19,7 +19,7 @@ public class Weapon extends Item
      */
     public void print()
     {
-        System.out.println(displayName + " + " + displayLevel + "\tAttack: " + enchantStats);
+        System.out.println(displayName + "\t + " + displayLevel + "\tAttack: " + enchantStats);
     }
     
 }
