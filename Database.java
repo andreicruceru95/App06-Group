@@ -126,7 +126,8 @@ public class Database
     {
         for(Monster monster : monsters)
         {
-            System.out.println(monster.getName() + " : \t" + monster.getStats() + "\n" + monster.getHealthInfo());
+            System.out.println(monster.getName() + " : \t" + monster.getStats() + "\n" + monster.getHealthInfo() + 
+                                "\nCan drop: " + monster.getDrop());
         }
        
     }
