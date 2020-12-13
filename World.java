@@ -45,12 +45,7 @@ public class World
     private static final int PERSON_5_COL = 8;
     private static final int TOWN_TELEPORT_ROW = 3;
     private static final int TOWN_TELEPORT_COL = 25;
-    private static final int DESSERT_TELEPORT_ROW = 27;
-    private static final int DESSERT_TELEPORT_COL = 15;
-    private static final int DESSERT_SHOP_ROW = 4;
-    private static final int DESSERT_SHOP_COL = 4;
-    private static final int DESSERT_BLACKSMITH_ROW = 8;
-    private static final int DESSERT_BLACKSMITH_COL = 8;
+   
     private static final int CAVE_SHOP_ROW = 4;
     private static final int CAVE_SHOP_COL = 4;
     private static final int CAVE_BLACKSMITH_ROW = 8;
@@ -196,6 +191,7 @@ public class World
         town.setOne(PERSON_5_ROW,PERSON_5_COL,character.PERSON_1.getCharacter());
         town.setOne(GUARD_ROW,GUARD_COL,character.GUARD.getCharacter());
         town.setOne(STABLE_ROW,STABLE_COL,character.STABLE.getCharacter());
+        town.setOne(STABLE_ROW -2,STABLE_COL,character.BIOLOGIST.getCharacter());
         
         //add monsters, trees, etc       
         town.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.TREE.getCharacter(), 50);
@@ -226,6 +222,13 @@ public class World
      */
     private void addObjectsToDessert()
     {
+        int dessertTeleportRow = 27;
+        int dessertTeleportCol = 15;
+        int corpseRow = 8;
+        int corpseCol = 8;
+        int potionRow = 4;
+        int potionCol = 4;
+         
         dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.CACTUS.getCharacter(), 50);
         dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.POISON_SPIDER.getCharacter(), 30);
         dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character.RED_SCORPION.getCharacter(), 30);
@@ -240,9 +243,12 @@ public class World
             }
         }
         
-        dessert.setOne(DESSERT_TELEPORT_ROW, DESSERT_TELEPORT_COL, character.TELEPORT.getCharacter());
-        dessert.setOne(DESSERT_SHOP_ROW, DESSERT_SHOP_COL, character.SHOP.getCharacter());
-        dessert.setOne(DESSERT_BLACKSMITH_ROW, DESSERT_BLACKSMITH_COL, character.BLACKSMITH.getCharacter());
+        dessert.setOne(dessertTeleportRow, dessertTeleportCol, character.TELEPORT.getCharacter());
+        dessert.setOne(corpseRow, corpseCol, character.CORPSE.getCharacter());
+        
+        dessert.setOne(potionRow - 1, potionCol, character.TREE.getCharacter());
+        dessert.setOne(potionRow, potionCol, character.POTION.getCharacter());
+        dessert.setOne(potionRow + 1, potionCol, character.TREE.getCharacter());
     }
     
     /**
@@ -409,8 +415,11 @@ public class World
           
     }
     
-    public boolean goTest()
+    public boolean goTest(int colCoord)
     {
-        return true;
+        if(colCoord == T_TEST_COL)
+            return true;
+        
+        return false;
     }
 } 
