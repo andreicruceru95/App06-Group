@@ -18,6 +18,7 @@ public class Player extends Actor
     public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
     
     public static final Inventory INVENTORY = new Inventory();
+    public static final Quests QUESTS = new Quests();
     
     private boolean ring = false;
     private boolean bracelet = false;
@@ -352,5 +353,35 @@ public class Player extends Actor
     {
         return maxHealthPoints;
         
+    }
+    
+    public void printQuestList()
+    {
+        QUESTS.printQuestList();
+    }
+    
+    public void startQuest(String string)
+    {
+        QUESTS.startQuest(string);
+    }
+    
+    public boolean checkQuestStatus(String string)
+    {
+        return QUESTS.checkQuestStatus(string);
+    }
+    
+    public int getRewardAmount(String string)
+    {
+        return QUESTS.getRewardAmount(string);
+    }
+    
+    public int getRequirementAmount(String string)
+    {
+        return QUESTS.getRequirementAmount(string);
+    }
+    
+    public String getRequirement(String string)
+    {
+        return QUESTS.getRequirement(string);
     }
 }
