@@ -28,6 +28,7 @@ public class Inventory
         INVENTORY.put(character.TOWER_KEY.getCharacter(), 0);
         INVENTORY.put(character.FOX_KEY.getCharacter(), 0);
         INVENTORY.put(character.CHEST_KEY.getCharacter(), 0);
+        INVENTORY.put(character.HUSBAND_REMAINS.getCharacter(), 0);
         
     }
 
@@ -43,17 +44,29 @@ public class Inventory
     
     public boolean checkInventory(String string, int amount)
     {
-        if(INVENTORY.get(string) > amount)
-            return true;
+        boolean exists = false;
+        try
+        {
+            if(INVENTORY.get(string) > amount)
+            {
+                exists = true;
+                
+                return exists;
+            }
             
-        return false;    
+        }
+        catch(Exception e)
+        {
+             System.out.println("You don't have it");
+        }
+        
+        return exists;
     }
     
     public void printInventory()
     {
-        // if(INVENTORY.isEmpty())
-            // System.out.println("\t\tInventory is empty");
         int count = 0;    
+        
         for (String object : INVENTORY.keySet())
         {
             String key = object.toString();
