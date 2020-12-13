@@ -15,6 +15,6 @@ public class Amulet extends Item
     
     public void print()
     {
-        System.out.println(displayName + " + " + displayLevel + "\tBonus HP : " + (enchantStats));
+        System.out.println(displayName + "\t + " + displayLevel + "\tBonus HP : " + (enchantStats));
     }
 }
