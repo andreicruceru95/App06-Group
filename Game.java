@@ -351,28 +351,28 @@ public class Game
     {
         switch (direction)
         {
-            case UP -> {
+            case UP : {
                 world.addToHelpMap((player.getRowCoord() - 1), player.getColCoord(), "   ");
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
                         world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
                         world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
             }
-            case DOWN -> {
+            case DOWN : {
                 world.addToHelpMap((player.getRowCoord() + 1), player.getColCoord(), "   ");
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
                         world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
                         world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
             }
-            case LEFT -> {
+            case LEFT : {
                 world.addToHelpMap((player.getRowCoord()), player.getColCoord() - 1, "   ");
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
                         world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
                         world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
             }
-            case RIGHT -> {
+            case RIGHT : {
                 world.addToHelpMap((player.getRowCoord()), player.getColCoord() + 1, "   ");
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
                         world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));

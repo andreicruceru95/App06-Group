@@ -27,30 +27,30 @@ public class Interactions
         INTERACTIONS.put(DESSERT,  "\t\tYou see a corpse of a previous adventurer, maybe you should see if he had any notes");
         INTERACTIONS.put(SPIDER_CAVE, "\t\tA cave? You should be careful.. Who knows what monsters lives in here.");
 
-        INTERACTIONS.put(Characters.CORPSE.getCharacter(), """
-                \t\tJurnal:\s
+        INTERACTIONS.put(Characters.CORPSE.getCharacter(), 
+                "\t\tJurnal:" + 
 
-                \t\tI've made it this far, however I don't know how much further I can go on,
-                \t\tsomewhere south should be another teleporter but that leads into the spiders den.
-                \t\tI think they're the ones that are keeping guard over the mythical stone.
-                \t\tI pray that someone is able to carry on my quest and save humanity. To any unfortunate 
-                \t\tadventurer that reads this,
-                \t\tI've stashed some health potions near the rocks west between the two trees
-                \t\tI wish you all the best and god speed""");
+                "\t\tI've made it this far, however I don't know how much further I can go on,"+
+                "\t\tsomewhere south should be another teleporter but that leads into the spiders den." +
+                "\t\tI think they're the ones that are keeping guard over the mythical stone." +
+                "\t\tI pray that someone is able to carry on my quest and save humanity. To any unfortunate "+
+                "\t\tadventurer that reads this,"+
+                "\t\tI've stashed some health potions near the rocks west between the two trees"+
+                "\t\tI wish you all the best and god speed");
 
-        INTERACTIONS.put(Characters.BIOLOGIST.getCharacter(), """
-                Biologist:\s
+        INTERACTIONS.put(Characters.BIOLOGIST.getCharacter(), 
+               " Biologist:" +
 
-                \t\tI am developing new potions that will help you in battle
-                \t\tand I need someone to collect some herbs for me\t\tI need 10 of each species of flowers.\s
-                \t\tBring them to me and you will be rewarded!""");
+                "\t\tI am developing new potions that will help you in battle"+
+                "\t\tand I need someone to collect some herbs for me\t\tI need 10 of each species of flowers."+
+                "\t\tBring them to me and you will be rewarded!");
 
-        INTERACTIONS.put(Characters.PERSON_1.getCharacter(), """
-                Old Lady:\s
+        INTERACTIONS.put(Characters.PERSON_1.getCharacter(), 
+                "Old Lady:"+
 
-                \t\tMy husband was one of the brave warriors that fought along with\s
-                \t\tthe Gods. You need to find his remains so I can bury him.\s
-                \t\tI owe him that..""");
+                "\t\tMy husband was one of the brave warriors that fought along with"+
+                "\t\tthe Gods. You need to find his remains so I can bury him."+
+                "\t\tI owe him that..");
     }
     
     public boolean getInteraction(String object)

@@ -24,10 +24,9 @@ public class Storyline
                         "\t\tThe animals become violent, enraged, attacking anyone on sight..\n" +
                                 "\t\tMillions have died, cities were wiped off the face of the earth",
 
-                        """
-\t\tThe king, Potus, sent armies to slay the creatures,
-\t\tbut whenever a creature was defeated, more would appear out of nowhere..
-\t\tHis armies were eventually outnumbered and defeated""",
+                        "\t\tThe king, Potus, sent armies to slay the creatures," +
+                        "\t\tbut whenever a creature was defeated, more would appear out of nowhere." +
+                        "\t\tHis armies were eventually outnumbered and defeated",
 
                         "\t\tThe stone is now out there between armies of demons, ready to be found \n" +
                                 "\t\t and brought to the city, where it belongs.",
@@ -48,11 +47,10 @@ public class Storyline
         {
             "\t\tWelcome young adventurer " + playerName + ", this is where your story begins.",
 
-                """
-\t\tYou find yourself in the last settlement of humankind.
-\t\tIn this land of trepidations you must slay your way
-\t\tthough the now uncharted territory and retrieve the mythical stone
-\t\tand place it back in the centre of town where it belongs.""",
+                "\t\tYou find yourself in the last settlement of humankind.\n" +
+                "\t\tIn this land of trepidations you must slay your way\n" +
+                "\t\tthough the now uncharted territory and retrieve the mythical stone\n" +
+                "\t\tand place it back in the centre of town where it belongs.",
 
             "\t\tUpon your quest you will have to fight monsters, upgrade your gear and level up.",
 

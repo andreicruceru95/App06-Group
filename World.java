@@ -112,11 +112,11 @@ public class World
     {
         switch (name.toLowerCase())
         {
-            case "town" -> currentMap = town;
-            case "dessert" -> currentMap = dessert;
-            case "spidercave" -> currentMap = spiderCave;
-            case "test" -> currentMap = test;
-            default -> System.out.println("error");
+            case "town" : currentMap = town;
+            case "dessert" : currentMap = dessert;
+            case "spidercave" : currentMap = spiderCave;
+            case "test" : currentMap = test;
+            default : System.out.println("error");
         }
         
     }
@@ -316,9 +316,9 @@ public class World
     {
         switch (currentMap.getName().toLowerCase())
         {
-            case "town" -> currentMap.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-            case "dessert" -> dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-            case "spidercave" -> spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+            case "town" : currentMap.addObjects(WALL_END + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+            case "dessert" : dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+            case "spidercave" : spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
         }
     }
 
