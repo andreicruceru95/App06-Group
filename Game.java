@@ -35,6 +35,9 @@ public class Game
     public static final String HIDE_ITEMS = "hideitems";
     public static final String INVENTORY = "inventory";
     public static final String QUESTS = "seequests";
+    public static final String HORSE_ON = "horseon";
+    public static final String HORSE_OFF = "horseoff";
+
     
     public static final Shop SHOP = new Shop();
     public static final int PLAYER_INITIAL_ROW = 7;
@@ -67,6 +70,10 @@ public class Game
     public static final String DOWN = "s";
     public static final String LEFT = "a";
     public static final String RIGHT = "d";
+    public static final String UP2 = "8";
+    public static final String DOWN2 = "5";
+    public static final String LEFT2 = "4";
+    public static final String RIGHT2 = "6";
         
     public static final String square = "   ";
     //private int monsterLevel = 1;
@@ -115,6 +122,7 @@ public class Game
     private final boolean biologistQuest4 = false;
     private final boolean biologistQuest5 = false;
     private final boolean ladyQuest = false;
+    private boolean horse = false;
     
     private static final Random rand = new Random();
     private static final Input reader = new Input();
@@ -248,6 +256,14 @@ public class Game
                 player.printQuestList(); 
                 pressAny();
             }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HORSE_ON))
+            {
+                horse = true;
+            }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HORSE_OFF))
+            {
+                horse = false;
+            }
             else
                 runMenu(choice);
         }
@@ -296,7 +312,7 @@ public class Game
                     player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
 
                 }
-
+                
                 break;
             case DOWN:
 
@@ -335,7 +351,61 @@ public class Game
                     player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
 
                 }
+ 
+                break;
+                 
+                //using keys "8","5","4","6" while horse (boolean) is true, player can move 2 spaces instead of 1.
+                case UP2:
 
+                if (checkNextSquare((player.getRowCoord() - 2), player.getColCoord()) && (horse == true))
+                {
+                    updateHelpMap(UP);
+
+                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                    player.setCoordinates((player.getRowCoord() - 2), player.getColCoord());
+
+                }
+                
+                break;
+            case DOWN2:
+
+                if (checkNextSquare((player.getRowCoord() + 2), player.getColCoord()) && (horse == true))
+                {
+                    updateHelpMap(DOWN);
+
+                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                    player.setCoordinates((player.getRowCoord() + 2), player.getColCoord());
+
+                }
+
+                break;
+            case LEFT2:
+
+                if (checkNextSquare(player.getRowCoord(), (player.getColCoord() - 2)) && (horse == true))
+                {
+                    updateHelpMap(LEFT);
+
+                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 2));
+
+                }
+
+                break;
+            case RIGHT2:
+
+                if (checkNextSquare(player.getRowCoord(), (player.getColCoord() + 2)) && (horse == true))
+                {
+                    updateHelpMap(RIGHT);
+
+                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 2));
+
+                }
+ 
                 break;
         }
         
@@ -349,8 +419,8 @@ public class Game
     
     private void updateHelpMap(String direction)
     {
-        switch (direction)
-        {
+        switch (direction) {
+        
             case UP : {
                 world.addToHelpMap((player.getRowCoord() - 1), player.getColCoord(), "   ");
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
@@ -379,7 +449,9 @@ public class Game
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
                         world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
             }
+            
         }
+        
         
     } 
      
