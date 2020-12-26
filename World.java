@@ -110,21 +110,24 @@ public class World
      */
     public void setCurrentMap(String name)
     {
-        switch (name.toLowerCase())
-        {
-            case "town" : currentMap = town;
-            case "dessert" : currentMap = dessert;
-            case "spidercave" : currentMap = spiderCave;
-            case "test" : currentMap = test;
-            default : System.out.println("error");
-        }
+        if(name.toLowerCase().equals("town"))
+            currentMap = town;
+        
+            // switch (name)
+        // {
+            // case "town" : currentMap = town;
+            // case "dessert" : currentMap = dessert;
+            // case "spidercave" : currentMap = spiderCave;
+            // case "test" : currentMap = test;
+            // default : System.out.println("error");
+        // }
         
     }
     
     /**
      * add object to the town map
      */
-    private void addObjectsToTown()
+    public void addObjectsToTown()
     {
         //add wall
         for (int i = 0; i < FULL_H; i++)

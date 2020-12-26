@@ -81,7 +81,7 @@ public class Game
     public static final Storyline story = new Storyline();
     public static final Blacksmith blacksmith = new Blacksmith();
 
-    //private Characters character;
+    private Characters character;
     //private Commands commands;
     
     private Actor monster;
@@ -139,38 +139,38 @@ public class Game
         
         display.runStory(story.getPartTwo(playerName));
         
-        misk.add(Characters.FLOWER_RED.getCharacter());
-        misk.add(Characters.FLOWER_BLUE.getCharacter());
-        misk.add(Characters.FLOWER_YELLOW.getCharacter());
-        misk.add(Characters.FLOWER_PURPLE.getCharacter());
-        misk.add(Characters.FLOWER_WHITE.getCharacter());
-        misk.add(Characters.SNOW_FRAG.getCharacter());
-        misk.add(Characters.STAR_FRAG.getCharacter());
-        misk.add(Characters.SPIDER_KEY.getCharacter());
-        misk.add(Characters.TOWER_KEY.getCharacter());
-        misk.add(Characters.FOX_KEY.getCharacter());
-        misk.add(Characters.CHEST_KEY.getCharacter());
+        misk.add(character.FLOWER_RED.getCharacter());
+        misk.add(character.FLOWER_BLUE.getCharacter());
+        misk.add(character.FLOWER_YELLOW.getCharacter());
+        misk.add(character.FLOWER_PURPLE.getCharacter());
+        misk.add(character.FLOWER_WHITE.getCharacter());
+        misk.add(character.SNOW_FRAG.getCharacter());
+        misk.add(character.STAR_FRAG.getCharacter());
+        misk.add(character.SPIDER_KEY.getCharacter());
+        misk.add(character.TOWER_KEY.getCharacter());
+        misk.add(character.FOX_KEY.getCharacter());
+        misk.add(character.CHEST_KEY.getCharacter());
         
-        monsters.add(new Monster (Characters.BLACK_BEAR.getCharacter(), LEVEL_1, Characters.FLOWER_RED.getCharacter()));
-        monsters.add(new Monster (Characters.WHITE_TIGER.getCharacter(), LEVEL_5, Characters.FLOWER_RED.getCharacter()));
-        monsters.add(new Monster (Characters.APE_THROWER.getCharacter(), LEVEL_10, Characters.FLOWER_BLUE.getCharacter()));
-        monsters.add(new Monster (Characters.POISON_SPIDER.getCharacter(), LEVEL_15, Characters.FLOWER_YELLOW.getCharacter()));
-        monsters.add(new Monster (Characters.RED_SCORPION.getCharacter(),LEVEL_20, Characters.FLOWER_YELLOW.getCharacter()));
-        monsters.add(new Monster (Characters.ALBINO_SNAKE.getCharacter(),LEVEL_25, Characters.FLOWER_PURPLE.getCharacter()));
-        monsters.add(new Monster (Characters.POLAR_BEAR.getCharacter(),LEVEL_30, Characters.FLOWER_WHITE.getCharacter()));
-        monsters.add(new Monster (Characters.YETI.getCharacter(),LEVEL_35, Characters.SNOW_FRAG.getCharacter()));
-        monsters.add(new Monster (Characters.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40, Characters.SNOW_FRAG.getCharacter()));
-        monsters.add(new Monster (Characters.DEMON.getCharacter(),LEVEL_45, Characters.STAR_FRAG.getCharacter()));
-        monsters.add(new Monster (Characters.CURSED_VAMPIRE.getCharacter(),LEVEL_50, Characters.STAR_FRAG.getCharacter()));
-        monsters.add(new Monster (Characters.WITCH.getCharacter(),LEVEL_55, Characters.STAR_FRAG.getCharacter()));
-        monsters.add(new Monster (Characters.BERA.getCharacter(),LEVEL_9, Characters.SPIDER_KEY.getCharacter()));
-        monsters.add(new Monster (Characters.TIGRIS.getCharacter(),LEVEL_14, Characters.SPIDER_KEY.getCharacter()));
-        monsters.add(new Monster (Characters.APE_KING.getCharacter(),LEVEL_19, Characters.SPIDER_KEY.getCharacter()));
-        monsters.add(new Monster (Characters.SPIDER_QUEEN.getCharacter(),LEVEL_34, Characters.FOX_KEY.getCharacter()));
-        monsters.add(new Monster (Characters.NINE_TAILS.getCharacter(),LEVEL_49, Characters.TOWER_KEY.getCharacter()));
+        monsters.add(new Monster (character.BLACK_BEAR.getCharacter(), LEVEL_1, character.FLOWER_RED.getCharacter()));
+        monsters.add(new Monster (character.WHITE_TIGER.getCharacter(), LEVEL_5, character.FLOWER_RED.getCharacter()));
+        monsters.add(new Monster (character.APE_THROWER.getCharacter(), LEVEL_10, character.FLOWER_BLUE.getCharacter()));
+        monsters.add(new Monster (character.POISON_SPIDER.getCharacter(), LEVEL_15, character.FLOWER_YELLOW.getCharacter()));
+        monsters.add(new Monster (character.RED_SCORPION.getCharacter(),LEVEL_20, character.FLOWER_YELLOW.getCharacter()));
+        monsters.add(new Monster (character.ALBINO_SNAKE.getCharacter(),LEVEL_25, character.FLOWER_PURPLE.getCharacter()));
+        monsters.add(new Monster (character.POLAR_BEAR.getCharacter(),LEVEL_30, character.FLOWER_WHITE.getCharacter()));
+        monsters.add(new Monster (character.YETI.getCharacter(),LEVEL_35, character.SNOW_FRAG.getCharacter()));
+        monsters.add(new Monster (character.ABOMINABLE_SNOWMAN.getCharacter(),LEVEL_40, character.SNOW_FRAG.getCharacter()));
+        monsters.add(new Monster (character.DEMON.getCharacter(),LEVEL_45, character.STAR_FRAG.getCharacter()));
+        monsters.add(new Monster (character.CURSED_VAMPIRE.getCharacter(),LEVEL_50, character.STAR_FRAG.getCharacter()));
+        monsters.add(new Monster (character.WITCH.getCharacter(),LEVEL_55, character.STAR_FRAG.getCharacter()));
+        monsters.add(new Monster (character.BERA.getCharacter(),LEVEL_9, character.SPIDER_KEY.getCharacter()));
+        monsters.add(new Monster (character.TIGRIS.getCharacter(),LEVEL_14, character.SPIDER_KEY.getCharacter()));
+        monsters.add(new Monster (character.APE_KING.getCharacter(),LEVEL_19, character.SPIDER_KEY.getCharacter()));
+        monsters.add(new Monster (character.SPIDER_QUEEN.getCharacter(),LEVEL_34, character.FOX_KEY.getCharacter()));
+        monsters.add(new Monster (character.NINE_TAILS.getCharacter(),LEVEL_49, character.TOWER_KEY.getCharacter()));
         //drop to be changed
-        monsters.add(new Monster (Characters.DEATH.getCharacter(),LEVEL_60, Characters.CHEST_KEY.getCharacter()));
-        monsters.add(new Monster (Characters.RED_DRAGON.getCharacter(), LEVEL_70, Characters.CHEST_KEY.getCharacter()));
+        monsters.add(new Monster (character.DEATH.getCharacter(),LEVEL_60, character.CHEST_KEY.getCharacter()));
+        monsters.add(new Monster (character.RED_DRAGON.getCharacter(), LEVEL_70, character.CHEST_KEY.getCharacter()));
          
         run();
                 
@@ -283,60 +283,61 @@ public class Game
      */
     public void movePlayer(String direction)
     {
-        switch (direction.replaceAll("\\s+", ""))
+        if (direction.replaceAll("\\s+", "").equals(UP))
         {
-            case UP:
+            
+            if (checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
+            {
+                updateHelpMap(UP);
 
-                if (checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
-                {
-                    updateHelpMap(UP);
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
 
-                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+                player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
 
-                    player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
+            }
+            
+        }
+        else if (direction.replaceAll("\\s+", "").equals(DOWN))
+        {  
+                
+            if (checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
+            {
+                updateHelpMap(DOWN);
 
-                }
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
 
-                break;
-            case DOWN:
+                player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
 
-                if (checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
-                {
-                    updateHelpMap(DOWN);
+            }
+                
+        }
+        else if (direction.replaceAll("\\s+", "").equals(LEFT))
+        {
 
-                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+            if (checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
+            {
+                updateHelpMap(LEFT);
 
-                    player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
 
-                }
+                player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
 
-                break;
-            case LEFT:
+            }
+            
+        }
+        else if (direction.replaceAll("\\s+", "").equals(RIGHT))
+        {
+            
+            if (checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
+            {
+                updateHelpMap(RIGHT);
 
-                if (checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
-                {
-                    updateHelpMap(LEFT);
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
 
-                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+                player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
 
-                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
+            }
 
-                }
-
-                break;
-            case RIGHT:
-
-                if (checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
-                {
-                    updateHelpMap(RIGHT);
-
-                    world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
-
-                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
-
-                }
-
-                break;
         }
         
         System.out.println(CLEAR);
@@ -351,34 +352,51 @@ public class Game
     {
         switch (direction)
         {
-            case UP : {
+            case UP : 
+            {
                 world.addToHelpMap((player.getRowCoord() - 1), player.getColCoord(), "   ");
+                
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
-                        world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+                                    world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+                                    
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
-                        world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+                                    world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+                                    
             }
-            case DOWN : {
+            case DOWN :
+            {
                 world.addToHelpMap((player.getRowCoord() + 1), player.getColCoord(), "   ");
+                
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
-                        world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+                                    world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+                        
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
-                        world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+                                    world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+                                    
             }
-            case LEFT : {
+            case LEFT : 
+            {
                 world.addToHelpMap((player.getRowCoord()), player.getColCoord() - 1, "   ");
+                
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
-                        world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+                                     world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+                        
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
-                        world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+                                     world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+                        
             }
-            case RIGHT : {
+            case RIGHT : 
+            {
                 world.addToHelpMap((player.getRowCoord()), player.getColCoord() + 1, "   ");
+                
                 world.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
-                        world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+                                      world.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+                        
                 world.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
-                        world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+                                     world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+                        
             }
+            
         }
         
     } 
@@ -444,7 +462,7 @@ public class Game
     
     public void getGold()
     {
-        System.out.println("\tGold: " + player.getGold() + "" + Characters.GOLD.getCharacter());
+        System.out.println("\tGold: " + player.getGold() + "" + character.GOLD.getCharacter());
     }
     
     /**
@@ -456,31 +474,31 @@ public class Game
         {
             return true;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.WALL.getCharacter()) || world.getSquareValue(nextRow,nextCol).equals(Characters.ROCK.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.WALL.getCharacter()) || world.getSquareValue(nextRow,nextCol).equals(character.ROCK.getCharacter()))
         {
             System.out.println("Cannot go through walls");
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.SHOP.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.SHOP.getCharacter()))
         {
             runShop();
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.BLACKSMITH.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.BLACKSMITH.getCharacter()))
         {
             runBlacksmith();
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.CHEST.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.CHEST.getCharacter()))
         {
             openChest();
             
             return true;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.GOLD.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.GOLD.getCharacter()))
         {
             player.addGold(pickUpGold);
             
@@ -492,38 +510,38 @@ public class Game
             
             return true;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.TELEPORT.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.TELEPORT.getCharacter()))
         {
             teleport();
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.CORPSE.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.CORPSE.getCharacter()))
         {
             System.out.println(CLEAR);
             
-            interaction.getInteraction(Characters.CORPSE.getCharacter());
+            interaction.getInteraction(character.CORPSE.getCharacter());
             
             pressAny();
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.BIOLOGIST.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.BIOLOGIST.getCharacter()))
         {
-            runBiologist();
+            //runBiologist();
             
             pressAny();
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.PERSON_1.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.PERSON_1.getCharacter()))
         {
-            runLadyQuest();
+            //runLadyQuest();
             pressAny();
             
             return false;
         }
-        else if(world.getSquareValue(nextRow,nextCol).equals(Characters.POTION.getCharacter()))
+        else if(world.getSquareValue(nextRow,nextCol).equals(character.POTION.getCharacter()))
         {
             int potionAmount = 5;
             
@@ -559,7 +577,7 @@ public class Game
         if(((Monster) monster).dropChest())
         {
             world.addObjects(player.getColCoord() - 1 , player.getColCoord() + 1,
-            player.getRowCoord() - 1, player.getRowCoord() + 1, Characters.CHEST.getCharacter()) ;
+            player.getRowCoord() - 1, player.getRowCoord() + 1, character.CHEST.getCharacter()) ;
         }
     }
     
@@ -578,7 +596,7 @@ public class Game
         {
             player.addGold(((Monster) monster).getDropAmount() * monster.getLevel());
             
-            System.err.println("Received " + ((Monster) monster).getDropAmount() * monster.getLevel() + Characters.GOLD.getCharacter());
+            System.err.println("Received " + ((Monster) monster).getDropAmount() * monster.getLevel() + character.GOLD.getCharacter());
         }
         
     }
@@ -609,7 +627,7 @@ public class Game
         if(((Monster) monster).dropGold() != 0)
         {
             world.addObjects(player.getColCoord() - 1 , player.getColCoord() + 1,
-            player.getRowCoord() - 1, player.getRowCoord() + 1, Characters.GOLD.getCharacter()) ;
+            player.getRowCoord() - 1, player.getRowCoord() + 1, character.GOLD.getCharacter()) ;
         }
         
         return monster.getLevel();
@@ -620,7 +638,8 @@ public class Game
         if(((Monster) monster).dropItem())
         {
             world.addObjects(player.getColCoord() - 1 , player.getColCoord() + 1,
-            player.getRowCoord() - 1, player.getRowCoord() + 1, ((Monster) monster).getDrop()) ;
+                                player.getRowCoord() - 1, player.getRowCoord() + 1, ((Monster) monster).getDrop()) ;
+                                
         }
            
     }
@@ -706,10 +725,11 @@ public class Game
     public void changeImage()
     {
         if(player.getCurrentHealth() <= player.getFullHealth() / 2)
-            player.changeImage(Characters.PLAYER2.getCharacter());
+            player.changeImage(character.PLAYER2.getCharacter());            
             
         else
-            player.changeImage(Characters.PLAYER.getCharacter());
+            player.changeImage(character.PLAYER.getCharacter());
+            
     }
 
     /**
@@ -717,29 +737,29 @@ public class Game
      */
     public void checkFirstInteraction()
     {
-        if(player.checkVisualField(Characters.SHOP.getCharacter()) && !shopDescription)
+        if(player.checkVisualField(character.SHOP.getCharacter()) && !shopDescription)
         {
-            shopDescription = interaction.getInteraction(Characters.SHOP.getCharacter());
+            shopDescription = interaction.getInteraction(character.SHOP.getCharacter());
             pressAny();
         }    
-        else if(player.checkVisualField(Characters.BLACKSMITH.getCharacter()) && !blacksmithDescription)
+        else if(player.checkVisualField(character.BLACKSMITH.getCharacter()) && !blacksmithDescription)
         {
-            blacksmithDescription = interaction.getInteraction(Characters.BLACKSMITH.getCharacter());
+            blacksmithDescription = interaction.getInteraction(character.BLACKSMITH.getCharacter());
             pressAny();
         }
-        else if(player.checkVisualField(Characters.STABLE.getCharacter()) && !stableDescription)
+        else if(player.checkVisualField(character.STABLE.getCharacter()) && !stableDescription)
         {
-            stableDescription = interaction.getInteraction(Characters.STABLE.getCharacter());
+            stableDescription = interaction.getInteraction(character.STABLE.getCharacter());
             pressAny();
         }
-        else if(player.checkVisualField(Characters.GUARD.getCharacter()) && !guardDescription)
+        else if(player.checkVisualField(character.GUARD.getCharacter()) && !guardDescription)
         {
-            guardDescription = interaction.getInteraction(Characters.GUARD.getCharacter());
+            guardDescription = interaction.getInteraction(character.GUARD.getCharacter());
             pressAny();
         }
-        else if(player.checkVisualField(Characters.TELEPORT.getCharacter()) && !teleporterDescription)
+        else if(player.checkVisualField(character.TELEPORT.getCharacter()) && !teleporterDescription)
         {
-            teleporterDescription = interaction.getInteraction(Characters.TELEPORT.getCharacter());
+            teleporterDescription = interaction.getInteraction(character.TELEPORT.getCharacter());
             pressAny();
         }
         else if(world.getCurrentMapName().toLowerCase().equals(DESSERT) && !dessertDescription)
@@ -755,77 +775,77 @@ public class Game
 
     }
     
-    public void runBiologist()
-    {
-        if(!firstBiologistInteraction)
-        {
-            firstBiologistInteraction = interaction.getInteraction(Characters.BIOLOGIST.getCharacter());
+    // public void runBiologist()
+    // {
+        // if(!firstBiologistInteraction)
+        // {
+            // firstBiologistInteraction = interaction.getInteraction(character.BIOLOGIST.getCharacter());
             
-            player.startQuest("biologist1");
-            player.startQuest("biologist2");
-            player.startQuest("biologist3");
-            player.startQuest("biologist4");
-            player.startQuest("biologist5");
-        }
-        else
-        {
-            checkBiologistQuests();
+            // player.startQuest("biologist1");
+            // player.startQuest("biologist2");
+            // player.startQuest("biologist3");
+            // player.startQuest("biologist4");
+            // player.startQuest("biologist5");
+        // }
+        // else
+        // {
+            // checkBiologistQuests();
             
-        }
+        // }
         
-    }
+    // }
     
-    public void runLadyQuest()
-    {
-        if(!firstLadyInteraction)
-        {
-            firstLadyInteraction = interaction.getInteraction(Characters.PERSON_1.getCharacter());
+    // public void runLadyQuest()
+    // {
+        // if(!firstLadyInteraction)
+        // {
+            // firstLadyInteraction = interaction.getInteraction(character.PERSON_1.getCharacter());
             
-            player.startQuest("Main[1][2]");
-        }
-        else
-            if(!ladyQuest)
-                runQuest("Main[1][2]");
-    }
+            // player.startQuest("Main[1][2]");
+        // }
+        // else
+            // if(!ladyQuest)
+                // runQuest("Main[1][2]");
+    // }
     
-    public void checkBiologistQuests()
-    {
-        if(!biologistQuest1)
-        {
-            runQuest("biologist1");
-        }
+    // public void checkBiologistQuests()
+    // {
+        // if(!biologistQuest1)
+        // {
+            // runQuest("biologist1");
+        // }
         
-        if(!biologistQuest2)
-        {
-            runQuest("biologist2");
-        }
+        // if(!biologistQuest2)
+        // {
+            // runQuest("biologist2");
+        // }
         
-        if(!biologistQuest3)
-        {
-            runQuest("biologist3");
-        }
+        // if(!biologistQuest3)
+        // {
+            // runQuest("biologist3");
+        // }
         
-        if(!biologistQuest4)
-        {
-            runQuest("biologist4");
-        }
+        // if(!biologistQuest4)
+        // {
+            // runQuest("biologist4");
+        // }
         
-        if(!biologistQuest5)
-        {
-            runQuest("biologist5");
-        }
+        // if(!biologistQuest5)
+        // {
+            // runQuest("biologist5");
+        // }
         
-    }
+    // }
     
-    private void runQuest(String questName)
-    {
-        if(player.checkInventory(player.getRequirement(questName), player.getRequirementAmount(questName)))
-        {
-            player.addGold(player.getRewardAmount(questName));
+    // private void runQuest(String questName)
+    // {
+        // if(player.checkInventory(player.getRequirement(questName), player.getRequirementAmount(questName)))
+        // {
+            // player.addGold(player.getRewardAmount(questName));
             
-        }
+        // }
         
-    }
+    // }
     
     /**
      * Enchance an item.

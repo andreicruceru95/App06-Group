@@ -15,7 +15,6 @@ public class Map
         
     public static final Random rand = new Random();
     
-    //private String description;
     private final String name;
     
     /**
@@ -117,7 +116,7 @@ public class Map
         for(int i = 0; i < amount; i++)
         {
             
-            while(!MAP[randomRow][randomCol].equals(SQUARE))
+            while(MAP[randomRow][randomCol] != SQUARE)
             {
                 randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
                 randomCol = rand.nextInt(columnMax - columnMin) + columnMin;

@@ -9,15 +9,14 @@ public class VisualField
 {
     public final static String[][] VISUAL_FIELD = new String[7][7];
     
-    //private Characters character;
-    private String player = Characters.PLAYER.getCharacter();
+    private Characters character;
+    private String player = character.PLAYER.getCharacter();
     
     /**
      * Set values in the visual field.
      */
     public void setVisualField(String [][] map, int playerRowCoord, int playerColCoord)
     {
-        VISUAL_FIELD[0][0] = map[playerRowCoord - 3][playerColCoord - 3];
         VISUAL_FIELD[0][1] = map[playerRowCoord - 3][playerColCoord - 2];
         VISUAL_FIELD[0][2] = map[playerRowCoord - 3][playerColCoord - 1];
         VISUAL_FIELD[0][3] = map[playerRowCoord - 3][playerColCoord];
@@ -81,18 +80,21 @@ public class VisualField
      */
     public boolean checkVisualField(String character)
     {
-        for (String[] strings : VISUAL_FIELD)
+        for (int i = 0; i < VISUAL_FIELD.length; i++)
         {
-            for (String string : strings)
+            for (int j = 0; j < VISUAL_FIELD[i].length; j++)
             {
 
-                if (string.contains(character))
+                if(VISUAL_FIELD[i][j].contains(character))
                 {
                     return true;
+                        
                 }
-
+                
             }
+        
         }
+        
         return false;
     }
     
@@ -101,11 +103,11 @@ public class VisualField
      */
     public void printVisualField()
     {
-        for (String[] strings : VISUAL_FIELD)
+        for (int i = 0; i < VISUAL_FIELD.length; i++)
         {
-            for (String string : strings)
+            for (int j = 0; j < VISUAL_FIELD[i].length; j++)
             {
-                System.out.print(string);
+                System.out.print(VISUAL_FIELD[i][j]);
             }
             System.out.println("");
         }

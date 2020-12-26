@@ -42,7 +42,7 @@ public class Database
     
     private static final String ROCK = " ⛰ ";
     private static final String WALL = " [/] ";
-    //private static final String BLACKSMITH = " B ";
+    private static final String BLACKSMITH = " B ";
     private static final String SHOP = " S ";
     private static final String CHEST = "!? ";
     private static final String GOLD = " $ ";
@@ -56,6 +56,7 @@ public class Database
         DATABASE_OBJECTS.put(PERSON_1, "\t\tPeople in the game. Some can interact with you.");
         DATABASE_OBJECTS.put(GUARD, "\t\tThe town guardian. He protects the city from the evil creatures.");
         DATABASE_OBJECTS.put(STABLE, "\t\tA stable. You can buy a horse from there.");
+        DATABASE_OBJECTS.put(BLACKSMITH, "\t\tA blacksmith. You can enchance your equipment there.");
         DATABASE_OBJECTS.put(PLAYER, "\t\tThe player location on the map.");
         DATABASE_OBJECTS.put(PLAYER2, "\t\tThe player location on the map, when the player's health drops under 50%");
         DATABASE_OBJECTS.put(ROCK, "\t\tRock wall");
