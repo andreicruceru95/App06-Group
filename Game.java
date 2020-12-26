@@ -35,11 +35,13 @@ public class Game
     public static final String HIDE_ITEMS = "hideitems";
     public static final String INVENTORY = "inventory";
     public static final String QUESTS = "seequests";
+    public static final String HORSE_ON = "horseon";
+    public static final String HORSE_OFF = "horseoff";
+
     
     public static final Shop SHOP = new Shop();
     public static final int PLAYER_INITIAL_ROW = 7;
     public static final int PLAYER_INITIAL_COL = 7;
-    //public static final int PLAYER_VISUAL = 3;
     public static final String TOWN = "town";
     public static final String DESSERT = "dessert";
     public static final String SPIDER_CAVE = "spidercave";
@@ -67,6 +69,10 @@ public class Game
     public static final String DOWN = "s";
     public static final String LEFT = "a";
     public static final String RIGHT = "d";
+    public static final String UP2 = "8";
+    public static final String DOWN2 = "5";
+    public static final String LEFT2 = "4";
+    public static final String RIGHT2 = "6";
         
     public static final String square = "   ";
     //private int monsterLevel = 1;
@@ -115,6 +121,7 @@ public class Game
     private final boolean biologistQuest4 = false;
     private final boolean biologistQuest5 = false;
     private final boolean ladyQuest = false;
+    private boolean horse = false;
     
     private static final Random rand = new Random();
     private static final Input reader = new Input();
@@ -247,6 +254,14 @@ public class Game
                 System.out.println(CLEAR);
                 player.printQuestList(); 
                 pressAny();
+            }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HORSE_ON))
+            {
+                horse = true;
+            }
+            else if(choice.toLowerCase().replaceAll("\\s","").contains(HORSE_OFF))
+            {
+                horse = false;
             }
             else
                 runMenu(choice);
@@ -398,6 +413,7 @@ public class Game
             }
             
         }
+        
         
     } 
      

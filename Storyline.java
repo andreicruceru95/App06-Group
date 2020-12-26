@@ -24,9 +24,9 @@ public class Storyline
                         "\t\tThe animals become violent, enraged, attacking anyone on sight..\n" +
                                 "\t\tMillions have died, cities were wiped off the face of the earth",
 
-                        "\t\tThe king, Potus, sent armies to slay the creatures," +
-                        "\t\tbut whenever a creature was defeated, more would appear out of nowhere." +
-                        "\t\tHis armies were eventually outnumbered and defeated",
+                        "\t\tThe king, Potus, sent armies to slay the creatures,\n" +
+                         "\t\tbut whenever a creature was defeated, more would appear out of nowhere. \n" +
+                          "\t\tHis armies were eventually outnumbered and defeated",
 
                         "\t\tThe stone is now out there between armies of demons, ready to be found \n" +
                                 "\t\t and brought to the city, where it belongs.",
