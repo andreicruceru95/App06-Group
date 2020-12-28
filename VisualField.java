@@ -17,6 +17,7 @@ public class VisualField
      */
     public void setVisualField(String [][] map, int playerRowCoord, int playerColCoord)
     {
+        VISUAL_FIELD[0][0] = map[playerRowCoord - 3][playerColCoord - 3];
         VISUAL_FIELD[0][1] = map[playerRowCoord - 3][playerColCoord - 2];
         VISUAL_FIELD[0][2] = map[playerRowCoord - 3][playerColCoord - 1];
         VISUAL_FIELD[0][3] = map[playerRowCoord - 3][playerColCoord];

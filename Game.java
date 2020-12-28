@@ -298,8 +298,9 @@ public class Game
      */
     public void movePlayer(String direction)
     {
-        if (direction.replaceAll("\\s+", "").equals(UP))
-        {
+        if (horse == false) {
+         if (direction.replaceAll("\\s+", "").equals(UP))
+         {
             
             if (checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
             {
@@ -311,9 +312,9 @@ public class Game
 
             }
             
-        }
-        else if (direction.replaceAll("\\s+", "").equals(DOWN))
-        {  
+         }
+         else if (direction.replaceAll("\\s+", "").equals(DOWN))
+         {  
                 
             if (checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
             {
@@ -325,9 +326,9 @@ public class Game
 
             }
                 
-        }
-        else if (direction.replaceAll("\\s+", "").equals(LEFT))
-        {
+         }
+         else if (direction.replaceAll("\\s+", "").equals(LEFT))
+         {
 
             if (checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
             {
@@ -339,9 +340,9 @@ public class Game
 
             }
             
-        }
-        else if (direction.replaceAll("\\s+", "").equals(RIGHT))
-        {
+         }
+         else if (direction.replaceAll("\\s+", "").equals(RIGHT))
+         {
             
             if (checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
             {
@@ -353,6 +354,66 @@ public class Game
 
             }
 
+         }
+        }
+        else if (horse == true)  //TOGGLE typing "horseon" / "horseoff"  to move twice as much...P.S remember to add this into help command
+        {
+         if (direction.replaceAll("\\s+", "").equals(UP))
+         {
+            
+            if (checkNextSquare((player.getRowCoord() - 2), player.getColCoord()))
+            {
+                updateHelpMap(UP);
+
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                player.setCoordinates((player.getRowCoord() - 2), player.getColCoord());
+
+            }
+            
+         }
+         else if (direction.replaceAll("\\s+", "").equals(DOWN))
+         {  
+                
+            if (checkNextSquare((player.getRowCoord() + 2), player.getColCoord()))
+            {
+                updateHelpMap(DOWN);
+
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                player.setCoordinates((player.getRowCoord() + 2), player.getColCoord());
+
+            }
+                
+         }
+         else if (direction.replaceAll("\\s+", "").equals(LEFT))
+         {
+
+            if (checkNextSquare(player.getRowCoord(), (player.getColCoord() - 2)))
+            {
+                updateHelpMap(LEFT);
+
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 2));
+
+            }
+            
+         }
+         else if (direction.replaceAll("\\s+", "").equals(RIGHT))
+         {
+            
+            if (checkNextSquare(player.getRowCoord(), (player.getColCoord() + 2)))
+            {
+                updateHelpMap(RIGHT);
+
+                world.setObject(player.getRowCoord(), player.getColCoord(), "   ");
+
+                player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 2));
+
+            }
+
+         }
         }
         
         System.out.println(CLEAR);
@@ -411,7 +472,6 @@ public class Game
                                      world.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
                         
             }
-            
         }
         
         
