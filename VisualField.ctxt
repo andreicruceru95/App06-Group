@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=VisualField
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ VisualField\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ The\ player's\ visual\ field\ on\ the\ map.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=map\ playerRowCoord\ playerColCoord
 comment1.target=void\ setVisualField(java.lang.String[][],\ int,\ int)
 comment1.text=\r\n\ Set\ values\ in\ the\ visual\ field.\r\n
@@ -9,7 +9,7 @@ comment2.target=boolean\ checkVisualField(java.lang.String)
 comment2.text=\r\n\ Check\ the\ visual\ field\ of\ the\ player\ for\ a\ given\ character\r\n
 comment3.params=
 comment3.target=void\ printVisualField()
-comment3.text=\r\n\ Player's\ visual\ field\ 7x7\r\n
+comment3.text=\r\n\ print\ player's\ visual\ field\ 7x7\r\n
 comment4.params=image
 comment4.target=void\ changeImage(java.lang.String)
 comment4.text=\r\n\ Change\ player's\ image.\r\n
