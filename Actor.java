@@ -1,10 +1,10 @@
 import java.util.Random;
 
 /**
- * Write a description of class Actor here.
+ * A game actor (Player/monsters)
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public abstract class Actor
 {
@@ -27,6 +27,9 @@ public abstract class Actor
     
     protected Random random = new Random();
     
+    /**
+     * Initialise Actor
+     */
     public Actor(String name, int level)
     {
         this.name = name;
@@ -102,6 +105,9 @@ public abstract class Actor
                 
     }
     
+    /**
+     * @return the health value status.
+     */
     public String getHealthInfo()
     {
         return "\t\tHealth: " + currentHealthPoints + " / " + maxHealthPoints;
