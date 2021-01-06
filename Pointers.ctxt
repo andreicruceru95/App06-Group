@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Pointers
+comment0.text=\ \r\n\ \ This\ is\ a\ enum\ class\ that\ will\ store\ the\ coordinates\r\n\ \ of\ the\ map\ objects.\r\n\ \ \r\n\ \ @author\ Andrei\ Cruceru\r\n\ \ @version\ 1.0.12\r\n
+comment1.params=value
+comment1.target=Pointers(int)
+comment1.text=\r\n\ constructor\ method\r\n
+comment2.params=
+comment2.target=int\ getValue()
+comment2.text=\r\n\ Return\ the\ coordinate.\r\n
+numComments=3
