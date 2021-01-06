@@ -1,8 +1,10 @@
 #BlueJ class context
 comment0.target=Characters
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Characters\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ This\ class\ contains\ all\ the\ characters\ we\ use\ in\ the\ game.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=character
 comment1.target=Characters(java.lang.String)
+comment1.text=\r\n\ Add\ character.\r\n
 comment2.params=
 comment2.target=java.lang.String\ getCharacter()
+comment2.text=\r\n\ @return\ character.\r\n
 numComments=3
