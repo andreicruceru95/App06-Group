@@ -1,9 +1,9 @@
 
 /**
- * Write a description of class Item here.
+ * The Player item.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Item
 {
@@ -17,19 +17,18 @@ public class Item
     public static final String EVO_NAME_4 = "Legendary";
     
     protected int bonusPerLevel;
-    
     protected String name;
     protected String displayName;
-    
     protected int displayLevel;
     protected int enchantLevel;
-    
     protected int baseStats;
-    protected int enchantStats;    
-    
+    protected int enchantStats;   
     protected int goldMultiplier = 1;   
     protected int goldRequired = 10 * goldMultiplier; 
    
+    /**
+     * Initialising the item.
+     */
     public Item(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {
         this.bonusPerLevel = bonusPerLevel;
@@ -46,11 +45,14 @@ public class Item
         update();
     }
     
+    /**
+     * @return the enchantment stats.
+     */
     protected int getStats()
     {
         return enchantStats;
     }
-   
+    
     /**
      * Increment an item level.
      * Every 9 levels the name changes
@@ -104,7 +106,15 @@ public class Item
         else
             return false;
     }
-
+        
+    /**
+     * @return the amount of gold required.
+     */
+    public int getGoldRequired()
+    {
+        return goldRequired;
+    }
+    
     /**
      * @return an item's name.
      */
