@@ -1,13 +1,16 @@
 /**
- * Write a description of class Monster here.
+ * The game Monster.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Monster extends Actor
 {
     private final String drop;
-        
+    
+    /**
+     * Initialising the Monster.
+     */
     public Monster(String name, int level, String drop)
     {
         super(name, level);
@@ -20,6 +23,9 @@ public class Monster extends Actor
         this.drop = drop;
     }
     
+    /**
+     * @return weather or not this monster drops gold.(50% chance)
+     */
     public int dropGold()
     {
         int goldDrop = 50; //%
@@ -32,6 +38,9 @@ public class Monster extends Actor
         
     }
     
+    /**
+     * @return weather or not this monster will drop an item.
+     */
     public boolean dropItem()
     {
         int miscDrop = 40; //%
@@ -41,6 +50,9 @@ public class Monster extends Actor
 
     }
     
+    /**
+     * @return weather or not this monster will drop a chest.
+     */
     public boolean dropChest()
     {
         int chestDrop = 15;
@@ -50,6 +62,45 @@ public class Monster extends Actor
 
     }
     
+    /**
+     * @return weather or not this monster will drop remains.
+     */
+    public boolean dropRemains()
+    {
+        int remainsDrop = 15;
+        int remainsChance = random.nextInt(total - 1) + 1;
+
+        return remainsChance <= remainsDrop;
+
+    }
+    
+    /**
+     * @return weather or not this monster will drop keys.
+     */
+    public boolean dropKey()
+    {
+        int keyDrop = 25;
+        int keyChance = random.nextInt(total - 1) + 1;
+
+        return keyChance <= keyDrop;
+
+    }
+    
+    /**
+     * @return weather or not this monster will drop keys.
+     */
+    public boolean dropPotion()
+    {
+        int potionDrop = 25;
+        int potionChance = random.nextInt(total - 1) + 1;
+
+        return potionChance <= potionDrop;
+
+    }
+    
+    /**
+     * @return the drop amount.
+     */
     public int getDropAmount()
     {
         int multiplier = 5;
