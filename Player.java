@@ -1,31 +1,40 @@
+import java.util.*;
+
 /**
- * Write a description of class Player here.
+ * The game user.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Player extends Actor
 {
     private static final VisualField VISUAL_FIELD = new VisualField();
-    
     public static final Item SWORD = new Weapon("Steel Sword", 20000, 1, 12);
     public static final Item ARMOUR = new Armour("Steel Armour", 10000, 1, 8);
     public static final Item POTION = new Potion("HP Potion", 20000, 1, 200);
     public static final Item AMULET = new Amulet("Hellen's Gift", 50000, 1, 1000);
     public static final Item RING = new Ring("Potus's Ring", 10, 1, 10);
     public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
-    
     public static final Inventory INVENTORY = new Inventory();
-    public static final Quests QUESTS = new Quests();
+    public static final Display DISPLAY = new Display();
+    public static final String[] QUESTS = new String[6];
     
     private boolean ring = false;
     private boolean bracelet = false;
+    private boolean stone = true;
+    private boolean oldLadyQuest = false;
+    private boolean jewelerQuest = false;
+    private boolean biologistQuest = false;
+    private boolean findStone = true;
+    private boolean farmerQuest = false;
+    private boolean queenIsDeath = false;
+    private boolean foxIsDeath = false;
     
-    private int goldAmount = 1000;
+    private int goldAmount = 1000000;
     private int score = 0;
-       
-    private int playerRowCoord = 6;
-    private int playerColCoord = 6;
+    private int monsterKilled = 0;
+    private int playerRowCoord = 23;
+    private int playerColCoord = 17;
     
     /**
      * Constructor for player class.
@@ -37,25 +46,88 @@ public class Player extends Actor
         update();
         
     }
+        
+    /**
+     * 
+     */
+    public void checkCharacter(String character)
+    {
+        if (character.equals(Characters.SPIDER_QUEEN.getCharacter()))
+            queenIsDeath = true;
+            
+        else if(character.equals(Characters.NINE_TAILS.getCharacter()))
+            foxIsDeath = true;
+            
+    }
     
+    /**
+     * @return the monster status
+     */
+    public boolean getMonsterStatus(String monsterName)
+    {
+        if(monsterName.equals("fox"))
+            return foxIsDeath;
+            
+        else if(monsterName.equals("queen"))
+            return queenIsDeath;
+        else
+            return false;
+    }
+    
+    /**
+     * Add an amount of objects to inventory.
+     */
     public void addToInventory(String string, int amount)
     {
         INVENTORY.addToInventory(string,amount);
     }
     
+    /**
+     * Remove items from inventory.
+     */
     public void removeFromInventory(String string, int amount)
     {
         INVENTORY.removeFromInventory(string , amount);
     }
     
+    /**
+     * Check inventory for an item.
+     */
     public boolean checkInventory(String string, int amount)
     {
         return INVENTORY.checkInventory(string,amount);
     }
     
+    /**
+     * Print the inventory items.
+     */
     public void printInventory()
     {
         INVENTORY.printInventory();    
+    }
+    
+    /**
+     * increase monster killed amount.
+     */
+    public void increaseKilled()
+    {
+        monsterKilled++;
+    }
+    
+    /**
+     * decrease monster killed amount.
+     */
+    public void decreaseKilled(int amount)
+    {
+        monsterKilled -= amount;
+    }
+    
+    /**
+     * @return the amount of kills.
+     */
+    public int getKilled()
+    {
+        return monsterKilled;
     }
     
     /**
@@ -113,8 +185,20 @@ public class Player extends Actor
      */
     public boolean getHealthPoints()
     {
-        return currentHealthPoints > 0;
+        if (currentHealthPoints > 0)
+            return true;
+        else
+            return false;           
         
+    }
+    
+    /**
+     * get reward for flowers.
+     * @return the amount of flowers times 10.
+     */
+    public int getReward()
+    {
+        return INVENTORY.countFlowers();
     }
     
     /**
@@ -207,51 +291,97 @@ public class Player extends Actor
         
     }
     
+    /**
+     * @return the weapon.
+     */
     public Item getWeapon()
     {
         return SWORD;
     }
     
+    /**
+     * set ring.
+     */
     public void setRing()
     {
         ring = true;
     }
     
+    /**
+     * check if the stone exists.
+     */
+    public boolean stoneExists()
+    {
+        return stone;
+    }
+    
+    /**
+     * set stone.
+     */
+    public void setStone()
+    {
+        stone = true;
+    }
+    
+    /**
+     * set bracelet.
+     */
     public void setBracelet()
     {
         bracelet = true;
     }
     
+    /**
+     * check if the bracelet exists.
+     */
     public boolean braceletExists()
     {
         return bracelet;
     }
     
+    /**
+     * Check if the ring exists.
+     */
     public boolean ringExists()
     {
         return ring;
     }
     
+    /**
+     * @return Armour.
+     */
     public Item getArmour()
     {
         return ARMOUR;
     }
     
+    /**
+     * @return potion.
+     */
     public Item getPotion()
     {
         return POTION;
     }
     
+    /**
+     * @return Amulet.
+     */
     public Item getAmulet()
     {
         return AMULET;
     }
     
+    /**
+     * @return Ring.
+     */
     public Item getRing()
     {
         return RING;            
     }
     
+    /**
+     * @return Bracelet.
+     */
     public Item getBracelet()
     {
         return BRACELET;
@@ -282,11 +412,17 @@ public class Player extends Actor
         return playerColCoord;
     }
     
+    /**
+     * @return the chance of double hit.
+     */
     public int getHitChance()
     {
         return doubleHitChance;
     }
     
+    /**
+     * @return the chance of evasion.
+     */
     public int getEvasionChance()
     {
         return evasionChance;
@@ -350,33 +486,65 @@ public class Player extends Actor
         
     }
     
+    /**
+     * set quests active
+     */
+    public void setQuestActive(String name)
+    {
+        if (name.equals("oldlady"))
+            oldLadyQuest = true;
+            
+        else if(name.equals("farmer"))
+            farmerQuest = true;
+            
+        else if(name.equals("jeweler"))
+            jewelerQuest = true;   
+            
+        else if(name.equals("biologist"))
+            biologistQuest = true;
+                        
+    }
+    
+    /**
+     * set quests inactive
+     */
+    public void setQuestInactive(String name)
+    {
+        if (name.equals("oldlady"))
+            oldLadyQuest = false;
+            
+        else if(name.equals("farmer"))
+            farmerQuest = false;
+            
+        else if(name.equals("jeweler"))
+            jewelerQuest = false;  
+            
+        else if(name.equals("biologist"))
+            biologistQuest = false; 
+            
+        else if(name.equals("stone"))
+            findStone = false;      
+    }
+    
+    /**
+     * print active quests.
+     */
     public void printQuestList()
     {
-        QUESTS.printQuestList();
-    }
-    
-    public void startQuest(String string)
-    {
-        QUESTS.startQuest(string);
-    }
-    
-    public boolean checkQuestStatus(String string)
-    {
-        return QUESTS.checkQuestStatus(string);
-    }
-    
-    public int getRewardAmount(String string)
-    {
-        return QUESTS.getRewardAmount(string);
-    }
-    
-    public int getRequirementAmount(String string)
-    {
-        return QUESTS.getRequirementAmount(string);
-    }
-    
-    public String getRequirement(String string)
-    {
-        return QUESTS.getRequirement(string);
+        QUESTS[0] = "\n\t\tRetrieve the Mythical Stone - Kill the Reaper in the demon tower.";
+        
+        if(oldLadyQuest)
+            QUESTS[1] = "\t\tFind husband remains - Kill monsters.";
+        
+        if(farmerQuest)
+            QUESTS[2] = "\t\tKill 50 monsters.";
+            
+        if(biologistQuest)
+            QUESTS[3] = "\t\tCollect Flowers - Kill monsters.";
+         
+        if(jewelerQuest)
+            QUESTS[4] = "\t\tCollect Star fragments (" + Characters.STAR_FRAG.getCharacter() + ") - Kill demons.";
+            
+        DISPLAY.listOptions(QUESTS);    
     }
 }
