@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Blacksmith
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ BlacksmithTest\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ The\ game\ blacksmith.\ \r\n\ Will\ improve\ the\ player's\ items.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=item\ gold
 comment1.target=boolean\ enchance(Item,\ int)
 comment1.text=\r\n\ Enhance\ an\ item.\r\n
@@ -9,8 +9,11 @@ comment2.target=boolean\ checkGold(int,\ int)
 comment2.text=\r\n\ Check\ if\ the\ gold\ required\ exists\ in\ the\ user's\ account.\r\n
 comment3.params=ringExists\ braceletExists
 comment3.target=void\ createList(boolean,\ boolean)
+comment3.text=\r\n\ Create\ list\ of\ options\r\n
 comment4.params=
 comment4.target=void\ openBlacksmithShop()
+comment4.text=\r\n\ Display\ the\ blacksmith\ options.\r\n
 comment5.params=item
 comment5.target=int\ getCost(Item)
+comment5.text=\r\n\ @return\ the\ cost\ of\ enchantment.\r\n
 numComments=6
