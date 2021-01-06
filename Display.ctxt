@@ -1,8 +1,9 @@
 #BlueJ class context
 comment0.target=Display
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Menu\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Display\ messages.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=list
 comment1.target=void\ listOptions(java.lang.String[])
+comment1.text=\r\n\ Print\ a\ list.\r\n
 comment2.params=part
 comment2.target=void\ runStory(java.lang.String[])
 comment2.text=\r\n\ Display\ a\ given\ list\ as\ a\ story.\r\n
