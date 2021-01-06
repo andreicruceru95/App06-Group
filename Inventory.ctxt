@@ -1,15 +1,22 @@
 #BlueJ class context
 comment0.target=Inventory
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Inventory\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ The\ player's\ inventory.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=
 comment1.target=Inventory()
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Inventory\r\n
 comment2.params=string\ amount
 comment2.target=void\ addToInventory(java.lang.String,\ int)
+comment2.text=\r\n\ Add\ an\ amount\ of\ items\ to\ inventory.\r\n
 comment3.params=string\ amount
 comment3.target=void\ removeFromInventory(java.lang.String,\ int)
+comment3.text=\r\n\ @remove\ an\ item\ from\ inventory.\r\n
 comment4.params=string\ amount
 comment4.target=boolean\ checkInventory(java.lang.String,\ int)
+comment4.text=\r\n\ Check\ if\ an\ amount\ of\ items\ exists\ in\ the\ inventory.\r\n
 comment5.params=
-comment5.target=void\ printInventory()
-numComments=6
+comment5.target=int\ countFlowers()
+comment5.text=\r\n\ Count\ how\ many\ flowers\ is\ in\ the\ inventory.\r\n\ Set\ each\ flower\ amount\ to\ 0.\r\n\ @return\ 10\ times\ the\ amount\ of\ flowers\ as\ gold\ reward.\r\n
+comment6.params=
+comment6.target=void\ printInventory()
+comment6.text=\r\n\ print\ the\ inventory\ items.\r\n\ print\ a\ message\ if\ empty.\r\n
+numComments=7
