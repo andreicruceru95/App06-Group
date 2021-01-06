@@ -1,16 +1,14 @@
 
 /**
- * Write a description of class VisualField here.
+ * The player's visual field on the map.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class VisualField
 {
     public final static String[][] VISUAL_FIELD = new String[7][7];
-    
-    private Characters character;
-    private String player = character.PLAYER.getCharacter();
+    private String player = Characters.PLAYER.getCharacter();
     
     /**
      * Set values in the visual field.
@@ -44,7 +42,7 @@ public class VisualField
         VISUAL_FIELD[3][0] = map[playerRowCoord][playerColCoord - 3];
         VISUAL_FIELD[3][1] = map[playerRowCoord][playerColCoord - 2];
         VISUAL_FIELD[3][2] = map[playerRowCoord][playerColCoord - 1];
-        VISUAL_FIELD[3][3] = " " + player +  " ";
+        VISUAL_FIELD[3][3] = player;
         VISUAL_FIELD[3][4] = map[playerRowCoord][playerColCoord + 1];
         VISUAL_FIELD[3][5] = map[playerRowCoord][playerColCoord + 2];
         VISUAL_FIELD[3][6] = map[playerRowCoord][playerColCoord + 3];
@@ -81,26 +79,23 @@ public class VisualField
      */
     public boolean checkVisualField(String character)
     {
-        for (int i = 0; i < VISUAL_FIELD.length; i++)
+        for(int i = 0; i < VISUAL_FIELD.length; i++)
         {
-            for (int j = 0; j < VISUAL_FIELD[i].length; j++)
+            for(int j = 0; j < VISUAL_FIELD[i].length; j++)
             {
-
-                if(VISUAL_FIELD[i][j].contains(character))
+                
+                if (VISUAL_FIELD[i][j].contains(character))
                 {
                     return true;
-                        
                 }
                 
             }
-        
         }
-        
         return false;
     }
     
     /**
-     * Player's visual field 7x7
+     * print player's visual field 7x7
      */
     public void printVisualField()
     {
