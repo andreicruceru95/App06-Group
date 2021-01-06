@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Main
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Demo\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ This\ class\ contains\ the\ Main\ method\ that\ will\ run\ the\ game.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=
 comment1.target=Main()
-comment1.text=\r\n\ tester\r\n
+comment1.text=\r\n\ Run\ the\ game\r\n
 numComments=2
