@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.lang.*;
 
 /**
  * Take an input from a user.
@@ -9,7 +8,7 @@ import java.lang.*;
  */
 public class Input
 {
-    private final Scanner reader;
+    private Scanner reader;
 
     /**
      * Create a new InputReader that reads text from the text terminal.
@@ -41,11 +40,14 @@ public class Input
         return string;
     }
     
+    /**
+     * @return any input.
+     */
     public String getAny()
-    {
-        //System.out.print("");
-
-        return reader.nextLine();
+    { 
+        String string = reader.nextLine();
+        
+        return string;
     }
       
     /**
