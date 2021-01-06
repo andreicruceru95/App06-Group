@@ -1,21 +1,21 @@
 /**
- * Write a description of class Demo here.
+ * This class contains the Main method that will run the game.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Main
 {
     private static final char CLEAR = '\u000c';
     
     /**
-     * tester
+     * Run the game
      */    
     public Main()
     {
         System.out.println(CLEAR);
-
-        new Game();
+        
+        Game game = new Game();
     }
     
 }
