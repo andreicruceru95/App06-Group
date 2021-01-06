@@ -1,13 +1,16 @@
 
 /**
- * Write a description of class Weapon here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Player's weapon.
+ * 
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Weapon extends Item
 {
     
+    /**
+     * Initialising the weapon.
+     */
     public Weapon(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {
         super(name, baseStats, enchantLevel, bonusPerLevel);
@@ -19,7 +22,7 @@ public class Weapon extends Item
      */
     public void print()
     {
-        System.out.println(displayName + "\t + " + displayLevel + "\tAttack: " + enchantStats);
+        System.out.println(displayName + " + " + displayLevel + "\tAttack: " + enchantStats);
     }
     
 }
