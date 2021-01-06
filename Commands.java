@@ -1,9 +1,10 @@
 
 /**
- * Enumeration class Commands - write a description of the enum class here
+ * Enumeration class Commands - 
+ * Contains all the in-game commands.
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public enum Commands
 {
@@ -20,27 +21,59 @@ public enum Commands
     HIDE_STATS ("\t\tEnter 'hide stats' to hide player's stats"),
     SHOW_ITEMS ("\t\tEnter 'show items' to show player's items"),
     HIDE_ITEMS ("\t\tEnter 'hide items' to hide player's items"),
+    QUEST("\t\tEnter 'quest' to display quests"),
     
     QUIT ("\t\tEnter 'quit' to quit game or quit window"),
     POTION ("\t\tEnter 'potion' to use health potion and restore health"),
     BUY_POTION ("\t\tEnter 'buy potion' to buy HealthPotion"),
-    BUY_ATTACK ("\t\tEnter 'buy attack' to buy attack value by "),
-    BUY_DEFENCE ("\t\tEnter 'buy defence' to buy defence value by "),
-    BUY_HEALTH ("\t\tEnter 'buy health' to buy increase your maximum health by "),
+    BUY_KEY ("\t\tEnter 'buy key' to buy chest keys"),
     ENCHANCE_WEAPON ("\t\tEnter 'enchance weapon' to enchance your weapon"),
     ENCHANCE_ARMOUR ("\t\tEnter 'enchance armour' to enchance your armour"),
     ENCHANCE_POTION ("\t\tEnter 'enchance potion' to enchance your potion"),
     ENCHANCE_AMULET ("\t\tEnter 'enchance amulet' to enchance your amulet"),
     ENCHANCE_RING ("\t\tEnter 'enchance ring' to enchance your ring"),
-    ENCHANCE_BRACELET ("\t\tEnter 'enchance bracelet' to enchance your bracelet");
+    ENCHANCE_BRACELET ("\t\tEnter 'enchance bracelet' to enchance your bracelet"),
+    
+    FORTRESS("\t\tEnter 'fortress' to teleport to fortress"),
+    TOWN("\t\tEnter 'town' to teleport to town"),
+    FOREST("\t\tEnter 'forest' to teleport to forest entrance"),
+    MOUNTAIN("\t\tEnter 'mountain' to teleport to mountain"),
+    DESSERT("\t\tEnter 'dessert' to teleport to dessert"),
+    SPIDER_CAVE ("\t\tEnter 'spidercave' to teleport to spider cave"),  
+    
+    HELP_C ("help"),
+    QUIT_C ("quit"),
+    POTION_C ("potion"),
+    SEE_DATABASE ("database"),
+    SEE_MONSTERS ("seemonsters"),
+    SEE_LOCATION_C ("seelocation"),
+    SUCCESS ("\t\tYou have successfully purchased: "),   
+    SHOW_STATS_C ("showstats"),
+    HIDE_STATS_C ("hidestats"),
+    SHOW_ITEMS_C ("showitems"),
+    HIDE_ITEMS_C ("hideitems"),
+    INVENTORY ("inventory"),
+    QUEST_C ("quest"),
+    TELEPORT ("teleport"),
+    ADD_TELEPORT ("addteleport"),
+    UP ("w"),
+    DOWN ("s"),
+    LEFT ("a"),
+    RIGHT ("d");
     
     private final String command;
- 
+    
+    /**
+     * Add command.
+     */
     Commands(String command) 
     {
         this.command = command;
     }
  
+    /**
+     * @return command.
+     */
     public String getCommand() 
     {
         return command;
