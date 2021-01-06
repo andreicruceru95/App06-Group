@@ -1,9 +1,9 @@
 
 /**
- * Write a description of class Characters here.
+ * This class contains all the characters we use in the game.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public enum Characters
 {
@@ -12,7 +12,8 @@ public enum Characters
     APE_KING(" Ⓐ "),
     APE_THROWER(" ③ "),
     BERA(" Ⓑ "),
-    BIOLOGIST(" ☣ "),
+    BIOLOGIST("!☣ "),
+    BIOLOGIST_2(" ☣ "),
     BLACKSMITH(" B "),
     BLACK_BEAR(" ① "),
     CACTUS(" ¥ "),
@@ -30,11 +31,30 @@ public enum Characters
     FOX_KEY(" ⚴ "),
     GOLD(" $ "),
     GUARD(" ⏳ "),
-    HUSBAND_REMAINS(" ⛆ "),
+    REMAINS(" ⛆ "),
     NINE_TAILS(" Ⓝ "),
-    PERSON_1(" ⛹"),
-    PLAYER("⚉"),
-    PLAYER2("☠"),
+    PERSON(" ⛹"),
+    PERSON_2("!⛹"),
+    PERSON_3("A"),
+    PERSON_4("B"),
+    PERSON_4_2("M"),
+    PERSON_5("C"),
+    PERSON_6("D"),
+    PERSON_6_2("N"),
+    PERSON_7("F"),
+    PERSON_8("G"),
+    PERSON_8_2("O"),
+    PERSON_9("H"),
+    PERSON_10("I"),
+    PERSON_11("J"),
+    PERSON_12("K"),
+    PERSON_13("L"),
+    PLAYER(" ⚉ "),
+    PLAYER2("☠"),    
+    MYTHICAL_STONE(" ⍟ "),
+    STONE_SPOT(" ⌬ "),
+    STONE_SPOT_2("!⌬ "),
+    NURSE(" H "),
 
     POISON_SPIDER(" ④ "),
     POLAR_BEAR(" ⑦ "),
@@ -58,12 +78,18 @@ public enum Characters
     YETI(" ⑧ ");
 
     private final String character;
-
+    
+    /**
+     * Add character.
+     */
     Characters(String character)
     {
         this.character = character;
     }
-
+    
+    /**
+     * @return character.
+     */
     public String getCharacter()
     {
         return character;
