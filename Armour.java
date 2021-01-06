@@ -1,21 +1,27 @@
 
 /**
- * Write a description of class Armour here.
+ * Player's Armour.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Armour extends Item
 {
-        
+    
+    /**
+     * Initialise the armour.
+     */
     public Armour(String name, int baseStats, int enchantLevel, int bonusPerLevel)
     {
         super(name, baseStats, enchantLevel, bonusPerLevel);
         
     }
     
+    /**
+     * Print the armour stats.
+     */
     public void print()
     {
-        System.out.println(displayName + "\t + " + displayLevel + "\tDefence: " + (enchantStats));
+        System.out.println(displayName + " + " + displayLevel + "\tDeffence: " + (enchantStats));
     }
 }
