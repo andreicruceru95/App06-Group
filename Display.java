@@ -1,22 +1,26 @@
 
 /**
- * Write a description of class Menu here.
+ * Display messages.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @authors Andrei Cruceru
+ * @version 1.0.12
  */
 public class Display
 {
     public static final char CLEAR = '\u000c';
-    private final Input reader = new Input();
+    public static final Input READER = new Input();
     
+    /**
+     * Print a list.
+     */
     public void listOptions(String[] list)
     {
         System.out.println(CLEAR);
 
         for (String s : list)
         {
-            System.out.println(s);
+            if(s != null)
+                System.out.println(s);
         }
         
     }
@@ -31,7 +35,7 @@ public class Display
         for (String s : part)
         {
             System.out.println(Commands.PRESS_ANY.getCommand());
-            reader.getAny();
+            READER.getAny();
 
             System.out.println(CLEAR);
 
