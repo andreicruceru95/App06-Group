@@ -1,10 +1,13 @@
 #BlueJ class context
 comment0.target=Storyline
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Storyline\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ This\ class\ contains\ parts\ of\ the\ game\ story\ line\ and\ methods\ that\ will\r\n\ return\ them.\r\n\r\n\ @authors\ Andrei\ Cruceru,\ Rory,\ Warren\ Frank\r\n\ @version\ 1.0.12\r\n
 comment1.params=
 comment1.target=java.lang.String[]\ getPartOne()
+comment1.text=\r\n\ @return\ the\ first\ part\ of\ the\ story\ line.\r\n
 comment2.params=playerName
 comment2.target=java.lang.String[]\ getPartTwo(java.lang.String)
+comment2.text=\r\n\ @return\ the\ second\ part\ of\ the\ story.\r\n
 comment3.params=
 comment3.target=java.lang.String[]\ getHelp()
+comment3.text=\r\n\ @return\ the\ game\ commands.\r\n
 numComments=4
