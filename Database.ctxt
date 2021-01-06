@@ -1,8 +1,9 @@
 #BlueJ class context
 comment0.target=Database
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Database\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Contains\ information\ about\ the\ in-game\ characters.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
 comment1.params=
 comment1.target=Database()
+comment1.text=\r\n\ Adding\ the\ objects\ and\ descriptions\ to\ a\ hash\ map.\r\n
 comment2.params=database
 comment2.target=void\ printDatabase(java.util.HashMap)
 comment2.text=\r\n\ Display\ the\ key/value\ of\ a\ given\ Hashmap.\r\n\ @param\ database\ is\ the\ hashmap\ printed.\r\n
