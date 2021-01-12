@@ -46,15 +46,20 @@ public class Interactions
         INTERACTIONS.put(Characters.BIOLOGIST.getCharacter(), "\n\t\tBiologist: \n\n" +
                         "\t\tI am developing new potions that will help you in battle\n" +
                         "\t\tand I need someone to collect some herbs for me.\n" +
-                        "\t\tI need 10 of each species of flowers, " +
-                        "bring them to me and you will be rewarded!");
+                        "\t\tI need any amount of flowers of each species. " +
+                        "Bring them to me and you will be rewarded!");
                         
         INTERACTIONS.put(Characters.BIOLOGIST_2.getCharacter(), "\n\t\tBiologist: \n\n" +
                         "\t\tYou brought me the flowers?\n" +
                         "\t\tBriliant! \n" +
                         "\t\tI will pay you 10$ for each flower.\n" +
                         "\t\tBring me more and you will be rewarded!");
-           
+                        
+        INTERACTIONS.put(Characters.BIOLOGIST_3.getCharacter(), "\n\t\tBiologist: \n\n" +
+                        "\t\tYou Do not have what i asked for\n" +
+                        "\t\tI need as many flowers as you can get. " +
+                        "Bring them to me and you will be rewarded!");
+                        
         INTERACTIONS.put(Characters.PERSON_3.getCharacter(), "\n\t\tOld Lady: \n\n" +
                         "\t\tMy husband was one of the brave warriors that fought along with \n" +
                         "\t\tthe Gods. You need to find his remains so I can burry him. \n" +
@@ -104,6 +109,11 @@ public class Interactions
                         "\t\tThere is a mountain east from the forest.\n" +
                         "\t\tSomeone reported to have seen a hideous creature, hell like.\n" +
                         "\t\tWe need to destroy it!");
+                         
+        INTERACTIONS.put(Characters.PERSON_14.getCharacter(), "\n\t\tFarmer: \n\n" +
+                        "\t\tYou have not killed 50 creatures.\n" +
+                        "\t\tKill them and I shall reward you!\n" +
+                        "\t\tFair well.");                
                
         INTERACTIONS.put(Characters.PERSON_13.getCharacter(), "\n\t\tSoldier: \n\n" +
                         "\t\tGood luck in your adventure!");  
