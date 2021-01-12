@@ -819,11 +819,7 @@ public class Game
                 player.setRing();
             }
             else
-            {
-                INTERACTION.getInteraction(Characters.PERSON_3.getCharacter());
-                
                 pressAny();
-            }
             
         }
         else if(row == Pointers.P26.getValue() && col == Pointers.P10.getValue())
@@ -840,11 +836,7 @@ public class Game
                 player.setBracelet();
             }
             else
-            {
-                INTERACTION.getInteraction(Characters.PERSON_5.getCharacter());
-                
                 pressAny();
-            }
             
         }
         else if(row == Pointers.P31.getValue() && col == Pointers.P13.getValue())
@@ -868,7 +860,7 @@ public class Game
             }
             else
             {
-                INTERACTION.getInteraction(Characters.PERSON_7.getCharacter());
+                INTERACTION.getInteraction(Characters.PERSON_14.getCharacter());
                 
                 pressAny();
             }
@@ -1135,7 +1127,6 @@ public class Game
     {
         do
         {
-            
             monster.receiveDmg(player.attack());
             //System.out.println("Monster received " + monster.receiveDmg(player.attack()));
                         
@@ -1158,6 +1149,7 @@ public class Game
             
         else
             player.changeImage(Characters.PLAYER.getCharacter()); 
+            
     }
         
     /**
@@ -1227,16 +1219,17 @@ public class Game
         if(player.getReward() > 0)
         {
             INTERACTION.getInteraction(Characters.BIOLOGIST_2.getCharacter());
+            
+            pressAny();
          
             player.addGold(player.getReward());
-            
-            player.setQuestInactive("biologist");
         }
         else
         {
-            System.out.println("\n\t\tYou don't have what I asked for");
+            INTERACTION.getInteraction(Characters.BIOLOGIST_3.getCharacter());
             
-            INTERACTION.getInteraction(Characters.BIOLOGIST.getCharacter());
+            pressAny();
+            
         }
         
     }
