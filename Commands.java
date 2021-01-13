@@ -39,27 +39,8 @@ public enum Commands
     FOREST("\t\tEnter 'forest' to teleport to forest entrance"),
     MOUNTAIN("\t\tEnter 'mountain' to teleport to mountain"),
     DESSERT("\t\tEnter 'dessert' to teleport to dessert"),
-    SPIDER_CAVE ("\t\tEnter 'spidercave' to teleport to spider cave"),  
-    
-    HELP_C ("help"),
-    QUIT_C ("quit"),
-    POTION_C ("potion"),
-    SEE_DATABASE ("database"),
-    SEE_MONSTERS ("seemonsters"),
-    SEE_LOCATION_C ("seelocation"),
-    SUCCESS ("\t\tYou have successfully purchased: "),   
-    SHOW_STATS_C ("showstats"),
-    HIDE_STATS_C ("hidestats"),
-    SHOW_ITEMS_C ("showitems"),
-    HIDE_ITEMS_C ("hideitems"),
-    INVENTORY ("inventory"),
-    QUEST_C ("quest"),
-    TELEPORT ("teleport"),
-    ADD_TELEPORT ("addteleport"),
-    UP ("w"),
-    DOWN ("s"),
-    LEFT ("a"),
-    RIGHT ("d");
+    SPIDER_CAVE ("\t\tEnter 'spidercave' to teleport to spider cave"), 
+    SUCCESS ("\t\tYou have successfully purchased: ");
     
     private final String command;
     
