@@ -283,6 +283,7 @@ public class Player extends Actor
         if(maxHealthPoints < currentHealthPoints)
         {
             currentHealthPoints = maxHealthPoints;
+            
         }
         
     }
@@ -293,6 +294,7 @@ public class Player extends Actor
     public Item getWeapon()
     {
         return SWORD;
+        
     }
     
     /**
@@ -301,6 +303,7 @@ public class Player extends Actor
     public void setRing()
     {
         ring = true;
+        
     }
     
     /**
@@ -309,6 +312,7 @@ public class Player extends Actor
     public boolean stoneExists()
     {
         return stone;
+        
     }
     
     /**
@@ -317,6 +321,7 @@ public class Player extends Actor
     public void setStone()
     {
         stone = true;
+        
     }
     
     /**
@@ -325,6 +330,7 @@ public class Player extends Actor
     public void setBracelet()
     {
         bracelet = true;
+        
     }
     
     /**
@@ -333,6 +339,7 @@ public class Player extends Actor
     public boolean braceletExists()
     {
         return bracelet;
+        
     }
     
     /**
@@ -341,6 +348,7 @@ public class Player extends Actor
     public boolean ringExists()
     {
         return ring;
+        
     }
     
     /**
@@ -349,6 +357,7 @@ public class Player extends Actor
     public Item getArmour()
     {
         return ARMOUR;
+        
     }
     
     /**
@@ -357,6 +366,7 @@ public class Player extends Actor
     public Item getPotion()
     {
         return POTION;
+        
     }
     
     /**
@@ -365,6 +375,7 @@ public class Player extends Actor
     public Item getAmulet()
     {
         return AMULET;
+        
     }
     
     /**
@@ -372,7 +383,8 @@ public class Player extends Actor
      */
     public Item getRing()
     {
-        return RING;            
+        return RING;    
+        
     }
     
     /**
@@ -381,6 +393,7 @@ public class Player extends Actor
     public Item getBracelet()
     {
         return BRACELET;
+        
     }
     
     /**
@@ -390,6 +403,7 @@ public class Player extends Actor
     {
         this.playerRowCoord = playerRowCoord;
         this.playerColCoord = playerColCoord;
+        
     }
     
     /**
@@ -398,6 +412,7 @@ public class Player extends Actor
     public int getRowCoord()
     {
         return playerRowCoord;
+        
     }
     
     /**
@@ -406,6 +421,7 @@ public class Player extends Actor
     public int getColCoord()
     {
         return playerColCoord;
+        
     }
     
     /**
@@ -414,6 +430,7 @@ public class Player extends Actor
     public int getHitChance()
     {
         return doubleHitChance;
+        
     }
     
     /**
@@ -422,27 +439,26 @@ public class Player extends Actor
     public int getEvasionChance()
     {
         return evasionChance;
+        
     }
     
     /**
      * Drink a health potion.
      */
-    public void drinkPotion()
+    public String drinkPotion()
     {
         if(((Potion) POTION).getAmount() > 0)
         {
             currentHealthPoints += POTION.getStats();
             
-            ((Potion) POTION).printMessage();
-            System.out.println("Your heal regenerated " + POTION.getStats());
-            System.out.println("\nYour health is now " + currentHealthPoints + " / " + maxHealthPoints); 
-            
             ((Potion) POTION).decreaseAmount();
             
             check();
+            
+            return ((Potion)POTION).printMessage(); 
         }
         else
-            System.err.println("Not enough potions");
+            return "Not enough potions";
         
     }
     
