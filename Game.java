@@ -240,7 +240,8 @@ public class Game
                         break;
                         
                     case POTION:
-                        player.drinkPotion();
+                        message = player.drinkPotion();
+                        isDisplayed = true;                       
                         break;
                         
                     case HELP:
@@ -316,13 +317,15 @@ public class Game
                         break;
                     
                     default:
-                        System.out.println("Not an option");
+                        message = "Not an option";
+                        isDisplayed = true;
                 } 
             
             }
             catch(Exception e)
             {
-                System.out.println("Not a command");
+                message = "Not a command";
+                isDisplayed = true;
             }
             
         }
@@ -365,9 +368,8 @@ public class Game
      */
     private void runMenu(String choice)
     {
-        System.out.println("Chose direction");        
-                  
         movePlayer(choice);
+        
     }
     
     /**
@@ -422,6 +424,7 @@ public class Game
                 
                 }
                 break;
+                
             case RIGHT:            
                 if(checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
                 {
