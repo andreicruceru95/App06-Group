@@ -527,14 +527,16 @@ public class Game
         switch(mapName)
         {
             case TOWER:
-                System.out.println("\tMap: " + mapName.toUpperCase() + " Level " + WORLD.getTowerLevel() + "\n");
+                System.out.println("\tMap: " + mapName.toUpperCase() + " Level " + WORLD.getTowerLevel() + "\t" +
+                                    "[" + player.getRowCoord() + ", " + player.getColCoord() + "]\n");
             
                 break;
                 
             default:
-                System.out.println("\tMap: " + mapName.toUpperCase() + "\n");                
+                System.out.println("\tMap: " + mapName.toUpperCase() + "\t" + "[" + player.getRowCoord() + 
+                                    ", " + player.getColCoord() + "]\n");                
         }
-        System .out.println(player.getRowCoord() + ", " + player.getColCoord() + "\n");
+        System .out.println();
         System.out.println("\tPlayer: " + player.getName() + "\tScore: " + 
                                     player.getScore() + "\n" + player.getHealthInfo());
                                
@@ -622,12 +624,7 @@ public class Game
             player.addScore(monster.getLevel());
             
             checkDrop(monster);
-            // dropItem(((Monster)monster).dropItem());
-            // dropChest(((Monster)monster).dropChest());
-            // dropKey(((Monster)monster).dropKey());
-            // dropPotion(((Monster)monster).dropPotion());
-            // dropRemains(((Monster)monster).dropRemains());
-                
+            
             return true;
         }
         
@@ -669,6 +666,12 @@ public class Game
                     openBag();
                     WORLD.openBags(nextRow, nextCol);
                     return true;
+                    
+                case OPENED_BARREL:
+                    message = "Barel has been destroyed";
+                    isDisplayed = true;
+                    
+                    return true; 
                     
                 case SQUARE:
                     return true;
@@ -1459,43 +1462,55 @@ public class Game
                     break;
                     
                 case ENCHANCE_WEAPON:
+                    BLACKSMITH.setMessage(1);
+                
                     if(BLACKSMITH.enchance(weapon, player.getGold()))
                         player.pay(BLACKSMITH.getCost(weapon));
                         
                      break;   
                     
-                case ENCHANCE_ARMOUR:               
+                case ENCHANCE_ARMOUR: 
+                    BLACKSMITH.setMessage(1);
+                
                     if(BLACKSMITH.enchance(armour,player.getGold()))
                         player.pay(BLACKSMITH.getCost(armour));
                     
                     break;   
                     
-                case ENCHANCE_POTION:                
+                case ENCHANCE_POTION: 
+                    BLACKSMITH.setMessage(1);
+                    
                     if(BLACKSMITH.enchance(potion, player.getGold()))
                         player.pay(BLACKSMITH.getCost(potion));
                         
                     break;
                  
-                case ENCHANCE_AMULET:                
+                case ENCHANCE_AMULET:  
+                    BLACKSMITH.setMessage(1);
+                    
                     if(BLACKSMITH.enchance(amulet, player.getGold()))
                         player.pay(BLACKSMITH.getCost(amulet));
                         
                     break;
                     
-                case ENCHANCE_RING:                
+                case ENCHANCE_RING:  
+                    BLACKSMITH.setMessage(1);
+                    
                     if(BLACKSMITH.enchance(ring, player.getGold()))
                         player.pay(BLACKSMITH.getCost(ring));
                         
                     break;    
                  
-                case ENCHANCE_BRACELET:                
+                case ENCHANCE_BRACELET:    
+                    BLACKSMITH.setMessage(1);
+                    
                     if(BLACKSMITH.enchance(bracelet, player.getGold()))
                         player.pay(BLACKSMITH.getCost(bracelet));
                         
                     break;
                     
                 default:
-                    BLACKSMITH.setMessage();
+                    BLACKSMITH.setMessage(0); 
             }
                 
         }
@@ -1510,9 +1525,7 @@ public class Game
         boolean finished = false;
             
         while(!finished)
-        {
-            System.out.println("\t\tHave a look at what I got!\n\n\n");
-               
+        {           
             SHOP.openShop();
                 
             String choiceRaw = READER.getString();
@@ -1525,7 +1538,10 @@ public class Game
                     break;
                 
                 case BUY_POTION:
+                    SHOP.setMessage(1);
+                    
                     System.out.println("\n\nHow many do you want to buy?\n\n");
+                    
                     int amount = READER.getInteger();
                         
                     if (player.getGold() >= (SHOP.getPotionPrice() * amount))
@@ -1539,6 +1555,8 @@ public class Game
                     break;
                     
                 case BUY_KEY:
+                    SHOP.setMessage(1);
+                
                     System.out.println("\n\nHow many do you want to buy?\n\n");
                     amount = READER.getInteger();
                         
@@ -1553,8 +1571,7 @@ public class Game
                     break;
                     
                 default:
-                    SHOP.setMessage();
-                    
+                    SHOP.setMessage(0);
                     break;
             }
             
