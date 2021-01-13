@@ -237,7 +237,11 @@ public class Game
                 switch(choice)
                 {
                     case TEST:
-                        player.setCoordinates(12,4);
+                    WORLD.addObjects(player.getColCoord()-1, player.getColCoord()+1, player.getRowCoord()-1, player.getRowCoord()+1, Characters.CHEST.getCharacter());
+                    WORLD.addObjects(player.getColCoord()-1, player.getColCoord()+1, player.getRowCoord()-1, player.getRowCoord()+1, Characters.CHEST.getCharacter());
+                    WORLD.addObjects(player.getColCoord()-1, player.getColCoord()+1, player.getRowCoord()-1, player.getRowCoord()+1, Characters.CHEST.getCharacter());
+                    WORLD.addObjects(player.getColCoord()-1, player.getColCoord()+1, player.getRowCoord()-1, player.getRowCoord()+1, Characters.CHEST.getCharacter());
+                    WORLD.addObjects(player.getColCoord()-1, player.getColCoord()+1, player.getRowCoord()-1, player.getRowCoord()+1, Characters.CHEST.getCharacter());
                         break;
                         
                     case QUIT:
@@ -691,15 +695,12 @@ public class Game
                     
                     return false;
                 
-                case CHEST:
-                    openBag();
-                        
-                    return true;                    
+                case CHEST:                                            
+                    return openChest();                   
                  
                 case GOLD:
                     hasRecieved(pickUpGold, Characters.GOLD.getCharacter());
                     player.addGold(pickUpGold);
-                    
                     return true;
                     
                 case NURSE:
@@ -864,6 +865,7 @@ public class Game
                 
             case -1:
                 player.increasePotionAmount(1);
+                hasRecieved(1, Characters.POTION.getCharacter());
                 break;
                 
             default: 
@@ -921,88 +923,26 @@ public class Game
             dropItem(Characters.POTION.getCharacter(), -1);
          
     }
-    
-    // /**
-     // * Drop a chest on the map.
-     // */
-    // private void dropChest(boolean chance)
-    // {
-        // if(chance)
-        // {
-            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.CHEST.getCharacter()) ;  
-        // }
-    // }
-    
-    // /**
-     // * Drop a potion on the map.
-     // */
-    // private void dropPotion(boolean chance)
-    // {
-        // if(chance)
-        // {
-            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.POTION.getCharacter()) ;  
-        // }
-    // }
-    
-    // /**
-     // * Drop a key on the map.
-     // */
-    // private void dropKey(boolean chance)
-    // {
-        // if(chance)
-        // {
-            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.CHEST_KEY.getCharacter()) ;  
-        // }
-    // }
-    
-    // /**
-     // * Drop monster remains on the map.
-     // */
-    // private void dropRemains(boolean chance)
-    // {
-        // if(chance)
-        // {
-            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.REMAINS.getCharacter()) ;  
-        // }
-    // }    
-    
-    // /**
-     // * Drop an item on the map.
-     // */
-    // private void dropItem(boolean chance)
-    // {
-        // if(chance)
-        // {
-            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, ((Monster) monster).getDrop()) ;           
-        // }
-           
-    // }
-    
-    // /**
-     // * 50% chance to obtain (1, 5) x monster level items or gold.
-     // */
-    // private void openChest()
-    // {
-        // int max = 4;
-        // if((RAND.nextInt(1 - 0) +0) == 0)
-        // {
-            // player.addToInventory(((Monster) monster).getDrop(), ((Monster) monster).getDropAmount());
-            
-            // hasRecieved(((Monster) monster).getDropAmount(), ((Monster) monster).getDrop());
-        // }
-        // else
-        // {
-            // player.addGold(((Monster) monster).getDropAmount() * monster.getLevel());
-            
-            // hasRecieved(((Monster) monster).getDropAmount() * monster.getLevel(), Characters.GOLD.getCharacter());
-        // }
         
-    // }
+    /**
+     * 50% chance to obtain (1, 5) x monster level items or gold.
+     */
+    private boolean openChest()
+    {
+        if (player.checkInventory(Characters.CHEST_KEY.getCharacter(), 1))   
+        {
+            openBag();
+            
+            return true;
+        }
+        else
+        {
+            message = "Not enough " + Characters.CHEST_KEY.getCharacter() + ":(";
+            isDisplayed = true;
+            
+            return false;       
+        }
+    }
     
     /**
      * Change variable values if player recieved items.
@@ -1517,6 +1457,7 @@ public class Game
                 case QUIT:
                     finished = true;
                     break;
+                    
                 case ENCHANCE_WEAPON:
                     if(BLACKSMITH.enchance(weapon, player.getGold()))
                         player.pay(BLACKSMITH.getCost(weapon));
@@ -1554,8 +1495,7 @@ public class Game
                     break;
                     
                 default:
-                    message = "Not an option";
-                    isDisplayed = true;
+                    BLACKSMITH.setMessage();
             }
                 
         }
@@ -1582,6 +1522,7 @@ public class Game
             {
                 case QUIT:
                     finished = true;
+                    break;
                 
                 case BUY_POTION:
                     System.out.println("\n\nHow many do you want to buy?\n\n");
@@ -1612,8 +1553,7 @@ public class Game
                     break;
                     
                 default:
-                    message = "Not an option";
-                    isDisplayed = true;
+                    SHOP.setMessage();
                     
                     break;
             }
