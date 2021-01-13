@@ -63,18 +63,23 @@ public class Inventory
             value = INVENTORY.get(object);
             
             if(key.equals(string))
+            {
                 key = string;
+                
+                break;
+            }
         } 
         
         if(key == null)
-            System.out.println("\n\t\tNo such item in your inventory");
+            exists = false;
             
         else 
+        { 
+            
             if(value > amount)
                 exists = true;
-            
-            else
-                System.out.println("Not enough " + string + " in your inventory");
+               
+        }
         
         return exists;
     }
@@ -86,7 +91,6 @@ public class Inventory
      */
     public int countFlowers()
     {
-        
         int value = 
                 INVENTORY.get(Characters.FLOWER_RED.getCharacter()) + 
                 INVENTORY.get(Characters.FLOWER_BLUE.getCharacter()) +
