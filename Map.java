@@ -23,11 +23,8 @@ public class Map
      */
      public Map(String name)
     {
-        //rand = 
-        //this.description = description;
         this.name = name;
         
-        //this.map = map;
     }
     
     /**
@@ -36,6 +33,7 @@ public class Map
     public void setOne(int row, int col,String object)
     {
         map[row][col] = object;
+        
     }
     
     /**
@@ -59,6 +57,7 @@ public class Map
     public String[][] getmap()
     {
         return map;
+        
     }
     
     /**
@@ -67,6 +66,7 @@ public class Map
     public String getName()
     {
         return name;
+        
     }
      
     /**
@@ -147,12 +147,13 @@ public class Map
         
         for(int i = 0; i < amount; i++)
         {
-            
-            while(map[randomRow][randomCol] != SQUARE)
+            randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+            randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+                
+            if(map[randomRow][randomCol] != SQUARE)
             {
-                randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
-                randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
-            
+                continue;
+                
             }
             
             map[randomRow][randomCol] = object;
