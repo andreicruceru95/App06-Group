@@ -41,61 +41,71 @@ public class Monster extends Actor
     /**
      * @return weather or not this monster will drop an item.
      */
-    public boolean dropItem()
+    public String dropItem()
     {
         int miscDrop = 40; //%
         int miscChance = random.nextInt(total - 1) + 1;
 
-        return miscChance <= miscDrop;
-
+        if(miscChance <= miscDrop)
+            return drop;
+        
+        return null;  
     }
     
     /**
      * @return weather or not this monster will drop a chest.
      */
-    public boolean dropChest()
+    public String dropChest()
     {
         int chestDrop = 15;
         int chestChance = random.nextInt(total - 1) + 1;
 
-        return chestChance <= chestDrop;
-
+        if(chestChance <= chestDrop)
+            return Characters.CHEST.getCharacter();
+          
+        return null;
     }
     
     /**
      * @return weather or not this monster will drop remains.
      */
-    public boolean dropRemains()
+    public String dropRemains()
     {
         int remainsDrop = 15;
         int remainsChance = random.nextInt(total - 1) + 1;
 
-        return remainsChance <= remainsDrop;
-
+        if(remainsChance <= remainsDrop)
+            return Characters.REMAINS.getCharacter();
+            
+        return null;
     }
     
     /**
      * @return weather or not this monster will drop keys.
      */
-    public boolean dropKey()
+    public String dropKey()
     {
         int keyDrop = 25;
         int keyChance = random.nextInt(total - 1) + 1;
 
-        return keyChance <= keyDrop;
-
+        if(keyChance <= keyDrop)
+            return Characters.CHEST_KEY.getCharacter();
+            
+        return null;
     }
     
     /**
      * @return weather or not this monster will drop keys.
      */
-    public boolean dropPotion()
+    public String dropPotion()
     {
         int potionDrop = 25;
         int potionChance = random.nextInt(total - 1) + 1;
 
-        return potionChance <= potionDrop;
-
+        if(potionChance <= potionDrop)
+            return Characters.POTION.getCharacter();
+            
+        return null;
     }
     
     /**
