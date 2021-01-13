@@ -905,6 +905,15 @@ public class World
     }
     
     /**
+     * Open barels
+     */
+    public void openBarels(int row, int col)
+    { 
+        currentMap.setOne(row, col, Characters.OPENED_BARREL.getCharacter());
+        
+    }
+    
+    /**
      * Increase the tower level
      */
     public void increaseLevel()
