@@ -246,7 +246,9 @@ public class World
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BERA.getCharacter(), 1);
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.TIGRIS.getCharacter(), 1);
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_KING.getCharacter(), 1);
-            
+        town.addBarrels(MAP_EDGE, Pointers.P10.getValue(), Characters.WALL.getCharacter(), Characters.BARREL.getCharacter());
+        town.addBarrels(MAP_EDGE, Pointers.P10.getValue(), Characters.WALL.getCharacter(), Characters.BAG.getCharacter());
+        
         //add trees to the right of the map
         for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
         {
@@ -387,6 +389,8 @@ public class World
         fortress.setOne(Pointers.P18.getValue(),Pointers.P11.getValue(), Characters.PERSON.getCharacter());
         fortress.setOne(Pointers.P24.getValue(),Pointers.P25.getValue(), Characters.PERSON.getCharacter());        
         fortress.setOne(Pointers.P30.getValue(),Pointers.P19.getValue(), Characters.PERSON.getCharacter());
+        fortress.addBarrels(MAP_EDGE, 50, Characters.WALL.getCharacter(), Characters.BARREL.getCharacter());
+        fortress.addBarrels(MAP_EDGE, 50, Characters.WALL.getCharacter(), Characters.BAG.getCharacter());
         
         setBiologist(Characters.BIOLOGIST.getCharacter());
         setOldLady(Characters.PERSON_2.getCharacter());
@@ -394,8 +398,8 @@ public class World
         setJeweler(Characters.PERSON_2.getCharacter());
         setDrunkPerson(Characters.PERSON_2.getCharacter());
         setMythicalStone(Characters.STONE_SPOT_2.getCharacter());
-    }
-    
+    } 
+            
     /**
      * Set mythical stone image
      */
@@ -893,7 +897,7 @@ public class World
     /**
      * print the maps.
      */
-    private void printMaps()
+    public void printMaps()
     {
         town.printMap();
         dessert.printMap();
@@ -915,10 +919,7 @@ public class World
     
     /**
      * Open bags.
-     */
-    /**
-     * Open barels
-     */
+     */    
     public void openBags(int row, int col)
     { 
         currentMap.setOne(row, col, SQUARE);
@@ -963,15 +964,5 @@ public class World
         userHelp.setOne(row, col, object);
         
     }
-        
-    /**
-     * 
-     */
-    public boolean checkTeleport(int col)
-    {
-        if(col == Pointers.P14.getValue())
-            return true;
-        else
-            return false;
-    }
+    
 }
