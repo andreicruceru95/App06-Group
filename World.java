@@ -8,10 +8,17 @@ import java.util.*;
  */
 public class World
 {
-    private static final int MAP_EDGE = 3;
-    private static final int FULL_L = 34;
-    private static final int FULL_H = 46;
-    private static final String SQUARE = "   ";
+    public static final String TOWER = "tower";
+    public static final String TOWN = "town";
+    public static final String DESSERT = "dessert";
+    public static final String SPIDER_CAVE = "spidercave";
+    public static final String MOUNTAIN = "mountain";
+    public static final String FOREST = "forest";
+    public static final String FORTRESS = "fortress";
+    public static final int MAP_EDGE = 3;
+    public static final int FULL_L = 34;
+    public static final int FULL_H = 46;
+    public static final String SQUARE = "   ";
     
     private Map currentMap;
     private Map town;
@@ -95,44 +102,39 @@ public class World
      */
     public void setCurrentMap(String name)
     {
-        if (name.toLowerCase().equals("town"))
+        switch (name)
         {
-            currentMap = town;
+            case TOWN:
+                currentMap = town;
+                break;
+                
+            case DESSERT:
+                currentMap = dessert;
+                break;  
+                
+            case SPIDER_CAVE:
+                currentMap = spiderCave;
+                break;
+                
+            case FORTRESS:
+                currentMap = fortress;
+                break;
+                
+            case FOREST:
+                currentMap = forest;
+                break;
+                
+            case TOWER:
+                currentMap = tower;
+                break;
+                
+            case MOUNTAIN:
+                currentMap = mountain;
+                break;
+                
+            default:
+                 System.out.println("error");
         }
-        else if(name.toLowerCase().equals("dessert"))
-        {
-            currentMap = dessert;
-        }
-        else if(name.toLowerCase().equals("spidercave"))
-        {
-            currentMap = spiderCave;
-        }
-        else if(name.toLowerCase().equals("fortress"))
-        {
-            currentMap = fortress;
-        }
-        else if(name.toLowerCase().equals("forest"))
-        {
-            currentMap = forest;
-        }
-        else if(name.toLowerCase().equals("dessert"))
-        {
-            currentMap = dessert;
-        }
-        else if(name.toLowerCase().equals("spiderCave"))
-        {
-            currentMap = spiderCave;
-        }
-        else if(name.toLowerCase().equals("tower"))
-        {
-            currentMap = tower;
-        }
-        else if(name.toLowerCase().equals("mountain"))
-        {
-            currentMap = mountain;
-        }
-        else
-             System.out.println("error");
         
     }
     
@@ -141,57 +143,53 @@ public class World
      */
     public void increaseTowerLevel()
     {
-        if(getTowerLevel() == 1)
+        int level = getTowerLevel();
+        
+        switch (level)
         {
-            tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-            
-            addObjectToTower(Characters.POISON_SPIDER.getCharacter());
-            
-            towerLevel++;
-            
+            case 1:
+                tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectToTower(Characters.POISON_SPIDER.getCharacter());
+                towerLevel++;
+                
+                break;
+                
+            case 2:
+                tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectToTower(Characters.DEMON.getCharacter());
+                towerLevel++;
+                
+                break;
+                
+            case 3:
+                tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectToTower(Characters.CURSED_VAMPIRE.getCharacter());
+                towerLevel++;
+                
+                break;
+                
+            case 4:
+                tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectToTower(Characters.WITCH.getCharacter());
+                currentMap.addObjects(Pointers.P16.getValue(),Pointers.P17.getValue(), 
+                                           Pointers.P20.getValue(),Pointers.P21.getValue(), Characters.DEATH.getCharacter(), 1);
+                
+                towerLevel++;
+                
+                break;
+                
+            case 5:
+                tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                currentMap.addObjects(Pointers.P16.getValue(),Pointers.P17.getValue(), 
+                                           Pointers.P20.getValue(),Pointers.P21.getValue(), Characters.RED_DRAGON.getCharacter(), 1);
+                
+                towerLevel++;
+                
+                break;
+                
+            default:
+                currentMap = spiderCave;
         }
-        else if(getTowerLevel() == 2)
-        {
-            tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-            
-            addObjectToTower(Characters.DEMON.getCharacter());
-            
-            towerLevel++;
-            
-        }
-        else if(getTowerLevel() == 3)
-        {
-            tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-            
-            addObjectToTower(Characters.CURSED_VAMPIRE.getCharacter());
-            
-            towerLevel++;
-            
-        }
-        else if(getTowerLevel() == 4)
-        {
-            tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-            
-            addObjectToTower(Characters.WITCH.getCharacter());
-            
-            currentMap.addObjects(Pointers.P16.getValue(),Pointers.P17.getValue(), 
-                                       Pointers.P20.getValue(),Pointers.P21.getValue(), Characters.DEATH.getCharacter(), 1);
-            
-            towerLevel++;
-            
-        }
-        else if(getTowerLevel() == 5)
-        {
-            tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-            
-            currentMap.addObjects(Pointers.P16.getValue(),Pointers.P17.getValue(), 
-                                       Pointers.P20.getValue(),Pointers.P21.getValue(), Characters.RED_DRAGON.getCharacter(), 1);
-            
-            towerLevel++;
-            
-        }
-        else if(getTowerLevel() == 6)
-            currentMap = spiderCave;
     }
     
     /**
@@ -753,6 +751,9 @@ public class World
                        monster, 20);
     }
     
+    /**
+     * add a teleport on the map (testing).
+     */
     public void addTeleport(int row, int col)
     {
         currentMap.setOne(row, col, Characters.TELEPORT.getCharacter());
@@ -849,6 +850,7 @@ public class World
     public void setObject(int playerRowCoord, int playerColCoord, String value)
     {
         currentMap.setOne(playerRowCoord, playerColCoord, value);
+        
     }
     
     /**
@@ -857,6 +859,7 @@ public class World
     public String[][] getMapAsArray()
     {
         return currentMap.getmap();
+        
     }
     
     /**
@@ -864,40 +867,43 @@ public class World
      */
     public void addAnother(String character)
     {
-        if (currentMap.getName().toLowerCase().equals("town"))
+        String name = currentMap.getName();
+        
+        switch (name)
         {
-            currentMap.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("dessert"))
-        {
-            dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("spidercave"))
-        {
-            spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("forest"))
-        {
-            currentMap.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("mountain"))
-        {
-            currentMap.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, character, 1);
-        }
-        else if (currentMap.getName().toLowerCase().equals("tower"))
-        {
-            
-            if(!currentMap.checkForMonsters())
-                currentMap.addObjects(Pointers.P14.getValue(),Pointers.P15.getValue(), 
-                                       Pointers.P16.getValue(),Pointers.P17.getValue(), Characters.TELEPORT.getCharacter(), 1);
-                                       
+            case TOWN:
+                currentMap.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+                break;
+                
+            case DESSERT:
+                dessert.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+                break;
+                
+            case SPIDER_CAVE:
+                spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, character, 1);
+                break;
+                
+            case FOREST:
+                currentMap.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, character, 1);
+                break;
+                
+            case MOUNTAIN:
+                currentMap.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, character, 1);
+                break;
+                
+            case TOWER:            
+                if(!currentMap.checkForMonsters())
+                    currentMap.addObjects(Pointers.P14.getValue(),Pointers.P15.getValue(), 
+                                           Pointers.P16.getValue(),Pointers.P17.getValue(), Characters.TELEPORT.getCharacter(), 1);
+                                           
+                 break;                      
         }
     }
     
     /**
-     * print the maps.
+     * print the maps.(testing)
      */
-    public void printMaps()
+    private void printMaps()
     {
         town.printMap();
         dessert.printMap();
