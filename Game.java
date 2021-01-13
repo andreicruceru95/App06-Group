@@ -11,6 +11,8 @@ import java.util.*;
 public class Game 
 {
     public static final String SQUARE = "   ";
+    //to be changed
+    public static final String TEST = "test";
     public static final String TOWER = "tower";
     public static final String TOWN = "town";
     public static final String DESSERT = "dessert";
@@ -60,6 +62,9 @@ public class Game
     public static final String STONE = " ⌬ ";
     public static final String M_STONE = " ⍟ ";
     public static final String POTION_C = " ⚱ ";
+    public static final String BARREL = " Ô ";
+    public static final String OPENED_BARREL = " Ø ";
+    public static final String BAG = " Û ";
     public static final String BUY_POTION = "buypotion";
     public static final String BUY_KEY = "buykey";
     public static final int CHEST_CHANCE = 10;
@@ -102,7 +107,7 @@ public class Game
     public static final Random RAND = new Random();
     public static final Input READER = new Input();
     
-    private Actor monster;
+    // private Actor monster;
     private Player player;
     private Item weapon;
     private Item armour;
@@ -231,6 +236,10 @@ public class Game
                 
                 switch(choice)
                 {
+                    case TEST:
+                        player.setCoordinates(12,4);
+                        break;
+                        
                     case QUIT:
                         finished = true;
                         break;
@@ -521,7 +530,7 @@ public class Game
             default:
                 System.out.println("\tMap: " + mapName.toUpperCase() + "\n");                
         }
-        
+        System .out.println(player.getRowCoord() + ", " + player.getColCoord() + "\n");
         System.out.println("\tPlayer: " + player.getName() + "\tScore: " + 
                                     player.getScore() + "\n" + player.getHealthInfo());
                                
@@ -647,6 +656,16 @@ public class Game
             
             switch(squareValue)
             {
+                case BARREL:
+                    openBag();
+                    WORLD.openBarels(nextRow, nextCol);
+                    return false;
+                
+                case BAG:
+                    openBag();
+                    WORLD.openBags(nextRow, nextCol);
+                    return true;
+                    
                 case SQUARE:
                     return true;
                 
@@ -673,19 +692,9 @@ public class Game
                     return false;
                 
                 case CHEST:
-                    if(player.checkInventory(Characters.CHEST_KEY.getCharacter(), 1))
-                    {
-                        openChest();
+                    openBag();
                         
-                        return true;
-                    }
-                    else
-                    {
-                        message = "Not enough keys!";
-                        isDisplayed = true;
-                        
-                        return false;
-                    }
+                    return true;                    
                  
                 case GOLD:
                     hasRecieved(pickUpGold, Characters.GOLD.getCharacter());
@@ -816,6 +825,7 @@ public class Game
             }
             
         }
+        
     }
     
     /**
@@ -836,10 +846,30 @@ public class Game
     /**
      * drop an item on the map.
      */
-    private void dropItem(String item)
+    private void dropItem(String item, int number)
     {
-        WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, item) ;
+        int value = RAND.nextInt(50 - 1) + 1;
+        
+        switch(number)
+        {
+            case 0:
+                WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+                    ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, item) ;
+                break;
+                
+            case 1:
+                player.addGold(value);
+                hasRecieved(value, GOLD);
+                break;
+                
+            case -1:
+                player.increasePotionAmount(1);
+                break;
+                
+            default: 
+                player.addToInventory(item, 1);  
+                hasRecieved(1, item);
+        }
     }
     
     /**
@@ -855,20 +885,42 @@ public class Game
         String potion = ((Monster)monster).dropPotion();
         
         if(item != null)
-            dropItem(item);
+            dropItem(item, 0);
             
         if(chest != null)
-            dropItem(chest);
+            dropItem(chest, 0);
             
         if(remains != null)
-            dropItem(remains);
+            dropItem(remains, 0);
             
         if(key != null)
-            dropItem(key);  
+            dropItem(key, 0);  
             
         if(potion != null)
-            dropItem(potion); 
+            dropItem(potion, 0); 
     } 
+    
+    /**
+     * Open bags and barrels.
+     */
+    private void openBag()
+    {
+        int key = 25;
+        int potion = 10;
+        int gold = 45;
+        int max = 70;        
+        int rand = RAND.nextInt(max - 1) + 1;
+        
+        if(rand > gold)
+            dropItem(GOLD, 1);
+            
+        else if(rand > key)
+            dropItem(Characters.CHEST_KEY.getCharacter(), key);
+            
+        else
+            dropItem(Characters.POTION.getCharacter(), -1);
+         
+    }
     
     // /**
      // * Drop a chest on the map.
@@ -931,25 +983,26 @@ public class Game
            
     // }
     
-    /**
-     * 50% chance to obtain (1, 5) x monster level items or gold.
-     */
-    private void openChest()
-    {
-        if((RAND.nextInt(1 - 0) +0) == 0)
-        {
-            player.addToInventory(((Monster) monster).getDrop(), ((Monster) monster).getDropAmount());
+    // /**
+     // * 50% chance to obtain (1, 5) x monster level items or gold.
+     // */
+    // private void openChest()
+    // {
+        // int max = 4;
+        // if((RAND.nextInt(1 - 0) +0) == 0)
+        // {
+            // player.addToInventory(((Monster) monster).getDrop(), ((Monster) monster).getDropAmount());
             
-            hasRecieved(((Monster) monster).getDropAmount(), ((Monster) monster).getDrop());
-        }
-        else
-        {
-            player.addGold(((Monster) monster).getDropAmount() * monster.getLevel());
+            // hasRecieved(((Monster) monster).getDropAmount(), ((Monster) monster).getDrop());
+        // }
+        // else
+        // {
+            // player.addGold(((Monster) monster).getDropAmount() * monster.getLevel());
             
-            hasRecieved(((Monster) monster).getDropAmount() * monster.getLevel(), Characters.GOLD.getCharacter());
-        }
+            // hasRecieved(((Monster) monster).getDropAmount() * monster.getLevel(), Characters.GOLD.getCharacter());
+        // }
         
-    }
+    // }
     
     /**
      * Change variable values if player recieved items.
@@ -1580,7 +1633,8 @@ public class Game
         {
             
             case FOREST:
-                if(WORLD.checkTeleport(player.getColCoord()))
+                //int col = ((Player)player).getColCoord();
+                if(((Player)player).getColCoord() == 3 || ((Player)player).getRowCoord() == 12)
                 {
                     WORLD.setCurrentMap(MOUNTAIN);
                     
@@ -1597,6 +1651,11 @@ public class Game
             case FORTRESS:
                 WORLD.setCurrentMap(TOWN);                
                 setTownCoord();                
+                break;
+            
+            case MOUNTAIN:
+                WORLD.setCurrentMap(DESSERT);
+                setDessertCoord();
                 break;
                 
             case TOWN:
