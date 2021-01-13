@@ -21,7 +21,7 @@ public class Player extends Actor
     
     private boolean ring = false;
     private boolean bracelet = false;
-    private boolean stone = true;
+    private boolean stone = false;
     private boolean oldLadyQuest = false;
     private boolean jewelerQuest = false;
     private boolean biologistQuest = false;
