@@ -116,6 +116,7 @@ public class Map
         }
         
     }
+    
     /**
      * Check if the map contains monsters.
      * Tower only.
@@ -135,6 +136,34 @@ public class Map
 
         }
         return true;
+    }
+    
+    
+    /**
+     * Add barels and bags on the map
+     */
+    public void addBarrels(int mapEdge,int amount, String wall, String character)
+    {
+        int minAmount = 1;
+        
+        for (int i = mapEdge; i < map.length - mapEdge; i ++)
+        {
+            
+            for(int j = mapEdge; j < map[i].length - 1; j++)
+            {
+                
+                if(map[i][j].equals(wall))
+                {
+                    addObjects(j - 1, j + 1, i - 1, i + 1, character, 1);
+                    
+                    minAmount++;
+                }
+                
+                if(minAmount == amount)  
+                    break;
+            }
+            
+        }
     }
         
     /**
