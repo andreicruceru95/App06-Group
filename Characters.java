@@ -57,7 +57,10 @@ public enum Characters
     STONE_SPOT(" ⌬ "),
     STONE_SPOT_2("!⌬ "),
     NURSE(" H "),
-
+    BARREL (" Ô "),
+    OPENED_BARREL(" Ø "),
+    BAG (" Û "),
+    
     POISON_SPIDER(" ④ "),
     POLAR_BEAR(" ⑦ "),
     POTION(" ⚱ "),
