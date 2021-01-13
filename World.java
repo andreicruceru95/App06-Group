@@ -80,7 +80,7 @@ public class World
         
         setCurrentMap("fortress");
     } 
-    
+       
     /**
      * Add objects on the map.
      */
@@ -244,8 +244,8 @@ public class World
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BERA.getCharacter(), 1);
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.TIGRIS.getCharacter(), 1);
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_KING.getCharacter(), 1);
-        town.addBarrels(MAP_EDGE, Pointers.P10.getValue(), Characters.WALL.getCharacter(), Characters.BARREL.getCharacter());
-        town.addBarrels(MAP_EDGE, Pointers.P10.getValue(), Characters.WALL.getCharacter(), Characters.BAG.getCharacter());
+        town.addBarrels(MAP_EDGE, 10, Characters.WALL.getCharacter(), Characters.BARREL.getCharacter());
+        town.addBarrels(MAP_EDGE, 10, Characters.WALL.getCharacter(), Characters.BAG.getCharacter());
         
         //add trees to the right of the map
         for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
