@@ -60,7 +60,7 @@ public class Inventory
         for (String object : INVENTORY.keySet())
         {
             key = object.toString();
-            value = INVENTORY.get(object);
+            value = INVENTORY.get(key);
             
             if(key.equals(string))
             {
