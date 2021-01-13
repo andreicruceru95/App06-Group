@@ -119,7 +119,7 @@ public class Interactions
                         "\t\tGood luck in your adventure!");  
                         
         INTERACTIONS.put(Characters.STONE_SPOT.getCharacter(), "\nVoice: \n\n" +
-                        "\t\tYou need to find the mythical stone, and place it here." +
+                        "\t\tYou need to find the mythical stone, and place it here.\n" +
                         "\t\tGo! There isn't much time!");  
                         
         INTERACTIONS.put(Characters.STONE_SPOT_2.getCharacter(), "\nVoice: \n\n" +
