@@ -10,7 +10,13 @@ public class Blacksmith
 {
     public static final String SUCCESS = "\t\tYou have successfully enchanted: ";
     public static final Display DISPLAY = new Display();
-    public static final String[] BLACKSMITH_MENU = new String[7];
+    public static final String[] BLACKSMITH_MENU = new String[8];
+    public static final String SWORD = "Steel Sword";
+    public static final String ARMOUR ="Steel Armour";
+    public static final String POTION = "HP Potion";
+    public static final String AMULET = "Hellen's Gift";
+    public static final String RING = "Potus's Ring";
+    public static final String BRACELET = "Spirit Trinket";
 
     private int weaponCost = 5;
     private int armourCost = 5;
@@ -19,6 +25,7 @@ public class Blacksmith
     private int braceletCost = 15;
     private int potionCost = 100;
     private boolean message = false;
+    private boolean success = false;
     
     /**
      * Enhance an item.
@@ -27,100 +34,87 @@ public class Blacksmith
     {
         int itemMultiplier = 10;
         int specialMultiplier = 15;
+        String name = item.getName();
         
-        if(item.getName().toLowerCase().contains("sword"))
+        switch(name)
         {
+            case SWORD:
+                if(checkGold(gold, weaponCost))
+                {
+                    item.enchance();
+                    
+                    System.err.println(SUCCESS + item.getName());
+                    
+                    weaponCost += itemMultiplier;
+                    
+                    return true;
+                }
+                
+            case ARMOUR:
+                if(checkGold(gold, armourCost))
+                {
+                    item.enchance();
+                    
+                    System.err.println(SUCCESS + item.getName());
+                    
+                    armourCost += itemMultiplier;
+                    
+                    return true;
+                }
+                
+            case POTION:
+                if(checkGold(gold, potionCost))
+                {
+                    item.enchance();
+                    
+                    System.err.println(SUCCESS + item.getName());
+    
+                    int potionMultiplier = 50;
+                    potionCost += potionMultiplier;
+                    
+                    return true;
+                }
+                
+            case AMULET:
+                if(checkGold(gold, amuletCost))
+                {
+                    item.enchance();
+                    
+                    System.err.println(SUCCESS + item.getName());
+                    
+                    amuletCost += itemMultiplier;
+                    
+                    return true;
+                }
+                
             
-            if(checkGold(gold, weaponCost))
-            {
-                item.enchance();
+            case RING:
+                if(checkGold(gold, ringCost))
+                {
+                    item.enchance();
+                    
+                    System.err.println(SUCCESS + item.getName());
+                    
+                    ringCost += specialMultiplier;
+                    
+                    return true;
+                }
                 
-                System.err.println(SUCCESS + item.getName());
+            case BRACELET:
+                if(checkGold(gold, braceletCost))
+                {
+                    item.enchance();
+                    
+                    System.err.println(SUCCESS + item.getName());
+                    
+                    braceletCost += specialMultiplier;
+                    
+                    return true;
+                }
                 
-                weaponCost += itemMultiplier;
-                
-                return true;
-            }
-            
+            default:
+                return false;
         }
-        else if(item.getName().toLowerCase().contains("armour"))
-        {
-            
-            if(checkGold(gold, armourCost))
-            {
-                item.enchance();
-                
-                System.err.println(SUCCESS + item.getName());
-                
-                armourCost += itemMultiplier;
-                
-                return true;
-            }
-            
-        }
-        else if(item.getName().toLowerCase().contains("potion"))
-        {
-            
-            if(checkGold(gold, potionCost))
-            {
-                item.enchance();
-                
-                System.err.println(SUCCESS + item.getName());
-
-                int potionMultiplier = 50;
-                potionCost += potionMultiplier;
-                
-                return true;
-            }
-            
-        }
-        else if(item.getName().toLowerCase().contains("gift"))
-        {
-            
-            if(checkGold(gold, amuletCost))
-            {
-                item.enchance();
-                
-                System.err.println(SUCCESS + item.getName());
-                
-                amuletCost += itemMultiplier;
-                
-                return true;
-            }
-            
-        }
-        else if(item.getName().toLowerCase().contains("ring"))
-        {
-            
-            if(checkGold(gold, ringCost))
-            {
-                item.enchance();
-                
-                System.err.println(SUCCESS + item.getName());
-                
-                ringCost += specialMultiplier;
-                
-                return true;
-            }
-            
-        }
-        else if(item.getName().toLowerCase().contains("trinket"))
-        {
-            
-            if(checkGold(gold, braceletCost))
-            {
-                item.enchance();
-                
-                System.err.println(SUCCESS + item.getName());
-                
-                braceletCost += specialMultiplier;
-                
-                return true;
-            }
-            
-        }
-                
-        return false;
     }
     
     /**
@@ -149,18 +143,45 @@ public class Blacksmith
             
         BLACKSMITH_MENU[6] = "\n\n" + Commands.QUIT.getCommand();
         
-        if (message)
-            BLACKSMITH_MENU[7] = "\n\nNot a option!";
-        
+        if(message)
+        {
+            BLACKSMITH_MENU[3] = "\n\n\t\tNot an option!";
+            
+            message = false;
+        }
+        else 
+            BLACKSMITH_MENU[3] = null;
+            
+        if(success)
+        {
+            BLACKSMITH_MENU[4] = "\n\n\t\tSuccess!";
+            
+            success = false;
+        }            
+        else
+            BLACKSMITH_MENU[4] = null;
     }
         
     /**
-     * set message on/off
+     * set message on
     */
-    public void setMessage()
+    public void setMessage(int number)
     {
-        message = true;
+        switch(number)
+        {
+            case 0:
+                message = true;
+                success = false;
+                break;
+                
+            case 1:
+                message = false;
+                success = true;
+                break;
+        }
+        
     }
+    
     
     /**
      * Display the blacksmith options.
@@ -168,6 +189,7 @@ public class Blacksmith
     public void openBlacksmithShop()
     {
         DISPLAY.listOptions(BLACKSMITH_MENU);
+        
     }
     
     /**
@@ -175,23 +197,30 @@ public class Blacksmith
      */
     public int getCost(Item item)
     {
-        if(item.getName().toLowerCase().contains("sword"))
+        String name = item.getName();
+        
+        switch (name)
         {
-            return weaponCost;
+            case SWORD:
+                return weaponCost;
+                
+            case ARMOUR:
+                return armourCost;
+                
+            case POTION:
+                return potionCost;
+                
+            case AMULET:
+                return amuletCost;
+            
+            case RING:
+                return ringCost;
+                
+            case BRACELET:
+                return braceletCost;
+                
+            default:
+                return 0;
         }
-        else if(item.getName().toLowerCase().contains("armour"))
-        {
-            return armourCost;
-        }
-        else if(item.getName().toLowerCase().contains("potion"))
-        {
-            return potionCost;
-        }
-        else if(item.getName().toLowerCase().contains("amulet"))
-        {
-            return amuletCost;
-        }
-        else
-            return 0;
     }
 }
