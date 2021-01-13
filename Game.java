@@ -10,11 +10,62 @@ import java.util.*;
 
 public class Game 
 {
-    public static final char CLEAR = '\u000c';
-    public static final Shop SHOP = new Shop();
+    public static final String SQUARE = "   ";
+    public static final String TOWER = "tower";
     public static final String TOWN = "town";
     public static final String DESSERT = "dessert";
     public static final String SPIDER_CAVE = "spidercave";
+    public static final String MOUNTAIN = "mountain";
+    public static final String FOREST = "forest";
+    public static final String FORTRESS = "fortress";
+    public static final String HELP = ("help");
+    public static final String QUIT = ("quit");
+    public static final String POTION = ("potion");
+    public static final String SEE_DATABASE = ("database");
+    public static final String SEE_MONSTERS = ("seemonsters");
+    public static final String SEE_LOCATION = ("seelocation");
+    public static final String SHOW_STATS =("showstats");
+    public static final String HIDE_STATS = ("hidestats");
+    public static final String SHOW_ITEMS = ("showitems");
+    public static final String HIDE_ITEMS = ("hideitems");
+    public static final String INVENTORY = ("inventory");
+    public static final String QUEST = ("quest");
+    public static final String TELEPORT = ("teleport");
+    public static final String ADD_TELEPORT = ("addteleport");
+    public static final String ENCHANCE_WEAPON = "enchanceweapon";
+    public static final String ENCHANCE_ARMOUR = "enchancearmour";
+    public static final String ENCHANCE_POTION = "enchancepotion";
+    public static final String ENCHANCE_AMULET = "enchanceamulet";
+    public static final String ENCHANCE_RING = "enchancering";
+    public static final String ENCHANCE_BRACELET = "enchancebracelet";
+    public static final String UP = ("w");
+    public static final String DOWN = ("s");
+    public static final String LEFT = ("a");
+    public static final String RIGHT = ("d");
+    public static final String WALL = "[/]";
+    public static final String ROCK = " ⛰ ";
+    public static final String SHOP_C = " S ";
+    public static final String BLACKSMITH_C = " B ";
+    public static final String CHEST = " ⛋ ";
+    public static final String GOLD = " $ ";
+    public static final String NURSE = " H ";
+    public static final String BIOLOGIST = "!☣ ";
+    public static final String BIOLOGIST_2 = " ☣ ";
+    public static final String PERSON = " ⛹";
+    public static final String PERSON_2 = "!⛹";
+    public static final String REMAINS = " ⛆ ";
+    public static final String TELEPORT_C = " ↈ ";
+    public static final String CORPSE = " ☠ ";
+    public static final String STONE_2 = "!⌬ ";
+    public static final String STONE = " ⌬ ";
+    public static final String M_STONE = " ⍟ ";
+    public static final String POTION_C = " ⚱ ";
+    public static final String BUY_POTION = "buypotion";
+    public static final String BUY_KEY = "buykey";
+    
+    
+    public static final char CLEAR = '\u000c';
+    public static final Shop SHOP = new Shop();
     public static final int LEVEL_1 = 1;
     public static final int LEVEL_5 = 5;
     public static final int LEVEL_10 = 10;
@@ -59,6 +110,12 @@ public class Game
     private int row = 24;
     private int col = 17;    
     private int pickUpGold = 0;
+    
+    private boolean hasReceived = false;
+    private int amountReceived = 0;
+    private String objectReceived = null;
+    private String message = null;
+    private boolean isDisplayed = false;
     
     private boolean shopDescription =  false;
     private boolean blacksmithDescription =  false;
@@ -162,92 +219,108 @@ public class Game
             showInfo();
             updateVisualField();
             
-            String choice = READER.getAny();
+            String choiceRaw = READER.getAny();
+            String choice = choiceRaw.toLowerCase().replaceAll("\\s+","");
             
-            if (choice.toLowerCase().replaceAll("\\s+","").equals(Commands.QUIT_C.getCommand()))
+            try
             {
-                finished = true;
                 
-            }    
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals(Commands.ADD_TELEPORT.getCommand()))
-            {
-                WORLD.addTeleport(player.getRowCoord() + 1, player.getColCoord());
-                
-            }  
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals(Commands.POTION_C.getCommand()))
-            {
-                player.drinkPotion();
-                
-            }    
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.HELP_C.getCommand()))
-            {
-                DISPLAY.listOptions(STORY.getHelp());
-                
-                pressAny();
+                switch(choice)
+                {
+                    case QUIT:
+                        finished = true;
+                        break;
+                    
+                    case ADD_TELEPORT:
+                        WORLD.addTeleport(player.getRowCoord() + 1, player.getColCoord());
+                        break;
+                        
+                    case POTION:
+                        player.drinkPotion();
+                        break;
+                        
+                    case HELP:
+                        DISPLAY.listOptions(STORY.getHelp());
+                        pressAny();
+                        break;
+                        
+                    case SEE_DATABASE:
+                        DATABASE.printAll();
+                        pressAny();
+                        break;
+                        
+                    case SEE_MONSTERS:
+                        DATABASE.getMonsterList(MONSTERS);
+                        
+                        pressAny();
+                        break;
+                    case SEE_LOCATION:
+                        WORLD.printHelpMap(player.getRowCoord(), player.getColCoord());
+                    
+                        pressAny();
+                        break;
+                        
+                    case TELEPORT:
+                        runTeleport();
+                        break;
+                        
+                    case SHOW_STATS:
+                        stats=true;
+                        break;
+                        
+                    case HIDE_STATS:
+                        stats = false;
+                        break;
+                        
+                    case SHOW_ITEMS:
+                        items = true;
+                        break;
+                        
+                    case HIDE_ITEMS:
+                        items = false;
+                        break;
+                        
+                    case INVENTORY:
+                        System.out.println(CLEAR);
+                    
+                        player.printInventory(); 
+                    
+                        pressAny();
+                        break;
+                        
+                    case QUEST:
+                        System.out.println(CLEAR);
+                    
+                        player.printQuestList(); 
+                    
+                        pressAny();
+                        break;
+                    case UP:
+                        runMenu(choice);
+                        break;
+                        
+                    case DOWN:
+                        runMenu(choice);
+                        break;
+                        
+                    case LEFT:
+                        runMenu(choice);
+                        break;
+                        
+                    case RIGHT:
+                        runMenu(choice);
+                        break;
+                    
+                    default:
+                        System.out.println("Not an option");
+                } 
+            
             }
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.SEE_DATABASE.getCommand()))
+            catch(Exception e)
             {
-                DATABASE.printAll();
-                
-                pressAny();
-            }
-                
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.SEE_MONSTERS.getCommand()))
-            {
-                DATABASE.getMonsterList(MONSTERS);
-                
-                pressAny();
+                System.out.println("Not a command");
             }
             
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.SEE_LOCATION_C.getCommand()))
-            {
-                WORLD.printHelpMap(player.getRowCoord(), player.getColCoord());
-                
-                pressAny();
-            }
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.TELEPORT.getCommand()))
-            {
-                runTeleport();
-            
-            }
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.SHOW_STATS_C.getCommand()))
-            {
-                stats = true;
-            
-            }
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.HIDE_STATS_C.getCommand()))
-            {
-                stats = false;
-            
-            }    
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.SHOW_ITEMS_C.getCommand()))    
-            {
-                items = true;
-            
-            }    
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.HIDE_ITEMS_C.getCommand()))
-            {
-                items = false;
-            
-            }
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.INVENTORY.getCommand()))
-            {
-                System.out.println(CLEAR);
-                
-                player.printInventory(); 
-                
-                pressAny();
-            }
-            else if(choice.toLowerCase().replaceAll("\\s","").contains(Commands.QUEST_C.getCommand()))
-            {
-                System.out.println(CLEAR);
-                
-                player.printQuestList(); 
-                
-                pressAny();
-            }
-            else
-                runMenu(choice);
         }
     }
     
@@ -267,6 +340,18 @@ public class Game
     private void runMenu(String choice)
     {
         System.out.println("Chose direction");
+        
+          
+        if(isDisplayed)
+            System.out.println("\t" + message);
+        
+        isDisplayed = false;
+        
+        if(hasReceived)
+            System.out.println("\tReceived: " + amountReceived + " " + objectReceived);
+        
+        hasReceived = false;
+        
         movePlayer(choice);
     }
     
@@ -284,60 +369,54 @@ public class Game
      */
     private void movePlayer(String direction)
     {
-        if(direction.equals(Commands.UP.getCommand()))
+        
+        switch(direction)
         {
-            
-            if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
-            {
-                updateHelpMap(Commands.UP.getCommand());
+            case UP:
+                if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
+                {
+                    updateHelpMap(UP);
                 
-                WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
+                    player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
                       
-            }
-                       
-        }
-        else if(direction.equals(Commands.DOWN.getCommand()))
-        {
-            
-            if(checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
-            {
-                updateHelpMap(Commands.DOWN.getCommand());
+                }
+                break;                      
+        
+            case DOWN:
+                if(checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
+                {
+                    updateHelpMap(DOWN);
                 
-                WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
+                    player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
                 
-            }
-               
-        }
-        else if(direction.equals(Commands.LEFT.getCommand()))
-        {
-            
-            if(checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
-            {
-                updateHelpMap(Commands.LEFT.getCommand());
+                }
+                break;
                 
-                WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+            case LEFT:
+                if(checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
+                {
+                    updateHelpMap(LEFT);
+                    
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
+                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
                 
-            }
-               
-        }
-        else if(direction.equals(Commands.RIGHT.getCommand()))
-        {
-            
-            if(checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
-            {
-                updateHelpMap(Commands.RIGHT.getCommand());
+                }
+                break;
+            case RIGHT:            
+                if(checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
+                {
+                    updateHelpMap(RIGHT);
                 
-                WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
                 
-                player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
+                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
                 
-            }
+                }
             
         }
         
@@ -345,7 +424,6 @@ public class Game
         changeImage();
         showInfo();
         updateVisualField();
-        
         checkFirstInteraction();       
     }
     
@@ -354,49 +432,56 @@ public class Game
      */
     private void updateHelpMap(String direction)
     {
-        if(direction.equals(Commands.UP.getCommand()))
+        switch(direction)
         {
-            //center
-            WORLD.addToHelpMap((player.getRowCoord() - 1),player.getColCoord(), "   ");
-            //left
-            WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
-                                WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
-            //right         
-            WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
-                                WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
-        }
-        else if(direction.equals(Commands.DOWN.getCommand()))
-        {
-            //center
-            WORLD.addToHelpMap((player.getRowCoord() + 1),player.getColCoord(), "   ");
-            //left
-            WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
-                                WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
-            //right         
-            WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
-                                WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
-        }
-        else if(direction.equals(Commands.LEFT.getCommand()))
-        {
-            //center
-            WORLD.addToHelpMap((player.getRowCoord()),player.getColCoord() - 1, "   ");
-            //down
-            WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
-                                WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
-            //up         
-            WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
-                                WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
-        }
-        else if(direction.equals(Commands.RIGHT.getCommand()))
-        {
-            //center
-            WORLD.addToHelpMap((player.getRowCoord()),player.getColCoord() + 1, "   ");
-            //down
-            WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
-                                WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
-            //up         
-            WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
-                                WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+            case UP:                
+                //center
+                WORLD.addToHelpMap((player.getRowCoord() - 1),player.getColCoord(), "   ");
+                //left
+                WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
+                                    WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+                //right         
+                WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
+                                    WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+            
+            
+                break;
+            
+            case DOWN:
+                //center
+                WORLD.addToHelpMap((player.getRowCoord() + 1),player.getColCoord(), "   ");
+                //left
+                WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
+                                    WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+                //right         
+                WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
+                                    WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+                   
+               break;
+            
+            case LEFT:
+                //center
+                WORLD.addToHelpMap((player.getRowCoord()),player.getColCoord() - 1, "   ");
+                //down
+                WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() - 1),
+                                    WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() - 1)));
+                //up         
+                WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() - 1),
+                                    WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() - 1)));
+        
+                break;    
+                                
+            case RIGHT:
+                //center
+                WORLD.addToHelpMap((player.getRowCoord()),player.getColCoord() + 1, "   ");
+                //down
+                WORLD.addToHelpMap((player.getRowCoord() + 1), (player.getColCoord() + 1),
+                                    WORLD.getSquareValue((player.getRowCoord() + 1), (player.getColCoord() + 1)));
+                //up         
+                WORLD.addToHelpMap((player.getRowCoord() - 1), (player.getColCoord() + 1),
+                                    WORLD.getSquareValue((player.getRowCoord() - 1), (player.getColCoord() + 1)));
+                                    
+                break;
         }
         
     } 
@@ -406,19 +491,27 @@ public class Game
      */
     private void showInfo()
     {
-        if(WORLD.getCurrentMapName().toLowerCase().contains("tower"))
-            System.out.println("\tMap: " + WORLD.getCurrentMapName().toUpperCase() + " Level " + WORLD.getTowerLevel() + "\n");
+        String mapName = WORLD.getCurrentMapName().toLowerCase();
         
-        else    
-            System.out.println("\tMap: " + WORLD.getCurrentMapName().toUpperCase() + "\n");
+        switch(mapName)
+        {
+            case TOWER:
+                System.out.println("\tMap: " + mapName.toUpperCase() + " Level " + WORLD.getTowerLevel() + "\n");
             
-        System.out.println("\tPlayer: " + player.getName() + "\tScore: " + player.getScore() + "\n" + player.getHealthInfo());
+                break;
+                
+            default:
+                System.out.println("\tMap: " + mapName.toUpperCase() + "\n");                
+        }
         
+        System.out.println("\tPlayer: " + player.getName() + "\tScore: " + 
+                                    player.getScore() + "\n" + player.getHealthInfo());
+                               
         if(stats)
         {
             System.out.println(player.getStats()); 
             getGold();
-            
+              
         }
         
         createRing();
@@ -441,7 +534,7 @@ public class Game
                 System.out.print("\nTELEPORT STONE - type 'teleport' to use\n\n");
                 
         }   
-            
+         
     }
     
     /**
@@ -450,7 +543,7 @@ public class Game
     private void createRing()
     {
         
-        if(((Player) player).ringExists())
+        if(player.ringExists())
         {
             ring = player.getRing();
             
@@ -483,211 +576,232 @@ public class Game
     }
     
     /**
+     * the start of the fight with a monster.
+     */
+    private boolean fightMonster(String character, Actor monster)
+    {
+        if(fight(character, monster))
+        {
+            WORLD.addAnother(character);
+                
+            player.checkCharacter(character);
+                
+            pickUpGold = dropGold(monster);
+            player.addScore(pickUpGold);
+            player.addScore(monster.getLevel());
+                
+            dropItem(monster);
+            dropChest(monster);
+            dropKey(monster);
+            dropPotion(monster);
+            dropRemains(monster);
+                
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * Check the next square
      */
     private boolean checkNextSquare(int nextRow, int nextCol)
-    { 
-        if (WORLD.getSquareValue(nextRow,nextCol).equals("   "))
+    {
+        String squareValue = WORLD.getSquareValue(nextRow,nextCol);
+        
+        Actor monster = findMonster(squareValue);
+        if(monster != null)
         {
-            return true;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.WALL.getCharacter()) || WORLD.getSquareValue(nextRow,nextCol).equals(Characters.ROCK.getCharacter()))
-        {
-            System.out.println("Cannot go through walls");
+            return fightMonster(squareValue, monster);
             
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.SHOP.getCharacter()))
-        {
-            runShop();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.BLACKSMITH.getCharacter()))
-        {
-            runBlacksmith();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.CHEST.getCharacter()))
-        {
-            
-            if(player.checkInventory(Characters.CHEST_KEY.getCharacter(), 1))
-            {
-                openChest();
-                
-                return true;
-            }
-            else
-            {
-                System.err.println("Not enough keys");
-                
-                return false;
-            }
-            
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.GOLD.getCharacter()))
-        {
-            player.addGold(pickUpGold);
-            
-            return true;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.NURSE.getCharacter()))
-        {
-            player.setFullHealth();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.BIOLOGIST.getCharacter()))
-        {
-            runBiologist();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.BIOLOGIST_2.getCharacter()))
-        {
-            finishBiologistQuest();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.PERSON_2.getCharacter()))
-        {
-            checkPersonInteraction(nextRow,nextCol);
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.PERSON.getCharacter()))
-        {
-            checkPersonQuest(nextRow,nextCol);
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.REMAINS.getCharacter()))
-        {
-            player.addToInventory(Characters.REMAINS.getCharacter(), 1);
-            
-            return true;
-        }
-        else if(checkItem(WORLD.getSquareValue(nextRow,nextCol)))
+        }        
+        else if(checkItem(squareValue))
         {
             player.addToInventory(WORLD.getSquareValue(nextRow,nextCol), 1);
             
             return true;
         }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.TELEPORT.getCharacter()))
-        {
-            teleport();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.CORPSE.getCharacter()))
-        {
-            System.out.println(CLEAR);
-            
-            INTERACTION.getInteraction(Characters.CORPSE.getCharacter());
-            
-            pressAny();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.STONE_SPOT_2.getCharacter()) && 
-                !player.checkInventory(Characters.MYTHICAL_STONE.getCharacter(), 1)) 
-        {
-            System.out.println(CLEAR);
-            
-            INTERACTION.getInteraction(Characters.STONE_SPOT.getCharacter());
-            
-            pressAny();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.STONE_SPOT_2.getCharacter()) && 
-                player.checkInventory(Characters.MYTHICAL_STONE.getCharacter(), 1)) 
-        {
-            System.out.println(CLEAR);
-            
-            INTERACTION.getInteraction(Characters.STONE_SPOT_2.getCharacter());
-            
-            pressAny();
-            
-            WORLD.setMythicalStone(Characters.STONE_SPOT.getCharacter());
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.STONE_SPOT.getCharacter()) && 
-                player.checkInventory(Characters.MYTHICAL_STONE.getCharacter(), 1)) 
-        {
-            System.out.println(CLEAR);
-            
-            INTERACTION.getInteraction(Characters.STONE_SPOT_2.getCharacter());
-            
-            pressAny();
-            
-            return false;
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.MYTHICAL_STONE.getCharacter())) 
-        {
-            
-            if(!mythicalStone)
-            {
-                System.out.println(CLEAR);
-            
-                INTERACTION.getInteraction(Characters.MYTHICAL_STONE.getCharacter());
-            
-                player.addToInventory(Characters.MYTHICAL_STONE.getCharacter(), 1);
-            
-                pressAny();
-            
-                return true;
-            }
-            else
-            {
-                player.addToInventory(Characters.MYTHICAL_STONE.getCharacter(), 1);
-                
-                return true;
-            }
-            
-        }
-        else if(WORLD.getSquareValue(nextRow,nextCol).equals(Characters.POTION.getCharacter()))
-        {
-            int potionAmount = 5;
-            
-            player.increasePotionAmount(potionAmount);
-            
-            return true;
-        }
         else 
         {
-            String character = (WORLD.getSquareValue(nextRow,nextCol));
-            monster = findMonster(character);
             
-            if(fight(character, monster))
+            switch(squareValue)
             {
-                WORLD.addAnother(character);
+                case SQUARE:
+                    return true;
                 
-                player.checkCharacter(character);
+                case WALL:
+                    message = "Cannot go through walls!";
+                    isDisplayed = true;
+                    
+                    return false;
                 
-                pickUpGold = dropGold();
-                player.addScore(pickUpGold);
-                player.addScore(monster.getLevel());
+                case ROCK:
+                    message = "Cannot go through walls!";
+                    isDisplayed = true;
+                    
+                    return false;
                 
-                dropItem();
-                dropChest();
-                dropKey();
-                dropPotion();
-                dropRemains();
+                case SHOP_C:
+                    runShop();
+                    
+                    return false;
                 
-                return true;
+                case BLACKSMITH_C:
+                    runBlacksmith();
+                    
+                    return false;
+                
+                case CHEST:
+                    if(player.checkInventory(Characters.CHEST_KEY.getCharacter(), 1))
+                    {
+                        openChest();
+                        
+                        return true;
+                    }
+                    else
+                    {
+                        message = "Not enough keys!";
+                        isDisplayed = true;
+                        
+                        return false;
+                    }
+                 
+                case GOLD:
+                    hasRecieved(pickUpGold, Characters.GOLD.getCharacter());
+                    player.addGold(pickUpGold);
+                    
+                    return true;
+                    
+                case NURSE:
+                    player.setFullHealth();
+                    message = "Your healh has been restored!";
+                    isDisplayed = true;
+                    
+                    return false;
+                
+                case BIOLOGIST:
+                    runBiologist();
+                    
+                    return false;
+                    
+                case BIOLOGIST_2:
+                    finishBiologistQuest();
+                    
+                    return false;
+                    
+                case PERSON_2:
+                    checkPersonInteraction(nextRow,nextCol);
+                    
+                    return false;
+                    
+                case PERSON:
+                    checkPersonQuest(nextRow,nextCol);
+                    
+                    return false;
+                    
+                case REMAINS:    
+                    hasRecieved(1, Characters.REMAINS.getCharacter());
+                    player.addToInventory(Characters.REMAINS.getCharacter(), 1);
+                    
+                    return true;
+                    
+                case TELEPORT_C:
+                    teleport();    
+                    
+                    return false;
+                    
+                case CORPSE:
+                    System.out.println(CLEAR);                       
+                    
+                    INTERACTION.getInteraction(Characters.CORPSE.getCharacter());  
+                    
+                    pressAny();                   
+                    
+                    return false;
+                    
+                case STONE_2:
+                    if(!player.checkInventory(Characters.MYTHICAL_STONE.getCharacter(), 1)) 
+                    {
+                        System.out.println(CLEAR);
+                        
+                        INTERACTION.getInteraction(Characters.STONE_SPOT.getCharacter());
+                        
+                        pressAny();
+                        
+                        return false;
+                    }
+                    else
+                    {
+                        System.out.println(CLEAR);
+                        
+                        INTERACTION.getInteraction(Characters.STONE_SPOT_2.getCharacter());
+                        
+                        pressAny();
+                        
+                        WORLD.setMythicalStone(Characters.STONE_SPOT.getCharacter());
+                        
+                        return false;
+                    }
+                    
+                case STONE:
+                    if(player.checkInventory(Characters.MYTHICAL_STONE.getCharacter(), 1)) 
+                    {
+                        System.out.println(CLEAR);
+                        
+                        INTERACTION.getInteraction(Characters.STONE_SPOT_2.getCharacter());
+                        
+                        pressAny();
+                        
+                        return false;
+                    }
+                    
+                case M_STONE:
+                    if(!mythicalStone)
+                    {
+                        System.out.println(CLEAR);
+                        
+                        INTERACTION.getInteraction(Characters.MYTHICAL_STONE.getCharacter()); 
+                        
+                        hasRecieved(1, Characters.MYTHICAL_STONE.getCharacter());
+                        
+                        player.addToInventory(Characters.MYTHICAL_STONE.getCharacter(), 1);
+                        
+                        pressAny();
+                        
+                        return true;
+                    }
+                    else
+                    {
+                        player.addToInventory(Characters.MYTHICAL_STONE.getCharacter(), 1);
+                        
+                        hasRecieved(1, Characters.MYTHICAL_STONE.getCharacter());
+                        
+                        return true;
+                    }
+                    
+                
+                case POTION:
+                    int potionAmount = 5;
+                    
+                    hasRecieved(potionAmount, Characters.POTION.getCharacter());
+                        
+                    player.increasePotionAmount(potionAmount);
+                            
+                    return true;
+                    
+                default:    
+                    return false;
+                    
             }
             
         }
-        return false;
     }
+        
     
     /**
      * Drop a chest on the map.
      */
-    private void dropChest()
+    private void dropChest(Actor monster)
     {
         if(((Monster) monster).dropChest())
         {
@@ -699,7 +813,7 @@ public class Game
     /**
      * Drop a potion on the map.
      */
-    private void dropPotion()
+    private void dropPotion(Actor monster)
     {
         if(((Monster) monster).dropPotion())
         {
@@ -711,7 +825,7 @@ public class Game
     /**
      * Drop a key on the map.
      */
-    private void dropKey()
+    private void dropKey(Actor monster)
     {
         if(((Monster) monster).dropKey())
         {
@@ -723,7 +837,7 @@ public class Game
     /**
      * Drop monster remains on the map.
      */
-    private void dropRemains()
+    private void dropRemains(Actor monster)
     {
         if(((Monster) monster).dropRemains())
         {
@@ -741,15 +855,27 @@ public class Game
         {
             player.addToInventory(((Monster) monster).getDrop(), ((Monster) monster).getDropAmount());
             
-            System.err.println("Recieved " + ((Monster) monster).getDropAmount() + " " + ((Monster) monster).getDrop());
+            hasRecieved(((Monster) monster).getDropAmount(), ((Monster) monster).getDrop());
         }
         else
         {
             player.addGold(((Monster) monster).getDropAmount() * monster.getLevel());
             
-            System.err.println("Recieved " + ((Monster) monster).getDropAmount() * monster.getLevel() + Characters.GOLD.getCharacter());
+            hasRecieved(((Monster) monster).getDropAmount() * monster.getLevel(), Characters.GOLD.getCharacter());
         }
         
+    }
+    
+    /**
+     * Change variable values if player recieved items.
+     */
+    private void hasRecieved(int amount, String object)
+    {
+        hasReceived = true;
+        
+        amountReceived = amount;
+         
+        objectReceived = object;
     }
     
     /**
@@ -927,7 +1053,7 @@ public class Game
      * Drop gold on the map.
      * @return an amount of gold equal to the monster's level.
      */
-    private int dropGold()
+    private int dropGold(Actor monster)
     {
         if(((Monster) monster).dropGold() != 0)
         {
@@ -941,7 +1067,7 @@ public class Game
     /**
      * Drop an item on the map.
      */
-    private void dropItem()
+    private void dropItem(Actor monster)
     {
         if(((Monster) monster).dropItem())
         {
@@ -959,12 +1085,16 @@ public class Game
     {
         if(result)
         {
-            //System.err.println("\t\t\t\tYou Win!");
+            message = "You Won!";
+            isDisplayed = true;
             
             return true;
         }
         else
         {
+            message = "You Lost :(";
+            isDisplayed = true;
+            
             checkFirstDeath();
             
             setCoordinates(); 
@@ -972,32 +1102,44 @@ public class Game
             player.setFullHealth();
            
         }
+        
         return false;
     }
     
     private void setCoordinates()
     {
-        if (WORLD.getCurrentMapName().toLowerCase().equals("town"))
-            setTownCoord();
+        String mapName = WORLD.getCurrentMapName().toLowerCase();
+        
+        switch(mapName)
+        {
+            case TOWN:        
+                setTownCoord();
+                break;
             
-        else if (WORLD.getCurrentMapName().toLowerCase().equals("fortress"))
-            setFortressCoord();
-            
-        else if (WORLD.getCurrentMapName().toLowerCase().equals("forest"))
-            setForestCoord();
-            
-        else if (WORLD.getCurrentMapName().toLowerCase().equals("mountain"))
-            setMountainCoord();
-            
-        else if (WORLD.getCurrentMapName().toLowerCase().equals("dessert"))
-            setDessertCoord();
-            
-        else if (WORLD.getCurrentMapName().toLowerCase().equals("spidercave"))
-            setSpiderCaveCoord();
-            
-        else if (WORLD.getCurrentMapName().toLowerCase().equals("tower"))
-            setTowerCoord();    
-            
+            case FORTRESS:
+                setFortressCoord();
+                break;
+                
+            case FOREST: 
+                setForestCoord();
+                break;
+                
+            case MOUNTAIN:
+                setMountainCoord();
+                break;
+                
+            case DESSERT:
+                setDessertCoord();
+                break;
+                
+            case SPIDER_CAVE:
+                setSpiderCaveCoord();
+                break;
+                
+            case TOWER:
+                setTowerCoord();    
+                break;            
+        }
     }
     
     /**
@@ -1095,7 +1237,8 @@ public class Game
     {
         if(firstDeathDescription == false)
         {
-            System.out.println("You died! You will be sent back in town where someone will take care of you.");
+            message = "You died! You will be sent back in town where someone will take care of you.";
+            isDisplayed = true;
             
             pressAny();
             
@@ -1157,6 +1300,7 @@ public class Game
      */
     private void checkFirstInteraction()
     {
+        
         if(player.checkVisualField(Characters.SHOP.getCharacter()) && !shopDescription)
         {
             shopDescription = INTERACTION.getInteraction(Characters.SHOP.getCharacter());    
@@ -1216,19 +1360,24 @@ public class Game
      */
     private void finishBiologistQuest()
     {
-        if(player.getReward() > 0)
+        int amount = player.getReward();
+        
+        switch(amount)
         {
-            INTERACTION.getInteraction(Characters.BIOLOGIST_2.getCharacter());
-            
-            pressAny();
-         
-            player.addGold(player.getReward());
-        }
-        else
-        {
-            INTERACTION.getInteraction(Characters.BIOLOGIST_3.getCharacter());
-            
-            pressAny();
+            case 0:
+                INTERACTION.getInteraction(Characters.BIOLOGIST_3.getCharacter());                
+                pressAny();
+                
+                break;
+                
+            default:
+                INTERACTION.getInteraction(Characters.BIOLOGIST_2.getCharacter());                
+                pressAny();             
+                player.addGold(player.getReward());
+                
+                hasRecieved(player.getReward(), Characters.GOLD.getCharacter());
+                
+                break;
             
         }
         
@@ -1245,60 +1394,59 @@ public class Game
         {
             BLACKSMITH.createList(ringExists, braceletExists);
             
-            System.out.println("\n\n\t\tWhat can I do for you?\n\n");
+            message = "\n\n\t\tWhat can I do for you?\n\n";
+            isDisplayed = true;
                 
             BLACKSMITH.openBlacksmithShop();
                 
-            String choice = READER.getString();
-                
-            if(choice.toLowerCase().replaceAll("\\s+","").equals("quit"))
+            String choiceRaw = READER.getString();
+            String choice = choiceRaw.toLowerCase().replaceAll("\\s+","");
+            
+            switch(choice)
             {
-                finished = true;
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceweapon"))
-            {
-                                 
-                if(BLACKSMITH.enchance(weapon, player.getGold()))
-                    player.pay(BLACKSMITH.getCost(weapon));
-                
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancearmour"))
-            {
-                
-                if(BLACKSMITH.enchance(armour,player.getGold()))
-                    player.pay(BLACKSMITH.getCost(armour));
+                case QUIT:
+                    finished = true;
+                    break;
+                case ENCHANCE_WEAPON:
+                    if(BLACKSMITH.enchance(weapon, player.getGold()))
+                        player.pay(BLACKSMITH.getCost(weapon));
+                        
+                     break;   
                     
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancepotion"))
-            {
-                
-                if(BLACKSMITH.enchance(potion, player.getGold()))
-                    player.pay(BLACKSMITH.getCost(potion));
+                case ENCHANCE_ARMOUR:               
+                    if(BLACKSMITH.enchance(armour,player.getGold()))
+                        player.pay(BLACKSMITH.getCost(armour));
                     
+                    break;   
+                    
+                case ENCHANCE_POTION:                
+                    if(BLACKSMITH.enchance(potion, player.getGold()))
+                        player.pay(BLACKSMITH.getCost(potion));
+                        
+                    break;
+                 
+                case ENCHANCE_AMULET:                
+                    if(BLACKSMITH.enchance(amulet, player.getGold()))
+                        player.pay(BLACKSMITH.getCost(amulet));
+                        
+                    break;
+                    
+                case ENCHANCE_RING:                
+                    if(BLACKSMITH.enchance(ring, player.getGold()))
+                        player.pay(BLACKSMITH.getCost(ring));
+                        
+                    break;    
+                 
+                case ENCHANCE_BRACELET:                
+                    if(BLACKSMITH.enchance(bracelet, player.getGold()))
+                        player.pay(BLACKSMITH.getCost(bracelet));
+                        
+                    break;
+                    
+                default:
+                    message = "Not an option";
+                    isDisplayed = true;
             }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchanceamulet"))
-            {
-                
-                if(BLACKSMITH.enchance(amulet, player.getGold()))
-                    player.pay(BLACKSMITH.getCost(amulet));
-                
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancering"))
-            {
-                
-                if(BLACKSMITH.enchance(ring, player.getGold()))
-                    player.pay(BLACKSMITH.getCost(ring));
-                
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("enchancebracelet"))
-            {
-                
-                if(BLACKSMITH.enchance(bracelet, player.getGold()))
-                    player.pay(BLACKSMITH.getCost(bracelet));
-                
-            }
-            else
-                System.out.println("Not an option");
                 
         }
         
@@ -1317,45 +1465,49 @@ public class Game
                
             SHOP.openShop();
                 
-            String choice = READER.getString();
+            String choiceRaw = READER.getString();
+            String choice = choiceRaw.toLowerCase().replaceAll("\\s+","");
             
-            if(choice.toLowerCase().replaceAll("\\s+","").equals("quit"))
+            switch(choice)
             {
-                finished = true;
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("buypotion"))
-            {
-                System.out.println("\n\nHow many do you want to buy?\n\n");
-                int amount = READER.getInteger();
-                    
-                if (player.getGold() >= (SHOP.getPotionPrice() * amount))
-                {
-                    player.pay(SHOP.getPotionPrice() * amount);
-                    
-                    player.increasePotionAmount(amount);
-                    
-                    System.out.println(Commands.SUCCESS.getCommand() + amount + " Health Potion(s)");
-                }
+                case QUIT:
+                    finished = true;
                 
-            }
-            else if(choice.toLowerCase().replaceAll("\\s+","").equals("buykey"))
-            {
-                System.out.println("\n\nHow many do you want to buy?\n\n");
-                int amount = READER.getInteger();
+                case BUY_POTION:
+                    System.out.println("\n\nHow many do you want to buy?\n\n");
+                    int amount = READER.getInteger();
+                        
+                    if (player.getGold() >= (SHOP.getPotionPrice() * amount))
+                    {
+                        player.pay(SHOP.getPotionPrice() * amount);
+                        
+                        player.increasePotionAmount(amount);
+                        
+                        System.out.println(Commands.SUCCESS.getCommand() + amount + " Health Potion(s)");
+                    }
+                    break;
                     
-                if (player.getGold() >= (SHOP.getKeyPrice() * amount))
-                {
-                    player.pay(SHOP.getKeyPrice() * amount);
+                case BUY_KEY:
+                    System.out.println("\n\nHow many do you want to buy?\n\n");
+                    amount = READER.getInteger();
+                        
+                    if (player.getGold() >= (SHOP.getKeyPrice() * amount))
+                    {
+                        player.pay(SHOP.getKeyPrice() * amount);
+                        
+                        player.addToInventory(Characters.CHEST_KEY.getCharacter(),amount);
+                        
+                        System.out.println(Commands.SUCCESS.getCommand() + amount + " Keys");
+                    }
+                    break;
                     
-                    player.addToInventory(Characters.CHEST_KEY.getCharacter(),amount);
+                default:
+                    message = "Not an option";
+                    isDisplayed = true;
                     
-                    System.out.println(Commands.SUCCESS.getCommand() + amount + " Keys");
-                }
-                
+                    break;
             }
             
-            else 
-                System.out.println("Not an option");
         }
         
     }
@@ -1365,49 +1517,59 @@ public class Game
      */
     private void teleport()
     {
-        if(WORLD.getCurrentMapName().toLowerCase().equals("forest") && WORLD.checkTeleport(player.getColCoord()))
-        {
-            WORLD.setCurrentMap("mountain");
-            
-            setMountainCoord();
-        }
-        else if(WORLD.getCurrentMapName().toLowerCase().equals("forest")) 
-        {
-            WORLD.setCurrentMap("dessert");
-            
-            setDessertCoord();
-        }
-        else if(WORLD.getCurrentMapName().toLowerCase().equals("fortress"))
-        {
-            WORLD.setCurrentMap("town");
-            
-            setTownCoord();
-        }
-        else if(WORLD.getCurrentMapName().toLowerCase().equals("town"))
-        {
-            WORLD.setCurrentMap("forest");
-            
-            setForestCoord();
-        }
-        else if(WORLD.getCurrentMapName().toLowerCase().equals("dessert") && player.getMonsterStatus("fox"))
-        {
-            WORLD.setCurrentMap("spiderCave");
-            
-            setSpiderCaveCoord();
-        }
-        else if(WORLD.getCurrentMapName().toLowerCase().equals("spidercave") && player.getMonsterStatus("queen"))
-        {
-            WORLD.setCurrentMap("tower");
-            
-            setTowerCoord();
-        }
-        else if(WORLD.getCurrentMapName().toLowerCase().equals("tower"))
-        {
-            WORLD.increaseTowerLevel();
-            
-            setTowerCoord();
-        }
+        String mapName = WORLD.getCurrentMapName().toLowerCase();
         
+        switch(mapName)
+        {
+            
+            case FOREST:
+                if(WORLD.checkTeleport(player.getColCoord()))
+                {
+                    WORLD.setCurrentMap(MOUNTAIN);
+                    
+                    setMountainCoord();
+                }
+                else 
+                {
+                    WORLD.setCurrentMap(DESSERT);
+                    
+                    setDessertCoord();
+                }                
+                break;
+                
+            case FORTRESS:
+                WORLD.setCurrentMap(TOWN);                
+                setTownCoord();                
+                break;
+                
+            case TOWN:
+                WORLD.setCurrentMap(FOREST);                
+                setForestCoord();
+                break;
+                
+            case DESSERT:
+                if(player.getMonsterStatus("fox"))
+                {
+                    WORLD.setCurrentMap(SPIDER_CAVE);
+                    
+                    setSpiderCaveCoord();
+                }                
+                break;
+                
+            case SPIDER_CAVE:
+                if(player.getMonsterStatus("queen"))
+                {
+                    WORLD.setCurrentMap(TOWER);
+                    
+                    setTowerCoord();
+                }
+                break;
+                
+            case TOWER:
+                WORLD.increaseTowerLevel();                
+                setTowerCoord();
+                break;
+        }
     }
     
     /**
@@ -1417,47 +1579,45 @@ public class Game
     {
         printDestinationList();
         
-        String choice = READER.getString();
+        String choiceRaw = READER.getString();
+        String choice = choiceRaw.toLowerCase().replaceAll("\\s","");
         
-        if(choice.toLowerCase().replaceAll("\\s","").contains("fortress"))
+        switch(choice)
         {
-            WORLD.setCurrentMap("fortress");
-            
-            setFortressCoord();
+            case FORTRESS:
+                WORLD.setCurrentMap(FORTRESS);            
+                setFortressCoord();
+                break;
+                
+            case TOWN:
+                WORLD.setCurrentMap(TOWN);            
+                setTownCoord();
+                break;
+                
+            case FOREST:
+                WORLD.setCurrentMap(FOREST);            
+                setForestCoord();
+                break;
+                
+            case DESSERT:
+                WORLD.setCurrentMap(DESSERT);            
+                setDessertCoord();
+                break;
+                
+            case MOUNTAIN:
+                WORLD.setCurrentMap(MOUNTAIN);            
+                setMountainCoord();
+                break;
+                
+            case SPIDER_CAVE:
+                WORLD.setCurrentMap(SPIDER_CAVE);            
+                setSpiderCaveCoord();
+                break;
+                
+            default:
+                message = "Not a destination";   
+                isDisplayed = true;
         }
-        else if(choice.toLowerCase().replaceAll("\\s","").contains("town"))
-        {
-            WORLD.setCurrentMap("town");
-            
-            setTownCoord();
-        }
-        else if(choice.toLowerCase().replaceAll("\\s","").contains("forest"))
-        {
-            WORLD.setCurrentMap("forest");
-            
-            setForestCoord();
-        }    
-        else if(choice.toLowerCase().replaceAll("\\s","").contains("dessert"))
-        {
-            WORLD.setCurrentMap("dessert");
-            
-            setDessertCoord();
-        }
-        else if(choice.toLowerCase().replaceAll("\\s","").contains("mountain"))
-        {
-            WORLD.setCurrentMap("mountain");
-            
-            setMountainCoord();
-        }
-        else if(choice.toLowerCase().replaceAll("\\s","").contains("spidercave"))
-        {
-            WORLD.setCurrentMap("spidercave");
-            
-            setSpiderCaveCoord();
-        }
-        else
-            System.out.println("Not a destination");
-            
     }
     
     /**
