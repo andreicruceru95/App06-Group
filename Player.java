@@ -135,12 +135,8 @@ public class Player extends Actor
      */
     public void addGold(int gold)
     {
-        if(gold > 0)
-        {
-            System.err.println("\t\t\tReceived " + gold + "Gold");
-        }
-        
         this.goldAmount += gold;
+        
         score ++;
     }
     
