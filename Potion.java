@@ -32,20 +32,25 @@ public class Potion extends Item
     /**
      * Print a random message each time a potion is used.
      */
-    public void printMessage()
+    public String printMessage()
     {
         int randomMessage = random.nextInt(5 - 1) + 1;
         
         switch(randomMessage)
         {
-            case 1: System.out.println("You drunk a potion");
-            case 2:
-            case 3:
-            case 4:
-            case 5:
+            case 1: return "You won't drink away the alcoholism.";
+           
+            case 2: return "All the problems fade before a hangover";
+            
+            case 3: return "That one liner 'i'm not drinking too much tonight' never goes as planned...";
+            
+            case 4: return "I just found out I'm colorblind. The diagnosis came completely out of the purple.";
+            
+            case 5: return "Alcohol is a perfect solvent: It dissolves marriages, families and careers.";
             
         }
-       
+        
+        return null;       
     }
     
     /**
