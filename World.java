@@ -905,11 +905,23 @@ public class World
     }
     
     /**
-     * Open barels
+     * Open barels.
      */
     public void openBarels(int row, int col)
     { 
         currentMap.setOne(row, col, Characters.OPENED_BARREL.getCharacter());
+        
+    }
+    
+    /**
+     * Open bags.
+     */
+    /**
+     * Open barels
+     */
+    public void openBags(int row, int col)
+    { 
+        currentMap.setOne(row, col, SQUARE);
         
     }
     
