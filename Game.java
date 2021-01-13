@@ -62,7 +62,10 @@ public class Game
     public static final String POTION_C = " ⚱ ";
     public static final String BUY_POTION = "buypotion";
     public static final String BUY_KEY = "buykey";
-    
+    public static final int CHEST_CHANCE = 10;
+    public static final int POTION_CHANCE = 25;
+    public static final int KEY_CHANCE = 50;
+    public static final int ITEM_CHANCE = 75;
     
     public static final char CLEAR = '\u000c';
     public static final Shop SHOP = new Shop();
@@ -218,6 +221,7 @@ public class Game
             changeImage();
             showInfo();
             updateVisualField();
+            printMessages();
             
             String choiceRaw = READER.getAny();
             String choice = choiceRaw.toLowerCase().replaceAll("\\s+","");
@@ -325,6 +329,28 @@ public class Game
     }
     
     /**
+     * Print messages if condition is true.
+     */
+    private void printMessages()
+    {
+        if(isDisplayed)
+            System.out.println("\t\t" + message);
+         
+        else
+            System.out.println(" ");
+        
+        isDisplayed = false;
+        
+        if(hasReceived)
+            System.out.println("\tReceived: " + amountReceived + " " + objectReceived);
+        
+        else
+            System.out.println(" ");
+            
+        hasReceived = false;
+    }
+    
+    /**
      * Read any input from the user.
      */
     private void pressAny()
@@ -339,19 +365,8 @@ public class Game
      */
     private void runMenu(String choice)
     {
-        System.out.println("Chose direction");
-        
-          
-        if(isDisplayed)
-            System.out.println("\t" + message);
-        
-        isDisplayed = false;
-        
-        if(hasReceived)
-            System.out.println("\tReceived: " + amountReceived + " " + objectReceived);
-        
-        hasReceived = false;
-        
+        System.out.println("Chose direction");        
+                  
         movePlayer(choice);
     }
     
@@ -491,8 +506,8 @@ public class Game
      */
     private void showInfo()
     {
-        String mapName = WORLD.getCurrentMapName().toLowerCase();
-        
+        String mapName = WORLD.getCurrentMapName().toLowerCase();        
+         
         switch(mapName)
         {
             case TOWER:
@@ -534,7 +549,7 @@ public class Game
                 System.out.print("\nTELEPORT STONE - type 'teleport' to use\n\n");
                 
         }   
-         
+        
     }
     
     /**
@@ -589,19 +604,20 @@ public class Game
             pickUpGold = dropGold(monster);
             player.addScore(pickUpGold);
             player.addScore(monster.getLevel());
-                
-            dropItem(monster);
-            dropChest(monster);
-            dropKey(monster);
-            dropPotion(monster);
-            dropRemains(monster);
+            
+            checkDrop(monster);
+            // dropItem(((Monster)monster).dropItem());
+            // dropChest(((Monster)monster).dropChest());
+            // dropKey(((Monster)monster).dropKey());
+            // dropPotion(((Monster)monster).dropPotion());
+            // dropRemains(((Monster)monster).dropRemains());
                 
             return true;
         }
         
         return false;
     }
-    
+        
     /**
      * Check the next square
      */
@@ -617,7 +633,9 @@ public class Game
         }        
         else if(checkItem(squareValue))
         {
-            player.addToInventory(WORLD.getSquareValue(nextRow,nextCol), 1);
+            player.addToInventory(squareValue, 1);
+            
+            hasRecieved(1, squareValue);
             
             return true;
         }
@@ -780,7 +798,7 @@ public class Game
                     }
                     
                 
-                case POTION:
+                case POTION_C:
                     int potionAmount = 5;
                     
                     hasRecieved(potionAmount, Characters.POTION.getCharacter());
@@ -796,55 +814,119 @@ public class Game
             
         }
     }
+    
+    /**
+     * Drop gold on the map.
+     * @return an amount of gold equal to the monster's level.
+     */
+    private int dropGold(Actor monster)
+    {
+        if(((Monster)monster).dropGold() != 0)
+        {
+            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.GOLD.getCharacter()) ;           
+        }
         
-    
+        return monster.getLevel();
+    }
+        
     /**
-     * Drop a chest on the map.
+     * drop an item on the map.
      */
-    private void dropChest(Actor monster)
+    private void dropItem(String item)
     {
-        if(((Monster) monster).dropChest())
-        {
-            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.CHEST.getCharacter()) ;  
-        }
+        WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, item) ;
     }
     
     /**
-     * Drop a potion on the map.
+     * Check if the monster has dropped any items.
+     * 
      */
-    private void dropPotion(Actor monster)
+    private void checkDrop(Actor monster)
     {
-        if(((Monster) monster).dropPotion())
-        {
-            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.POTION.getCharacter()) ;  
-        }
-    }
+        String item = ((Monster)monster).dropItem();
+        String chest = ((Monster)monster).dropChest();
+        String remains =((Monster)monster).dropRemains();
+        String key =((Monster)monster).dropKey();
+        String potion = ((Monster)monster).dropPotion();
+        
+        if(item != null)
+            dropItem(item);
+            
+        if(chest != null)
+            dropItem(chest);
+            
+        if(remains != null)
+            dropItem(remains);
+            
+        if(key != null)
+            dropItem(key);  
+            
+        if(potion != null)
+            dropItem(potion); 
+    } 
     
-    /**
-     * Drop a key on the map.
-     */
-    private void dropKey(Actor monster)
-    {
-        if(((Monster) monster).dropKey())
-        {
-            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.CHEST_KEY.getCharacter()) ;  
-        }
-    }
+    // /**
+     // * Drop a chest on the map.
+     // */
+    // private void dropChest(boolean chance)
+    // {
+        // if(chance)
+        // {
+            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.CHEST.getCharacter()) ;  
+        // }
+    // }
     
-    /**
-     * Drop monster remains on the map.
-     */
-    private void dropRemains(Actor monster)
-    {
-        if(((Monster) monster).dropRemains())
-        {
-            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.REMAINS.getCharacter()) ;  
-        }
-    }
+    // /**
+     // * Drop a potion on the map.
+     // */
+    // private void dropPotion(boolean chance)
+    // {
+        // if(chance)
+        // {
+            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.POTION.getCharacter()) ;  
+        // }
+    // }
+    
+    // /**
+     // * Drop a key on the map.
+     // */
+    // private void dropKey(boolean chance)
+    // {
+        // if(chance)
+        // {
+            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.CHEST_KEY.getCharacter()) ;  
+        // }
+    // }
+    
+    // /**
+     // * Drop monster remains on the map.
+     // */
+    // private void dropRemains(boolean chance)
+    // {
+        // if(chance)
+        // {
+            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.REMAINS.getCharacter()) ;  
+        // }
+    // }    
+    
+    // /**
+     // * Drop an item on the map.
+     // */
+    // private void dropItem(boolean chance)
+    // {
+        // if(chance)
+        // {
+            // WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
+            // ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, ((Monster) monster).getDrop()) ;           
+        // }
+           
+    // }
     
     /**
      * 50% chance to obtain (1, 5) x monster level items or gold.
@@ -1048,35 +1130,7 @@ public class Game
         
         return false;
     }
-    
-    /**
-     * Drop gold on the map.
-     * @return an amount of gold equal to the monster's level.
-     */
-    private int dropGold(Actor monster)
-    {
-        if(((Monster) monster).dropGold() != 0)
-        {
-            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, Characters.GOLD.getCharacter()) ;           
-        }
         
-        return monster.getLevel();
-    }
-    
-    /**
-     * Drop an item on the map.
-     */
-    private void dropItem(Actor monster)
-    {
-        if(((Monster) monster).dropItem())
-        {
-            WORLD.addObjects(((Player) player).getColCoord() - 1 , ((Player) player).getColCoord() + 1,
-            ((Player) player).getRowCoord() - 1, ((Player) player).getRowCoord() + 1, ((Monster) monster).getDrop()) ;           
-        }
-           
-    }
-    
     /**
      * Spawn another monster on the map if you won the fight.
      * If you die, you will be set back to the initial position.
@@ -1553,7 +1607,13 @@ public class Game
                     WORLD.setCurrentMap(SPIDER_CAVE);
                     
                     setSpiderCaveCoord();
-                }                
+                } 
+                else
+                {
+                    message = "You need to fox key to get in!";
+                    isDisplayed = true;
+                }
+                   
                 break;
                 
             case SPIDER_CAVE:
@@ -1562,6 +1622,11 @@ public class Game
                     WORLD.setCurrentMap(TOWER);
                     
                     setTowerCoord();
+                }
+                else
+                {
+                    message = "You need the Spider Queen key to get in";
+                    isDisplayed = true;
                 }
                 break;
                 
