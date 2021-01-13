@@ -893,7 +893,7 @@ public class World
     /**
      * print the maps.
      */
-    public void printMaps()
+    private void printMaps()
     {
         town.printMap();
         dessert.printMap();
