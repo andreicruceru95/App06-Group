@@ -15,20 +15,20 @@ public class Inventory
      */
     public Inventory()
     {
-        INVENTORY.put(Characters.FLOWER_RED.getCharacter(), 0);
-        INVENTORY.put(Characters.FLOWER_BLUE.getCharacter(), 0);
-        INVENTORY.put(Characters.FLOWER_PURPLE.getCharacter(), 0);
-        INVENTORY.put(Characters.FLOWER_YELLOW.getCharacter(), 0);
-        INVENTORY.put(Characters.FLOWER_WHITE.getCharacter(), 0);
+        INVENTORY.put(Characters.FLOWER_RED.getCharacter(), 20);
+        INVENTORY.put(Characters.FLOWER_BLUE.getCharacter(), 20);
+        INVENTORY.put(Characters.FLOWER_PURPLE.getCharacter(), 20);
+        INVENTORY.put(Characters.FLOWER_YELLOW.getCharacter(), 20);
+        INVENTORY.put(Characters.FLOWER_WHITE.getCharacter(), 20);
         
-        INVENTORY.put(Characters.SNOW_FRAG.getCharacter(), 0);
-        INVENTORY.put(Characters.STAR_FRAG.getCharacter(), 0);
-        INVENTORY.put(Characters.SPIDER_KEY.getCharacter(), 0);
-        INVENTORY.put(Characters.TOWER_KEY.getCharacter(), 0);
-        INVENTORY.put(Characters.FOX_KEY.getCharacter(), 0);
-        INVENTORY.put(Characters.CHEST_KEY.getCharacter(), 0);
-        INVENTORY.put(Characters.REMAINS.getCharacter(), 0);
-        INVENTORY.put(Characters.MYTHICAL_STONE.getCharacter(), 0);
+        INVENTORY.put(Characters.SNOW_FRAG.getCharacter(), 120);
+        INVENTORY.put(Characters.STAR_FRAG.getCharacter(), 51);
+        INVENTORY.put(Characters.SPIDER_KEY.getCharacter(), 2);
+        INVENTORY.put(Characters.TOWER_KEY.getCharacter(), 2);
+        INVENTORY.put(Characters.FOX_KEY.getCharacter(), 2);
+        INVENTORY.put(Characters.CHEST_KEY.getCharacter(), 12);
+        INVENTORY.put(Characters.REMAINS.getCharacter(), 12);
+        INVENTORY.put(Characters.MYTHICAL_STONE.getCharacter(), 2);
         
     }
     
@@ -76,7 +76,7 @@ public class Inventory
         else 
         { 
             
-            if(value > amount)
+            if(value >= amount)
                 exists = true;
                
         }
