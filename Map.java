@@ -9,11 +9,11 @@ import java.util.*;
  */
 public class Map
 {
-    private static final String SQUARE = "   ";
-   
-    private String map[][]  = new String[47][35];
-        
-    private Random rand = new Random();
+    public static final String SQUARE = "   ";
+    public static final String TOWN = "Town";
+    public static final String FORTRESS = "Fortress";
+    public String map[][]  = new String[47][35];
+    public static final Random RAND = new Random();
     
     //private String description;
     private String name;
@@ -145,25 +145,55 @@ public class Map
     public void addBarrels(int mapEdge,int amount, String wall, String character)
     {
         int minAmount = 1;
+        int length = 0;
         
-        for (int i = mapEdge; i < map.length - mapEdge; i ++)
-        {
-            
-            for(int j = mapEdge; j < map[i].length - 1; j++)
-            {
-                
-                if(map[i][j].equals(wall))
-                {
-                    addObjects(j - 1, j + 1, i - 1, i + 1, character, 1);
-                    
-                    minAmount++;
-                }
-                
-                if(minAmount == amount)  
-                    break;
-            }
-            
-        }
+        // switch (name)
+        // {
+            // case FORTRESS: 
+                // for (int i = mapEdge; i < map.length - mapEdge; i ++)
+                // {
+                            
+                    // for(int j = mapEdge; j < map[i].length - 1; j++)
+                    // {
+                                
+                         // if(map[i][j].equals(wall))
+                         // {
+                             // addObjects(-i, i + 1, -j, j + 1, character, 1);
+                 
+                             // minAmount++;
+                         // }
+                                
+                         // if(minAmount == amount)  
+                             // break;
+                    // }  
+                            
+                // }            
+                // break;
+             
+            // case TOWN: 
+                // for (int i = mapEdge; i < map.length - mapEdge; i ++)
+                // {
+                            
+                    // for(int j = mapEdge; j < 10; j++)
+                    // {
+                                
+                         // if(map[i][j].equals(wall))
+                         // {
+                             // addObjects(-i, i + 1, -j, j + 1, character, 1);
+                 
+                             // minAmount++;
+                         // }
+                                
+                         // if(minAmount == amount)  
+                             // break;
+                    // }  
+                            
+                // }
+                // break;
+        //}
+        
+        
+        
     }
         
     /**
@@ -176,12 +206,12 @@ public class Map
         
         for(int i = 0; i < amount; i++)
         {
-            randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
-            randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+            randomRow = RAND.nextInt(rowMax - rowMin) + rowMin;
+            randomCol = RAND.nextInt(columnMax - columnMin) + columnMin;
                 
             if(map[randomRow][randomCol] != SQUARE)
             {
-                continue;
+                amount--;     
                 
             }
             
@@ -189,6 +219,42 @@ public class Map
         }
         
     }
+    
+    // /**
+     // * add an amount of objects in an empty square on the map
+     // */
+    // public void addObjects(int columnMin, int columnMax, int rowMin, int rowMax, String object, int amount)
+    // {
+        // int randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+        // int randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+        // //int i = 0;
+        // while(true)
+        // {
+            
+            // if(map[randomRow][randomCol] != SQUARE)
+            // {
+                // randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+                // randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+                    // // i++;
+                    // // if(i % 5 == 0)
+                        // // break;
+                    // // System.out.println(i);
+            // }
+            // else
+            // {
+                // map[randomRow][randomCol] = object;
+                // randomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+                // randomCol = rand.nextInt(columnMax - columnMin) + columnMin;
+                    
+                // amount --;
+                    
+                // if(amount == 0)
+                    // break;
+                        
+            // }
+            
+        // }
+    // }
         
     /**
      * @return a square value
