@@ -18,6 +18,7 @@ public class Blacksmith
     private int ringCost = 15;
     private int braceletCost = 15;
     private int potionCost = 100;
+    private boolean message = false;
     
     /**
      * Enhance an item.
@@ -148,6 +149,17 @@ public class Blacksmith
             
         BLACKSMITH_MENU[6] = "\n\n" + Commands.QUIT.getCommand();
         
+        if (message)
+            BLACKSMITH_MENU[7] = "\n\nNot a option!";
+        
+    }
+        
+    /**
+     * set message on/off
+    */
+    public void setMessage()
+    {
+        message = true;
     }
     
     /**
