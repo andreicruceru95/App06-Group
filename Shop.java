@@ -12,7 +12,7 @@ public class Shop
     public static final int POTION_PRICE = 5;
     public static final int CHEST_KEY_PRICE = 50;
     public static final Display DISPLAY = new Display();
-    public static final String[] LIST = new String[5];    
+    public static final String[] LIST = new String[6];    
     
     private boolean message = false;
     private boolean success = false;
@@ -20,29 +20,29 @@ public class Shop
     /**
      * Display the shop options.
      */    
-    public void openShop()
+    public void openShop(int goldAmount)
     {
         LIST[0] = Commands.QUIT.getCommand();
         LIST[1] = Commands.BUY_POTION.getCommand() + "\t\t" + POTION_PRICE + " Gold";
         LIST[2] = Commands.BUY_KEY.getCommand() + "\t\t" + CHEST_KEY_PRICE + " Gold";
-        
+        LIST[3] = "\n\t\tYour gold amount: " + goldAmount;
         if(message)
         {
-            LIST[3] = "\n\n\t\tNot an option!";
+            LIST[4] = "\n\n\t\tNot an option!";
             
             message = false;
         }
         else 
-            LIST[3] = null;
+            LIST[4] = null;
             
         if(success)
         {
-            LIST[4] = "\n\n\t\tSuccess!";
+            LIST[5] = "\n\n\t\tSuccess!";
             
             success = false;
         }            
         else
-            LIST[4] = null;
+            LIST[5] = null;
             
         DISPLAY.listOptions(LIST);
     }
