@@ -114,21 +114,21 @@ public class Interactions
                         "\t\tYou have not killed 50 creatures.\n" +
                         "\t\tKill them and I shall reward you!\n" +
                         "\t\tFair well.");                
-               
-        INTERACTIONS.put(Characters.PERSON_13.getCharacter(), "\n\t\tSoldier: \n\n" +
-                        "\t\tGood luck in your adventure!");  
                         
-        INTERACTIONS.put(Characters.STONE_SPOT.getCharacter(), "\nVoice: \n\n" +
+        INTERACTIONS.put(Characters.STONE_SPOT.getCharacter(), "\n\t\tVoice: \n\n" +
                         "\t\tYou need to find the mythical stone, and place it here.\n" +
                         "\t\tGo! There isn't much time!");  
                         
-        INTERACTIONS.put(Characters.STONE_SPOT_2.getCharacter(), "\nVoice: \n\n" +
-                        "\t\tWith the mythical stone back where it belongs," +
-                        "\t\tThe human kind is safe again." +
-                        "\t\tAll because of you, brave warrior!");
+        INTERACTIONS.put(Characters.STONE_SPOT_2.getCharacter(), "\n\t\tMessage: \n\n" +
+                        "\t\tIn honour of an unknown warrior, who\n " +
+                        "\t\tplaced the stone here and never revealed its identity.");
                                
-        INTERACTIONS.put(Characters.MYTHICAL_STONE.getCharacter(), "\nVoice: \n\n" +
-                        "\t\tYou found the mythical stone. Go and place it in the church.");                     
+        INTERACTIONS.put(Characters.MYTHICAL_STONE.getCharacter(), "\n\t\tVoice: \n\n" +
+                        "\t\tYou found the mythical stone. Go and place it in the church.");     
+                        
+                        
+        INTERACTIONS.put(Characters.DEATH.getCharacter(), "\n\t\tVoice: \n\n" +
+                        "\t\tYou will not go any further than this, warrior.\n");                
     }
     
     /**
