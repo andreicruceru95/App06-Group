@@ -34,12 +34,12 @@ public class Display
 
         for (String s : part)
         {
-            System.out.println(Commands.PRESS_ANY.getCommand());
-            READER.getAny();
-
             System.out.println(CLEAR);
 
             System.out.println(s);
+            
+            System.out.println(Commands.PRESS_ANY.getCommand());
+            READER.getAny();
         }
         
     }
