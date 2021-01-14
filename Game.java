@@ -104,7 +104,6 @@ public class Game
     public static final int LEVEL_60 = 60;
     public static final int LEVEL_70 = 70;
     
-    
     public static final ArrayList <Monster> MONSTERS = new ArrayList<>();
     public static final ArrayList <String> MISK = new ArrayList<>(); 
     public static final Interactions INTERACTION = new Interactions();
@@ -117,7 +116,6 @@ public class Game
     public static final Random RAND = new Random();
     public static final Input READER = new Input();
     
-    // private Actor monster;
     private Player player;
     private Item weapon;
     private Item armour;
@@ -147,8 +145,6 @@ public class Game
     private boolean firstDeathDescription =  false;
     private boolean stats = false;
     private boolean items = false;
-    private boolean ringExists = false;
-    private boolean braceletExists = false;
     private boolean biologistInteraction = false;
     private boolean oldLadyInteraction = false;
     private boolean jewelerInteraction = false;
@@ -186,7 +182,9 @@ public class Game
         armour = player.getArmour();
         potion = player.getPotion();
         amulet = player.getAmulet();
-        
+        ring = player.getRing();
+        bracelet = player.getBracelet();
+                
         DISPLAY.runStory(STORY.getPartTwo(playerName, -1));
                         
         MISK.add(Characters.FLOWER_RED.getCharacter());
@@ -220,9 +218,10 @@ public class Game
         MONSTERS.add(new Monster (Characters.NINE_TAILS.getCharacter(),LEVEL_49, Characters.TOWER_KEY.getCharacter()));
         MONSTERS.add(new Monster (Characters.DEATH.getCharacter(),LEVEL_60, Characters.CHEST_KEY.getCharacter()));
         MONSTERS.add(new Monster (Characters.RED_DRAGON.getCharacter(),70, Characters.MYTHICAL_STONE.getCharacter()));
-         
+        
+        BLACKSMITH.addItems(weapon, armour, potion, amulet, ring, bracelet);
         run();
-                
+                  
     }
        
     /**
@@ -557,10 +556,7 @@ public class Game
             getGold();
               
         }
-        
-        createRing();
-        createBracelet();
-            
+                   
         if(items)
         {
             ((Weapon) weapon).print();
@@ -568,10 +564,10 @@ public class Game
             ((Potion) potion).print();
             ((Amulet) amulet).print();
             
-            if(ringExists)
+            if(ring.checkVisibility())
                 ((Ring) ring).print();
             
-            if(braceletExists)
+            if(bracelet.checkVisibility())
                 ((Bracelet) bracelet).print();
             
             if(player.stoneExists())
@@ -580,37 +576,7 @@ public class Game
         }   
         
     }
-    
-    /**
-     * Create the player's ring.
-     */
-    private void createRing()
-    {
         
-        if(player.ringExists())
-        {
-            ring = player.getRing();
-            
-            ringExists = true;
-        }
-        
-    }
-    
-    /**
-     * Create the player's bracelet.
-     */
-    private void createBracelet()
-    {
-        
-        if(((Player) player).braceletExists())   
-        {
-            bracelet = player.getBracelet();
-            
-            braceletExists = true;
-        }  
-        
-    }
-    
     /**
      * print the player's gold amount.
      */
@@ -1130,7 +1096,7 @@ public class Game
                 
                 player.setQuestInactive("oldlady");
                 
-                player.setRing();
+                ring.setVisibility();
             }
             else
                 pressAny();
@@ -1147,7 +1113,7 @@ public class Game
                 
                 player.setQuestInactive("jeweler");
                 
-                player.setBracelet();
+                bracelet.setVisibility();
             }
             else
                 pressAny();
@@ -1622,9 +1588,9 @@ public class Game
             
         while(!finished)
         {
-            BLACKSMITH.createList(ringExists, braceletExists,player.getGold());
+            BLACKSMITH.createList(player.getGold());
             
-            message = "\n\n\t\tWhat can I do for you?\n\n";
+            message = "\n\n\t\tWhat can I do for you?\n\n"; 
             isDisplayed = true;
                 
             BLACKSMITH.openBlacksmithShop();
@@ -1642,15 +1608,15 @@ public class Game
                     BLACKSMITH.setMessage(1);
                 
                     if(BLACKSMITH.enchance(weapon, player.getGold()))
-                        player.pay(BLACKSMITH.getCost(weapon));
+                        player.pay(weapon.getGoldRequired());
                         
                      break;   
                     
                 case ENCHANCE_ARMOUR: 
-                    BLACKSMITH.setMessage(1);
+                    BLACKSMITH.setMessage(1); 
                 
                     if(BLACKSMITH.enchance(armour,player.getGold()))
-                        player.pay(BLACKSMITH.getCost(armour));
+                        player.pay(armour.getGoldRequired());
                     
                     break;   
                     
@@ -1658,7 +1624,7 @@ public class Game
                     BLACKSMITH.setMessage(1);
                     
                     if(BLACKSMITH.enchance(potion, player.getGold()))
-                        player.pay(BLACKSMITH.getCost(potion));
+                        player.pay(potion.getGoldRequired());
                         
                     break;
                  
@@ -1666,7 +1632,7 @@ public class Game
                     BLACKSMITH.setMessage(1);
                     
                     if(BLACKSMITH.enchance(amulet, player.getGold()))
-                        player.pay(BLACKSMITH.getCost(amulet));
+                        player.pay(amulet.getGoldRequired());
                         
                     break;
                     
@@ -1674,7 +1640,7 @@ public class Game
                     BLACKSMITH.setMessage(1);
                     
                     if(BLACKSMITH.enchance(ring, player.getGold()))
-                        player.pay(BLACKSMITH.getCost(ring));
+                        player.pay(ring.getGoldRequired());
                         
                     break;    
                  
@@ -1682,7 +1648,7 @@ public class Game
                     BLACKSMITH.setMessage(1);
                     
                     if(BLACKSMITH.enchance(bracelet, player.getGold()))
-                        player.pay(BLACKSMITH.getCost(bracelet));
+                        player.pay(bracelet.getGoldRequired());
                         
                     break;
                     
