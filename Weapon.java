@@ -11,9 +11,9 @@ public class Weapon extends Item
     /**
      * Initialising the weapon.
      */
-    public Weapon(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost)
+    public Weapon(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost, int multiplier, boolean exists)
     {
-        super(name, baseStats, enchantLevel, bonusPerLevel, cost);
+        super(name, baseStats, enchantLevel, bonusPerLevel, cost, multiplier, exists);
         
     }
     
