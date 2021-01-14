@@ -11,9 +11,9 @@ public class Bracelet extends Item
     /**
      *Initialise Bracelet. 
      */
-    public Bracelet(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost)
+    public Bracelet(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost, int multiplier, boolean exists)
     {
-        super(name, baseStats, enchantLevel, bonusPerLevel, cost);
+        super(name, baseStats, enchantLevel, bonusPerLevel, cost, multiplier, exists);
     }
     
     /**
