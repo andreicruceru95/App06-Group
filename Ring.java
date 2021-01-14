@@ -11,9 +11,9 @@ public class Ring extends Item
     /**
      * Initialise Ring.
      */
-    public Ring(String name, int baseStats, int enchantLevel, int bonusPerLevel)
+    public Ring(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost)
     {
-        super(name, baseStats, enchantLevel, bonusPerLevel);
+        super(name, baseStats, enchantLevel, bonusPerLevel, cost);
     }
     
     /**
