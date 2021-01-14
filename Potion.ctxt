@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Potion
 comment0.text=\r\n\ Health\ Potion.\r\n\ Restores\ player's\ Health\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
-comment1.params=name\ baseStats\ enchantLevel\ bonusPerLevel
-comment1.target=Potion(java.lang.String,\ int,\ int,\ int)
+comment1.params=name\ baseStats\ enchantLevel\ bonusPerLevel\ cost\ multiplier\ exists
+comment1.target=Potion(java.lang.String,\ int,\ int,\ int,\ int,\ int,\ boolean)
 comment1.text=\r\n\ Initialise\ the\ potion.\r\n
 comment2.params=
 comment2.target=void\ print()
