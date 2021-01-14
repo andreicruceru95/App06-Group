@@ -15,9 +15,9 @@ public class Potion extends Item
     /**
      * Initialise the potion.
      */
-    public Potion(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost)
+    public Potion(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost,int multiplier, boolean exists)
     {
-        super(name, baseStats, enchantLevel, bonusPerLevel, cost);
+        super(name, baseStats, enchantLevel, bonusPerLevel, cost, multiplier, exists);
     }
     
     /**
