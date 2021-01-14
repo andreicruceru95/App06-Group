@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=Item
 comment0.text=\r\n\ The\ Player\ item.\r\n\r\n\ @authors\ Andrei\ Cruceru\r\n\ @version\ 1.0.12\r\n
-comment1.params=name\ baseStats\ enchantLevel\ bonusPerLevel
-comment1.target=Item(java.lang.String,\ int,\ int,\ int)
-comment1.text=\r\n\ Initialising\ the\ item.\r\n
+comment1.params=name\ baseStats\ enchantLevel\ bonusPerLevel\ cost\ multiplier\ exists
+comment1.target=Item(java.lang.String,\ int,\ int,\ int,\ int,\ int,\ boolean)
+comment1.text=\r\n\ Initialising\ the\ item.\r\n\ @param\ name\ -\ item\ name.\r\n\ @param\ baseStats\ \=\ the\ basic\ status\ of\ an\ item.\r\n\ @param\ enchantLevel\ \=\ the\ enchantment\ level\ of\ the\ item\ at\ creation.\ \r\n\ Usefull\ in\ the\ future\ where\ the\ player\ can\ gain\ random\ items\ each\ with\ a\ random\ enchantment\ level.\r\n\ @param\ bonusPerLevel\ \=\ the\ rate\ of\ status\ upgrade\ for\ each\ level.\r\n\ @param\ cost\ \=\ the\ cost\ of\ enchantment\ for\ each\ level.\r\n\ @param\ multiplier\ \=\ the\ rate\ of\ cost\ changing.\r\n\ @param\ exists\ \=\ visibility\ of\ the\ item(obtained/not\ obtained).\r\n
 comment2.params=
 comment2.target=int\ getStats()
 comment2.text=\r\n\ @return\ the\ enchantment\ stats.\r\n
@@ -17,6 +17,14 @@ comment5.params=
 comment5.target=int\ getGoldRequired()
 comment5.text=\r\n\ @return\ the\ amount\ of\ gold\ required.\r\n
 comment6.params=
-comment6.target=java.lang.String\ getName()
-comment6.text=\r\n\ @return\ an\ item's\ name.\r\n
-numComments=7
+comment6.target=int\ getNextStats()
+comment6.text=\r\n\ get\ next\ stats\r\n
+comment7.params=
+comment7.target=java.lang.String\ getName()
+comment7.text=\r\n\ @return\ an\ item's\ name.\r\n
+comment8.params=
+comment8.target=boolean\ checkVisibility()
+comment8.text=\r\n\ Check\ if\ item\ exists\r\n
+comment9.params=
+comment9.target=void\ setVisibility()
+numComments=10
