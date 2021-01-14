@@ -9,12 +9,12 @@ import java.util.*;
 public class Player extends Actor
 {
     private static final VisualField VISUAL_FIELD = new VisualField();
-    public static final Item SWORD = new Weapon("Steel Sword", 20000, 1, 12);
-    public static final Item ARMOUR = new Armour("Steel Armour", 10000, 1, 8);
-    public static final Item POTION = new Potion("HP Potion", 20000, 1, 200);
-    public static final Item AMULET = new Amulet("Hellen's Gift", 50000, 1, 1000);
-    public static final Item RING = new Ring("Potus's Ring", 10, 1, 10);
-    public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,10);
+    public static final Item SWORD = new Weapon("Steel Sword", 200, 1, 100, 15);
+    public static final Item ARMOUR = new Armour("Steel Armour", 100, 1, 8, 15);
+    public static final Item POTION = new Potion("HP Potion", 200, 1, 200, 15);
+    public static final Item AMULET = new Amulet("Hellen's Gift", 500, 1, 1000, 30);
+    public static final Item RING = new Ring("Potus's Ring", 10, 1, 1, 30);
+    public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,1, 30);
     public static final Inventory INVENTORY = new Inventory();
     public static final Display DISPLAY = new Display();
     public static final String[] QUESTS = new String[6];
@@ -59,21 +59,7 @@ public class Player extends Actor
             foxIsDeath = true;
             
     }
-    
-    /**
-     * @return the monster status
-     */
-    public boolean getMonsterStatus(String monsterName)
-    {
-        if(monsterName.equals("fox"))
-            return foxIsDeath;
-            
-        else if(monsterName.equals("queen"))
-            return queenIsDeath;
-        else
-            return false;
-    }
-    
+        
     /**
      * Add an amount of objects to inventory.
      */
@@ -117,9 +103,9 @@ public class Player extends Actor
     /**
      * decrease monster killed amount.
      */
-    public void decreaseKilled(int amount)
+    public void decreaseKilled()
     {
-        monsterKilled -= amount;
+        monsterKilled = 0;
     }
     
     /**
