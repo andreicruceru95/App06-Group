@@ -17,15 +17,27 @@ public class Blacksmith
     public static final String AMULET = "Hellen's Gift";
     public static final String RING = "Potus's Ring";
     public static final String BRACELET = "Spirit Trinket";
-
-    private int weaponCost = 5;
-    private int armourCost = 5;
-    private int amuletCost = 5;
-    private int ringCost = 15;
-    private int braceletCost = 15;
-    private int potionCost = 100;
+    public Item weapon;
+    public Item armour;
+    public Item potion;
+    public Item amulet;
+    public Item ring;
+    public Item bracelet;
     private boolean message = false;
     private boolean success = false;
+    
+    /**
+     * add items
+     */
+    public void addItems(Item weapon, Item armour, Item potion, Item amulet, Item ring, Item bracelet)
+    {
+        this.weapon = weapon;
+        this.armour = armour;
+        this.potion = potion;
+        this.amulet = amulet;
+        this.ring = ring;
+        this.bracelet = bracelet;
+    }
     
     /**
      * Enhance an item.
@@ -39,75 +51,62 @@ public class Blacksmith
         switch(name)
         {
             case SWORD:
-                if(checkGold(gold, weaponCost))
+                if(checkGold(gold, weapon.getGoldRequired()))
                 {
                     item.enchance();
                     
                     System.err.println(SUCCESS + item.getName());
-                    
-                    weaponCost += itemMultiplier;
-                    
+                                        
                     return true;
                 }
                 
             case ARMOUR:
-                if(checkGold(gold, armourCost))
+                if(checkGold(gold, armour.getGoldRequired()))
                 {
                     item.enchance();
                     
                     System.err.println(SUCCESS + item.getName());
-                    
-                    armourCost += itemMultiplier;
                     
                     return true;
                 }
                 
             case POTION:
-                if(checkGold(gold, potionCost))
+                if(checkGold(gold, potion.getGoldRequired()))
                 {
                     item.enchance();
                     
                     System.err.println(SUCCESS + item.getName());
     
-                    int potionMultiplier = 50;
-                    potionCost += potionMultiplier;
-                    
                     return true;
                 }
                 
             case AMULET:
-                if(checkGold(gold, amuletCost))
+                if(checkGold(gold, amulet.getGoldRequired()))
                 {
                     item.enchance();
                     
                     System.err.println(SUCCESS + item.getName());
-                    
-                    amuletCost += itemMultiplier;
                     
                     return true;
                 }
                 
             
             case RING:
-                if(checkGold(gold, ringCost))
+                if(checkGold(gold, ring.getGoldRequired()))
                 {
                     item.enchance();
                     
                     System.err.println(SUCCESS + item.getName());
-                    
-                    ringCost += specialMultiplier;
                     
                     return true;
                 }
                 
             case BRACELET:
-                if(checkGold(gold, braceletCost))
+                if(checkGold(gold, bracelet.getGoldRequired()))
                 {
                     item.enchance();
                     
                     System.err.println(SUCCESS + item.getName());
-                    
-                    braceletCost += specialMultiplier;
                     
                     return true;
                 }
@@ -128,18 +127,24 @@ public class Blacksmith
     /**
      * Create list of options
      */
-    public void createList(boolean ringExists, boolean braceletExists, int goldAmount)
+    public void createList(int goldAmount)
     {
-        BLACKSMITH_MENU[0] = Commands.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weaponCost   + " Gold";
-        BLACKSMITH_MENU[1] = Commands.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armourCost   + " Gold";
-        BLACKSMITH_MENU[2] = Commands.ENCHANCE_POTION.getCommand()   + "\t\t\t" + potionCost   + " Gold";
-        BLACKSMITH_MENU[3] = Commands.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amuletCost   + "Gold";
+        BLACKSMITH_MENU[0] = Commands.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weapon.getGoldRequired()   + " Gold" +
+                             "\n\t\tAttack : +" + weapon.getStats() + "\t=> +" + weapon.getNextStats() + "\n";
+        BLACKSMITH_MENU[1] = Commands.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armour.getGoldRequired()   + " Gold" +
+                            "\n\t\tDeffence: +" + armour.getStats() + "\t=> +" + armour.getNextStats() + "\n";
+        BLACKSMITH_MENU[2] = Commands.ENCHANCE_POTION.getCommand()   + "\t\t\t" + potion.getGoldRequired()   + " Gold" +
+                            "\n\t\tRecover: +" + potion.getStats() + "\t=> +" + potion.getNextStats() + "\n";
+        BLACKSMITH_MENU[3] = Commands.ENCHANCE_AMULET.getCommand()   + "\t\t\t" + amulet.getGoldRequired()   + "Gold" + 
+                            "\n\t\tHealth: +" + amulet.getStats() + "\t=> +" + amulet.getNextStats() + "\n";
         
-        if(ringExists)
-            BLACKSMITH_MENU[4] = Commands.ENCHANCE_RING.getCommand()     + "\t\t\t" + ringCost     + "Gold";
+        if(ring.checkVisibility())
+            BLACKSMITH_MENU[4] = Commands.ENCHANCE_RING.getCommand()     + "\t\t\t" + ring.getGoldRequired() + "Gold" +
+                                "\n\t\tDouble Hit:+" + ring.getStats() + "%" + "\t=> +" + ring.getNextStats() + "%\n";
              
-        if(braceletExists)
-            BLACKSMITH_MENU[5] = Commands.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold";
+        if(bracelet.checkVisibility())
+            BLACKSMITH_MENU[5] = Commands.ENCHANCE_BRACELET.getCommand() + "\t\t"   + bracelet.getGoldRequired() + "Gold" +
+                                "\n\t\tDodge:+" + bracelet.getStats() + "%" + "\t=> +" + bracelet.getNextStats() + "%\n";
             
         BLACKSMITH_MENU[6] = "\n\n" + Commands.QUIT.getCommand();
         BLACKSMITH_MENU[7] = "\n\t\tYour gold amount: " + goldAmount;
@@ -182,7 +187,6 @@ public class Blacksmith
         
     }
     
-    
     /**
      * Display the blacksmith options.
      */
@@ -192,35 +196,4 @@ public class Blacksmith
         
     }
     
-    /**
-     * @return the cost of enchantment.
-     */
-    public int getCost(Item item)
-    {
-        String name = item.getName();
-        
-        switch (name)
-        {
-            case SWORD:
-                return weaponCost;
-                
-            case ARMOUR:
-                return armourCost;
-                
-            case POTION:
-                return potionCost;
-                
-            case AMULET:
-                return amuletCost;
-            
-            case RING:
-                return ringCost;
-                
-            case BRACELET:
-                return braceletCost;
-                
-            default:
-                return 0;
-        }
-    }
 }
