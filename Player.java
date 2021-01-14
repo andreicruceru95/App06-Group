@@ -9,18 +9,18 @@ import java.util.*;
 public class Player extends Actor
 {
     private static final VisualField VISUAL_FIELD = new VisualField();
-    public static final Item SWORD = new Weapon("Steel Sword", 200, 1, 100, 15);
-    public static final Item ARMOUR = new Armour("Steel Armour", 100, 1, 8, 15);
-    public static final Item POTION = new Potion("HP Potion", 200, 1, 200, 15);
-    public static final Item AMULET = new Amulet("Hellen's Gift", 500, 1, 1000, 30);
-    public static final Item RING = new Ring("Potus's Ring", 10, 1, 1, 30);
-    public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,1, 30);
+    public static final Item SWORD = new Weapon("Steel Sword", 200, 1, 100, 15, 10, true);
+    public static final Item ARMOUR = new Armour("Steel Armour", 100, 1, 50, 15, 10, true);
+    public static final Item POTION = new Potion("HP Potion", 200, 1, 200, 15, 10, true);
+    public static final Item AMULET = new Amulet("Hellen's Gift", 500, 1, 1000, 30, 20, true);
+    public static final Item RING = new Ring("Potus's Ring", 10, 1, 1, 30, 20, false);
+    public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,1, 30, 20, false);
     public static final Inventory INVENTORY = new Inventory();
     public static final Display DISPLAY = new Display();
     public static final String[] QUESTS = new String[6];
     
-    private boolean ring = false;
-    private boolean bracelet = false;
+    // private boolean ring = false;
+    // private boolean bracelet = false;
     private boolean stone = false;
     private boolean oldLadyQuest = false;
     private boolean jewelerQuest = false;
@@ -252,10 +252,10 @@ public class Player extends Actor
         shield = initialShield + ARMOUR.getStats();
         maxHealthPoints = initialMaxHealthPoints + AMULET.getStats();
         currentHealthPoints += AMULET.getStats();
-        if(ring)
+        if(RING.checkVisibility())
             doubleHitChance = initialDoubleHitChance + RING.getStats();
             
-        if(bracelet)
+        if(BRACELET.checkVisibility())
             evasionChance = initialEvasionChance + BRACELET.getStats();
             
         check();
@@ -282,16 +282,7 @@ public class Player extends Actor
         return SWORD;
         
     }
-    
-    /**
-     * set ring.
-     */
-    public void setRing()
-    {
-        ring = true;
         
-    }
-    
     /**
      * check if the stone exists.
      */
@@ -309,34 +300,7 @@ public class Player extends Actor
         stone = true;
         
     }
-    
-    /**
-     * set bracelet.
-     */
-    public void setBracelet()
-    {
-        bracelet = true;
-        
-    }
-    
-    /**
-     * check if the bracelet exists.
-     */
-    public boolean braceletExists()
-    {
-        return bracelet;
-        
-    }
-    
-    /**
-     * Check if the ring exists.
-     */
-    public boolean ringExists()
-    {
-        return ring;
-        
-    }
-    
+     
     /**
      * @return Armour.
      */
