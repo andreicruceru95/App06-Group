@@ -10,7 +10,7 @@ public class Blacksmith
 {
     public static final String SUCCESS = "\t\tYou have successfully enchanted: ";
     public static final Display DISPLAY = new Display();
-    public static final String[] BLACKSMITH_MENU = new String[8];
+    public static final String[] BLACKSMITH_MENU = new String[9];
     public static final String SWORD = "Steel Sword";
     public static final String ARMOUR ="Steel Armour";
     public static final String POTION = "HP Potion";
@@ -128,7 +128,7 @@ public class Blacksmith
     /**
      * Create list of options
      */
-    public void createList(boolean ringExists, boolean braceletExists)
+    public void createList(boolean ringExists, boolean braceletExists, int goldAmount)
     {
         BLACKSMITH_MENU[0] = Commands.ENCHANCE_WEAPON.getCommand()   + "\t\t\t" + weaponCost   + " Gold";
         BLACKSMITH_MENU[1] = Commands.ENCHANCE_ARMOUR.getCommand()   + "\t\t\t" + armourCost   + " Gold";
@@ -142,24 +142,24 @@ public class Blacksmith
             BLACKSMITH_MENU[5] = Commands.ENCHANCE_BRACELET.getCommand() + "\t\t"   + braceletCost + "Gold";
             
         BLACKSMITH_MENU[6] = "\n\n" + Commands.QUIT.getCommand();
-        
+        BLACKSMITH_MENU[7] = "\n\t\tYour gold amount: " + goldAmount;
         if(message)
         {
-            BLACKSMITH_MENU[3] = "\n\n\t\tNot an option!";
+            BLACKSMITH_MENU[8] = "\n\n\t\tNot an option!";
             
             message = false;
         }
         else 
-            BLACKSMITH_MENU[3] = null;
+            BLACKSMITH_MENU[8] = null;
             
         if(success)
         {
-            BLACKSMITH_MENU[4] = "\n\n\t\tSuccess!";
+            BLACKSMITH_MENU[8] = "\n\n\t\tSuccess!";
             
             success = false;
         }            
         else
-            BLACKSMITH_MENU[4] = null;
+            BLACKSMITH_MENU[8] = null;
     }
         
     /**
