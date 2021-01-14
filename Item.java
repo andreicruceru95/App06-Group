@@ -12,7 +12,7 @@ public class Item
     public static final int EVO_LEVEL_3 = 30;
     public static final int EVO_LEVEL_4 = 39;
     public static final String EVO_NAME_1 = "Basic";
-    public static final String EVO_NAME_2 = "Advanced";
+    public static final String EVO_NAME_2 = "Advanced"; 
     public static final String EVO_NAME_3 = "Epic";
     public static final String EVO_NAME_4 = "Legendary";
     
@@ -22,17 +22,18 @@ public class Item
     protected int displayLevel;
     protected int enchantLevel;
     protected int baseStats;
-    protected int enchantStats;   
-    protected int goldMultiplier = 1;   
-    protected int goldRequired = 10 * goldMultiplier; 
+    protected int enchantStats;     
+    protected int cost = 0; 
+    protected int multiplier = 0;
    
     /**
      * Initialising the item.
      */
-    public Item(String name, int baseStats, int enchantLevel, int bonusPerLevel)
+    public Item(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost, int multiplier)
     {
         this.bonusPerLevel = bonusPerLevel;
-        
+        this.cost = cost;
+        this.multiplier = multiplier;
         this.name = name;
         displayName = EVO_NAME_1 + " " + name;
         
@@ -66,7 +67,6 @@ public class Item
             
             enchantStats = (baseStats + ( enchantLevel * bonusPerLevel ));
             
-            goldMultiplier ++;
             
             update();
         }   
@@ -112,7 +112,7 @@ public class Item
      */
     public int getGoldRequired()
     {
-        return goldRequired;
+        return cost;
     }
     
     /**
