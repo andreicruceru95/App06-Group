@@ -60,6 +60,10 @@ public enum Characters
     BARREL (" Ô "),
     OPENED_BARREL(" Ø "),
     BAG (" Û "),
+    ANVIL(" ⇧ "), 
+    RED_DRAGON_B(" ! "),
+    GOLD_2("$$$"),
+    LUCK(" ☘ "),
     
     POISON_SPIDER(" ④ "),
     POLAR_BEAR(" ⑦ "),
