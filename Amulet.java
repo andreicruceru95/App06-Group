@@ -11,9 +11,9 @@ public class Amulet extends Item
     /**
      * Initialise Amulet.
      */
-    public Amulet(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost)
+    public Amulet(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost, int multiplier, boolean exists)
     {
-        super(name, baseStats, enchantLevel, bonusPerLevel,cost);
+        super(name, baseStats, enchantLevel, bonusPerLevel,cost, multiplier, exists);
     }
     
     /**
