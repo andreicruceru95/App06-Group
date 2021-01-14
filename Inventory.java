@@ -28,7 +28,7 @@ public class Inventory
         INVENTORY.put(Characters.FOX_KEY.getCharacter(), 2);
         INVENTORY.put(Characters.CHEST_KEY.getCharacter(), 12);
         INVENTORY.put(Characters.REMAINS.getCharacter(), 12);
-        INVENTORY.put(Characters.MYTHICAL_STONE.getCharacter(), 2);
+        INVENTORY.put(Characters.MYTHICAL_STONE.getCharacter(), 1);
         
     }
     
