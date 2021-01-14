@@ -11,9 +11,9 @@ public class Armour extends Item
     /**
      * Initialise the armour.
      */
-    public Armour(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost)
+    public Armour(String name, int baseStats, int enchantLevel, int bonusPerLevel, int cost, int multiplier, boolean exists)
     {
-        super(name, baseStats, enchantLevel, bonusPerLevel, cost);
+        super(name, baseStats, enchantLevel, bonusPerLevel, cost, multiplier, exists);
         
     }
     
