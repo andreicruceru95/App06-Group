@@ -19,6 +19,8 @@ public class World
     public static final int FULL_L = 34;
     public static final int FULL_H = 46;
     public static final String SQUARE = "   ";
+    public static final Random RAND = new Random();
+    public static final ArrayList<String> MONSTERS = new ArrayList<>();
     
     private Map currentMap;
     private Map town;
@@ -37,44 +39,35 @@ public class World
     private String farmer;
     private String drunkPerson;
     private String mythicalStone;
-           
+    
     private int row = 3;
     private int col = 3;
     private int towerLevel = 1;
+    private int amount = 0;
+    
     /**
      * initialising the World.
      * create and initialise the maps.
      */
     public World()
     {
-        town = new Map("Town");
-        town.createMap(Characters.WALL.getCharacter(),MAP_EDGE);
-        addObjectsToTown();
-        
-        dessert = new Map("Dessert");
-        dessert.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
-        addObjectsToDessert();
-        
-        spiderCave = new Map("SpiderCave");
-        spiderCave.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
-        addObjectsToSpiderCave();
+        MONSTERS.add(Characters.WHITE_TIGER.getCharacter());
+        MONSTERS.add(Characters.POISON_SPIDER.getCharacter());
+        MONSTERS.add(Characters.DEMON.getCharacter());
+        MONSTERS.add(Characters.CURSED_VAMPIRE.getCharacter());
+        MONSTERS.add(Characters.WITCH.getCharacter());
+        MONSTERS.add(Characters.DEATH.getCharacter());
+        MONSTERS.add(Characters.RED_DRAGON.getCharacter());
         
         fortress = new Map("Fortress");
         fortress.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
         addObjectsToFortress();
-        
+        town = new Map("Town");        
+        dessert = new Map("Dessert");        
+        spiderCave = new Map("SpiderCave");   
         forest = new Map("Forest");
-        forest.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-        addObjectsToForest();
-        
         tower = new Map("Tower");
-        tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-        addObjectToTower(Characters.WHITE_TIGER.getCharacter());
-        
         mountain = new Map("Mountain");
-        mountain.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-        addObjectsToMountain();
-        
         userHelp = new Map("Location");
         userHelp.createMap(Characters.WALL.getCharacter(),MAP_EDGE);
         
@@ -105,31 +98,50 @@ public class World
         switch (name)
         {
             case TOWN:
+                town.createMap(Characters.WALL.getCharacter(),MAP_EDGE);
+                addObjectsToTown();
                 currentMap = town;
+                clearMap();
                 break;
                 
             case DESSERT:
+                dessert.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
+                addObjectsToDessert();
                 currentMap = dessert;
+                clearMap();
                 break;  
                 
             case SPIDER_CAVE:
                 currentMap = spiderCave;
+                spiderCave.createMap(Characters.ROCK.getCharacter(),MAP_EDGE);
+                addObjectsToSpiderCave();
+                clearMap();
                 break;
                 
             case FORTRESS:
                 currentMap = fortress;
+                clearMap();
                 break;
                 
             case FOREST:
+                forest.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectsToForest();
                 currentMap = forest;
+                clearMap();
                 break;
                 
             case TOWER:
+                tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectToTower(Characters.WHITE_TIGER.getCharacter(), 1);
                 currentMap = tower;
+                clearMap();
                 break;
                 
             case MOUNTAIN:
+                mountain.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
+                addObjectsToMountain();
                 currentMap = mountain;
+                clearMap();
                 break;
                 
             default:
@@ -143,34 +155,32 @@ public class World
      */
     public void increaseTowerLevel()
     {
-        int level = getTowerLevel();
-        
-        switch (level)
+        switch (towerLevel)
         {
             case 1:
                 tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-                addObjectToTower(Characters.POISON_SPIDER.getCharacter());
+                addObjectToTower(Characters.POISON_SPIDER.getCharacter(), 1);
                 towerLevel++;
                 
                 break;
                 
             case 2:
                 tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-                addObjectToTower(Characters.DEMON.getCharacter());
+                addObjectToTower(Characters.DEMON.getCharacter(), 1);
                 towerLevel++;
                 
                 break;
                 
             case 3:
                 tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-                addObjectToTower(Characters.CURSED_VAMPIRE.getCharacter());
+                addObjectToTower(Characters.CURSED_VAMPIRE.getCharacter(), 1);
                 towerLevel++;
                 
                 break;
                 
             case 4:
                 tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-                addObjectToTower(Characters.WITCH.getCharacter());
+                addObjectToTower(Characters.WITCH.getCharacter(), 1);
                 currentMap.addObjects(Pointers.P16.getValue(),Pointers.P17.getValue(), 
                                            Pointers.P20.getValue(),Pointers.P21.getValue(), Characters.DEATH.getCharacter(), 1);
                 
@@ -180,16 +190,23 @@ public class World
                 
             case 5:
                 tower.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
-                currentMap.addObjects(Pointers.P16.getValue(),Pointers.P17.getValue(), 
-                                           Pointers.P20.getValue(),Pointers.P21.getValue(), Characters.RED_DRAGON.getCharacter(), 1);
-                
+                addObjectToTower(SQUARE, 0);                
                 towerLevel++;
                 
                 break;
                 
             default:
-                currentMap = spiderCave;
+                towerLevel = 1;
+                currentMap = town;
         }
+    }
+    
+    /**
+     * open the room to the mythical stone.
+     */
+    public void openRoom()
+    {
+        tower.setOne(Pointers.P25.getValue(), Pointers.P17.getValue(), SQUARE);
     }
     
     /**
@@ -197,6 +214,16 @@ public class World
      */
     private void addObjectsToTown()
     {
+        for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
+        {
+            
+            if(RAND.nextBoolean())
+            {
+                town.setOne(i, MAP_EDGE, Characters.BARREL.getCharacter());
+                town.setOne(i, 9, Characters.BARREL.getCharacter());
+            }
+               
+        }
         //add wall
         for (int i = 0; i < FULL_H; i++)
         {
@@ -224,7 +251,8 @@ public class World
                 
             }
         }
-        //add instances in town
+        
+        //add interactive characters in town
         town.setOne(Pointers.P10.getValue(), Pointers.P4.getValue(), Characters.SHOP.getCharacter());
         town.setOne(Pointers.P13.getValue(), Pointers.P9.getValue(), Characters.BLACKSMITH.getCharacter());
                 
@@ -244,21 +272,26 @@ public class World
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.BERA.getCharacter(), 1);
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.TIGRIS.getCharacter(), 1);
         town.addObjects(Pointers.P13.getValue() + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.APE_KING.getCharacter(), 1);
-        town.addBarrels(MAP_EDGE, 10, Characters.WALL.getCharacter(), Characters.BARREL.getCharacter());
-        town.addBarrels(MAP_EDGE, 10, Characters.WALL.getCharacter(), Characters.BAG.getCharacter());
+        
         
         //add trees to the right of the map
         for(int i = MAP_EDGE; i < FULL_H - MAP_EDGE; i++)
         {
+            
             for (int j = FULL_L - MAP_EDGE; j < FULL_L; j++)
             {
                 town.setOne(i ,j , Characters.TREE.getCharacter());
             }
+            
         }
-        
+        town.addAnvil(Pointers.P42.getValue(), Pointers.P14.getValue());
+        town.addAnvil(Pointers.P25.getValue(), Pointers.P26.getValue());
         town.setOne(Pointers.P4.getValue(), Pointers.P25.getValue(), Characters.TELEPORT.getCharacter());
     }
-    
+        
+    /**
+     * add objects to the forest map
+     */
     private void addObjectsToFortress()
     {
         //left wall
@@ -369,6 +402,8 @@ public class World
             fortress.setOne(Pointers.P22.getValue(),j, Characters.WALL.getCharacter());
             fortress.setOne(Pointers.P26.getValue(),j, Characters.WALL.getCharacter());
         }
+        fortress.addSmashable(MAP_EDGE, FULL_H - MAP_EDGE, MAP_EDGE, FULL_L - MAP_EDGE, Characters.BARREL.getCharacter());
+        fortress.addSmashable(MAP_EDGE, FULL_H - MAP_EDGE, MAP_EDGE, FULL_L - MAP_EDGE, Characters.BAG.getCharacter());
         
         fortress.setOne(Pointers.P24.getValue(),Pointers.P32.getValue(), Characters.TELEPORT.getCharacter());
         fortress.setOne(Pointers.P36.getValue(),Pointers.P12.getValue(), Characters.SHOP.getCharacter());
@@ -377,6 +412,7 @@ public class World
         fortress.setOne(Pointers.P36.getValue(),Pointers.P24.getValue(), Characters.POTION.getCharacter());
         fortress.setOne(Pointers.P40.getValue(),Pointers.P25.getValue(), Characters.POTION.getCharacter());
         fortress.setOne(Pointers.P40.getValue(),Pointers.P25.getValue(), Characters.POTION.getCharacter());
+        fortress.setOne(Pointers.P14.getValue(),Pointers.P25.getValue(), Characters.LUCK.getCharacter());
         
         fortress.setOne(Pointers.P18.getValue(),Pointers.P11.getValue(), Characters.PERSON.getCharacter());
         fortress.setOne(Pointers.P13.getValue(),Pointers.P15.getValue(), Characters.PERSON.getCharacter());
@@ -386,9 +422,7 @@ public class World
         fortress.setOne(Pointers.P21.getValue(),Pointers.P23.getValue(), Characters.PERSON.getCharacter());
         fortress.setOne(Pointers.P18.getValue(),Pointers.P11.getValue(), Characters.PERSON.getCharacter());
         fortress.setOne(Pointers.P24.getValue(),Pointers.P25.getValue(), Characters.PERSON.getCharacter());        
-        fortress.setOne(Pointers.P30.getValue(),Pointers.P19.getValue(), Characters.PERSON.getCharacter());
-        fortress.addBarrels(MAP_EDGE, 50, Characters.WALL.getCharacter(), Characters.BARREL.getCharacter());
-        fortress.addBarrels(MAP_EDGE, 50, Characters.WALL.getCharacter(), Characters.BAG.getCharacter());
+        fortress.setOne(Pointers.P30.getValue(),Pointers.P19.getValue(), Characters.PERSON.getCharacter()); 
         
         setBiologist(Characters.BIOLOGIST.getCharacter());
         setOldLady(Characters.PERSON_2.getCharacter());
@@ -463,6 +497,11 @@ public class World
      */
     private void addObjectsToForest()
     {
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.BLACK_BEAR.getCharacter(), 30);
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.WHITE_TIGER.getCharacter(), 30);
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.APE_THROWER.getCharacter(), 30);
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.POISON_SPIDER.getCharacter(), 30);
+        
         for(int i = Pointers.P14.getValue(); i < Pointers.P26.getValue(); i++)
         {
             forest.setOne(i, Pointers.P8.getValue(), Characters.TREE.getCharacter());
@@ -611,16 +650,15 @@ public class World
         forest.setOne(Pointers.P43.getValue(), Pointers.P14.getValue(), Characters.TELEPORT.getCharacter());
         forest.setOne(Pointers.P12.getValue(), Pointers.P3.getValue(), Characters.TELEPORT.getCharacter());
         
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.BLACK_BEAR.getCharacter(), 10);
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.WHITE_TIGER.getCharacter(), 10);
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.APE_THROWER.getCharacter(), 10);
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.POISON_SPIDER.getCharacter(), 10);
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.BERA.getCharacter(), 2);
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.TIGRIS.getCharacter(), 2);
-        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.APE_KING.getCharacter(), 2);
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.BERA.getCharacter(), 3);
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.TIGRIS.getCharacter(), 3);
+        forest.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.APE_KING.getCharacter(), 3);
+        
+        forest.addAnvil(Pointers.P15.getValue(), Pointers.P15.getValue());
         
         for (int j = FULL_L - (MAP_EDGE - 1); j <= FULL_L; j++)
         {
+            
             for (int i = 0; i < FULL_H; i++)
             {
                 forest.setOne(i, j, Characters.TREE.getCharacter());
@@ -636,6 +674,10 @@ public class World
      */
     private void addObjectsToMountain()
     {
+        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.YETI.getCharacter(), 50);
+        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.ABOMINABLE_SNOWMAN.getCharacter(), 50);
+        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.POLAR_BEAR.getCharacter(), 50);
+        
         for (int j = 0; j < Pointers.P19.getValue(); j++)
         {
             mountain.setOne(Pointers.P7.getValue(), j, Characters.TREE.getCharacter());
@@ -669,22 +711,22 @@ public class World
             }
             
         }
-        
+                
+        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.NINE_TAILS.getCharacter(), 2); 
         mountain.setOne(Pointers.P41.getValue(), Pointers.P30.getValue(), Characters.TELEPORT.getCharacter());
-        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.YETI.getCharacter(), 20);
-        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.ABOMINABLE_SNOWMAN.getCharacter(), 20);
-        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.POLAR_BEAR.getCharacter(), 20);
-        mountain.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, Characters.NINE_TAILS.getCharacter(), 2);
+        mountain.addAnvil(Pointers.P11.getValue(), Pointers.P30.getValue());
+        mountain.addAnvil(Pointers.P42.getValue(), Pointers.P4.getValue());
         
     }
     
     /**
      * Initialise tower map
      */
-    private void addObjectToTower(String monster)
+    private void addObjectToTower(String monster, int number)
     {
-        for (int i = 0; i <= Pointers.P12.getValue(); i ++)
+        for (int i = 0; i <= Pointers.P14.getValue(); i ++)
         {
+            
             for (int j = 0; j < FULL_L; j++)
             {
                 tower.setOne(i, j, Characters.WALL.getCharacter());
@@ -692,8 +734,9 @@ public class World
             
         }
         
-        for (int i = Pointers.P30.getValue(); i < FULL_H; i ++)
+        for (int i = Pointers.P28.getValue(); i < FULL_H; i ++)
         {
+            
             for (int j = 0; j < FULL_L; j++)
             {
                 tower.setOne(i, j, Characters.WALL.getCharacter());
@@ -703,7 +746,8 @@ public class World
         
         for (int i = 0; i < FULL_H; i ++)
         {
-            for (int j = 0; j <= Pointers.P8.getValue(); j++)
+            
+            for (int j = 0; j <= Pointers.P10.getValue(); j++)
             {
                 tower.setOne(i, j, Characters.WALL.getCharacter());
             }
@@ -712,43 +756,62 @@ public class World
         
         for (int i = 0; i < FULL_H; i ++)
         {
-            for (int j = Pointers.P26.getValue(); j < FULL_L; j++)
+            
+            for (int j = Pointers.P24.getValue(); j < FULL_L; j++)
             {
                 tower.setOne(i, j, Characters.WALL.getCharacter());
             }
             
         }
         
-        tower.setOne(Pointers.P13.getValue(), Pointers.P9.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P13.getValue(), Pointers.P10.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P13.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P14.getValue(), Pointers.P9.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P14.getValue(), Pointers.P10.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P15.getValue(), Pointers.P9.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P15.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P15.getValue(), Pointers.P12.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P15.getValue(), Pointers.P13.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P16.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P16.getValue(), Pointers.P12.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P17.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
         
-        tower.setOne(Pointers.P13.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P13.getValue(), Pointers.P24.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P13.getValue(), Pointers.P25.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P14.getValue(), Pointers.P24.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P14.getValue(), Pointers.P25.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P15.getValue(), Pointers.P25.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P15.getValue(), Pointers.P21.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P15.getValue(), Pointers.P22.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P15.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P16.getValue(), Pointers.P22.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P16.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P17.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
         
-        tower.setOne(Pointers.P27.getValue(), Pointers.P9.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P28.getValue(), Pointers.P9.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P28.getValue(), Pointers.P10.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P29.getValue(), Pointers.P9.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P29.getValue(), Pointers.P10.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P29.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P25.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P26.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P26.getValue(), Pointers.P12.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P27.getValue(), Pointers.P11.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P27.getValue(), Pointers.P12.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P27.getValue(), Pointers.P13.getValue(), Characters.WALL.getCharacter());
         
-        tower.setOne(Pointers.P27.getValue(), Pointers.P25.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P28.getValue(), Pointers.P24.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P28.getValue(), Pointers.P25.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P29.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P29.getValue(), Pointers.P24.getValue(), Characters.WALL.getCharacter());
-        tower.setOne(Pointers.P29.getValue(), Pointers.P25.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P25.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P26.getValue(), Pointers.P22.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P26.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P27.getValue(), Pointers.P21.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P27.getValue(), Pointers.P22.getValue(), Characters.WALL.getCharacter());
+        tower.setOne(Pointers.P27.getValue(), Pointers.P23.getValue(), Characters.WALL.getCharacter());
         
-        tower.addObjects(Pointers.P8.getValue(), Pointers.P25.getValue(), Pointers.P12.getValue(), Pointers.P29.getValue(),
+        tower.addObjects(Pointers.P11.getValue(), Pointers.P22.getValue(), Pointers.P14.getValue(), Pointers.P27.getValue(),
                        monster, 20);
+                       
+        tower.setOne(Pointers.P19.getValue(), Pointers.P17.getValue(), Characters.TELEPORT.getCharacter()); 
+        
+        if(number == 0)
+        {
+            
+            for(int j = Pointers.P11.getValue(); j < Pointers.P23.getValue(); j++)
+            {
+                
+                tower.setOne(Pointers.P25.getValue(), j, Characters.WALL.getCharacter());
+                tower.setOne(Pointers.P26.getValue(), j, Characters.CHEST.getCharacter());
+                tower.setOne(Pointers.P27.getValue(), j, Characters.CHEST.getCharacter());
+            }   
+            
+            tower.setOne(Pointers.P26.getValue(), Pointers.P17.getValue(), Characters.MYTHICAL_STONE.getCharacter());
+            tower.setOne(Pointers.P24.getValue(), Pointers.P17.getValue(), Characters.RED_DRAGON.getCharacter());
+        }
+        
     }
     
     /**
@@ -781,6 +844,10 @@ public class World
         dessert.setOne(Pointers.P27.getValue(), Pointers.P15.getValue(), Characters.TELEPORT.getCharacter());
         dessert.setOne(Pointers.P8.getValue(), Pointers.P8.getValue(), Characters.CORPSE.getCharacter());
         dessert.setOne(Pointers.P16.getValue(), Pointers.P6.getValue(), Characters.POTION.getCharacter());
+        
+        dessert.addAnvil(Pointers.P5.getValue(), Pointers.P19.getValue());
+        dessert.addAnvil(Pointers.P39.getValue(), Pointers.P25.getValue());
+        
     }
     
     /**
@@ -790,6 +857,9 @@ public class World
     {
         int thickness = 3;
         int opening = 5;
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.POISON_SPIDER.getCharacter(), 50);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.RED_SCORPION.getCharacter(), 50);
+        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.ALBINO_SNAKE.getCharacter(), 50);
         
         //add a wall going down in the cave
         for (int i = 0; i < FULL_H - MAP_EDGE - opening; i++)
@@ -798,7 +868,7 @@ public class World
             {
                 spiderCave.setOne(i, j, Characters.ROCK.getCharacter());
             }
-        }
+        }        
         //add a wall to the right
         for (int i = FULL_H - opening - thickness; i < FULL_H - opening; i++)
         {
@@ -823,10 +893,7 @@ public class World
                 spiderCave.setOne(i, j,Characters.ROCK.getCharacter());
             }
         }
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.POISON_SPIDER.getCharacter(), 40);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.RED_SCORPION.getCharacter(), 40);
-        spiderCave.addObjects(MAP_EDGE + 1, FULL_L - MAP_EDGE - 1, MAP_EDGE, FULL_H - MAP_EDGE - 1, Characters.ALBINO_SNAKE.getCharacter(), 40);
-        
+                
         spiderCave.addObjects(Pointers.P15.getValue() - 1, Pointers.P15.getValue() + 1,Pointers.P26.getValue() - 1,
                                 Pointers.P26.getValue() + 1, Characters.SPIDER_QUEEN.getCharacter(), 1);
         spiderCave.addObjects(Pointers.P15.getValue() - 1, Pointers.P15.getValue() + 1,Pointers.P26.getValue() - 1,
@@ -860,14 +927,14 @@ public class World
     {
         return currentMap.getmap();
         
-    }
+    }    
     
     /**
      * Add a monster on the map in an empty square
      */
     public void addAnother(String character)
     {
-        String name = currentMap.getName();
+        String name = currentMap.getName().toLowerCase();
         
         switch (name)
         {
@@ -891,24 +958,73 @@ public class World
                 currentMap.addObjects(MAP_EDGE, FULL_L - MAP_EDGE, MAP_EDGE, FULL_H - MAP_EDGE, character, 1);
                 break;
                 
-            case TOWER:            
-                if(!currentMap.checkForMonsters())
-                    currentMap.addObjects(Pointers.P14.getValue(),Pointers.P15.getValue(), 
-                                           Pointers.P16.getValue(),Pointers.P17.getValue(), Characters.TELEPORT.getCharacter(), 1);
-                                           
-                 break;                      
+            case TOWER: 
+                if(character.equals(Characters.RED_DRAGON.getCharacter()))
+                    openRoom();
+                    
+                break;                      
         }
+    }   
+    
+    /**
+     * Check if all the monsters in the room have been killed.
+     */
+    public boolean validateTowerLevel()
+    {
+        switch(towerLevel)
+        {
+            case 1:
+                amount = (currentMap.checkForMonsters(Characters.WHITE_TIGER.getCharacter()));
+                
+                break;                
+                
+            case 2:
+                amount = (currentMap.checkForMonsters(Characters.POISON_SPIDER.getCharacter()));
+                
+                break; 
+                                
+            case 3:
+                amount = (currentMap.checkForMonsters(Characters.DEMON.getCharacter()));
+            
+                break; 
+                
+            case 4:
+                amount = (currentMap.checkForMonsters(Characters.CURSED_VAMPIRE.getCharacter()));
+            
+                break; 
+                
+            case 5:
+                amount = (currentMap.checkForMonsters(Characters.WITCH.getCharacter()) +
+                        (currentMap.checkForMonsters(Characters.DEATH.getCharacter())));
+                
+                break; 
+                
+            case 6 :    
+                amount = (currentMap.checkForMonsters(Characters.RED_DRAGON.getCharacter()));
+                
+                break; 
+        }
+        
+        return amount == 0;
+    }
+    
+    /**
+     * return the mount of monsters on the map
+     */
+    public int getAmount()
+    {
+        return amount;
     }
     
     /**
      * print the maps.(testing)
      */
-    private void printMaps()
+    public void printMaps()
     {
-        town.printMap();
+        // town.printMap();
         dessert.printMap();
         spiderCave.printMap();
-        fortress.printMap();
+        // fortress.printMap();
         forest.printMap();
         tower.printMap();
         mountain.printMap();
@@ -969,6 +1085,15 @@ public class World
     {
         userHelp.setOne(row, col, object);
         
+    }
+    
+    /**
+     * clear help map
+     */
+    public void clearMap()
+    {
+        
+        userHelp.createMap(Characters.WALL.getCharacter(), MAP_EDGE);
     }
     
 }
