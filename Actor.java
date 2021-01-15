@@ -36,6 +36,14 @@ public abstract class Actor
         this.level = level;
         
     }
+    
+    /**
+     * @return shield value.
+     */
+    public int getDefenceValue()
+    {
+        return shield;
+    }
         
     /**
      * Send an attack.
