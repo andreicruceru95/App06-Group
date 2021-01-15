@@ -19,8 +19,6 @@ public class Player extends Actor
     public static final Display DISPLAY = new Display();
     public static final String[] QUESTS = new String[6];
     
-    // private boolean ring = false;
-    // private boolean bracelet = false;
     private boolean stone = false;
     private boolean oldLadyQuest = false;
     private boolean jewelerQuest = false;
@@ -32,7 +30,6 @@ public class Player extends Actor
     
     private int goldAmount = 1000000;
     private int score = 0;
-    private int monsterKilled = 0;
     private int playerRowCoord = 23;
     private int playerColCoord = 17;
     
@@ -90,30 +87,6 @@ public class Player extends Actor
     public void printInventory()
     {
         INVENTORY.printInventory();    
-    }
-    
-    /**
-     * increase monster killed amount.
-     */
-    public void increaseKilled()
-    {
-        monsterKilled++;
-    }
-    
-    /**
-     * decrease monster killed amount.
-     */
-    public void decreaseKilled()
-    {
-        monsterKilled = 0;
-    }
-    
-    /**
-     * @return the amount of kills.
-     */
-    public int getKilled()
-    {
-        return monsterKilled;
     }
     
     /**
@@ -252,6 +225,7 @@ public class Player extends Actor
         shield = initialShield + ARMOUR.getStats();
         maxHealthPoints = initialMaxHealthPoints + AMULET.getStats();
         currentHealthPoints += AMULET.getStats();
+        
         if(RING.checkVisibility())
             doubleHitChance = initialDoubleHitChance + RING.getStats();
             
