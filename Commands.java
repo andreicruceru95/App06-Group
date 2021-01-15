@@ -22,6 +22,9 @@ public enum Commands
     SHOW_ITEMS ("\t\tEnter 'show items' to show player's items"),
     HIDE_ITEMS ("\t\tEnter 'hide items' to hide player's items"),
     QUEST("\t\tEnter 'quest' to display quests"),
+    MOUNT("\t\tEnter 'mount' to get on your horse"),
+    DISMOUNT("\t\tEnter 'dismount' to get off your horse"),
+    SHOW_MOUNT("\t\tEnter 'show mount' to see your mount bonuses"),
     
     QUIT ("\t\tEnter 'quit' to quit game or quit window"),
     POTION ("\t\tEnter 'potion' to use health potion and restore health"),
