@@ -13,6 +13,8 @@ public class Game
     public static final String SQUARE = "   ";
     //to be changed
     public static final String TEST = "test";
+    public static final String MOUNT = "mount";
+    public static final String DISMOUNT = "dismount";
     public static final String TOWER = "tower";
     public static final String TOWN = "town";
     public static final String DESSERT = "dessert";
@@ -81,7 +83,7 @@ public class Game
     public static final int POTION_CHANCE = 25;
     public static final int KEY_CHANCE = 50;
     public static final int ITEM_CHANCE = 75;
-    
+    public static final String SHOW_MOUNT = "showmount";
     public static final char CLEAR = '\u000c';
     public static final Shop SHOP = new Shop();
     public static final int LEVEL_1 = 1;
@@ -128,6 +130,11 @@ public class Game
     private int pickUpGold = 0;
     private int numberOfInteractions = 10;
     private int bossGold = 1;
+    private int procentValue = 10;
+    private int totalNumberOfKills = 0;
+    private int timelineNumberOfKills = 0;
+    private int fixedProcentValue = 10;
+    private int bonusDevider = 20;
     
     private boolean hasReceived = false;
     private int amountReceived = 0;
@@ -159,6 +166,8 @@ public class Game
     private boolean spiderCave = false;
     private boolean tower = false;
     private boolean mythicalStone = false;
+    private boolean isMounted = false;
+    private boolean mountIsDisplayed = false;
         
     /**
      * Initialise the game.
@@ -253,6 +262,11 @@ public class Game
                         WORLD.setCurrentMap(TOWER);
                         setTowerCoord();
                         break;
+                    
+                    case SHOW_MOUNT:
+                        displayMessage(displayMount());
+                        
+                        break;
                         
                     case QUIT:
                         finished = true;
@@ -338,20 +352,37 @@ public class Game
                     case RIGHT:
                         runMenu(choice);
                         break;
+                        
+                    case MOUNT:
+                        mount();
+                        break;
+                        
+                    case DISMOUNT:
+                        dismount();
                     
                     default:
-                        message = "Not an option";
-                        isDisplayed = true;
+                        displayMessage("Not an option");
+                        
                 } 
             
             }
             catch(Exception e)
             {
-                message = "Not a command";
-                isDisplayed = true;
+                displayMessage("Not a command");
+                
             }
             
         }
+    }
+    
+    /**
+     * Display a message.
+     */
+    private void displayMessage(String message)
+    {
+        this.message = message;
+        
+        isDisplayed = true;
     }
     
     /**
@@ -391,8 +422,12 @@ public class Game
      */
     private void runMenu(String choice)
     {
-        movePlayer(choice);
-        
+        if(isMounted)
+            moveTwice(choice);
+            
+        else
+            moveOnce(choice);
+            
     }
     
     /**
@@ -405,69 +440,107 @@ public class Game
     }
     
     /**
+     * move twice.
+     * if first move is correct, move again.
+     */
+    private void moveTwice(String direction)
+    {
+        if(moveOnce(direction))
+            moveOnce(direction);
+            
+    }
+    
+    /**
      * Move player on the map.
      */
-    private void movePlayer(String direction)
+    private boolean moveOnce(String direction)
     {
-        
         switch(direction)
         {
             case UP:
-                if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord()))
+                if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord())) 
                 {
                     updateHelpMap(UP);
-                
+                    
                     WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
-                
+                    
                     player.setCoordinates((player.getRowCoord() - 1), player.getColCoord());
-                      
+                        
+                    updateScreen();
+                        
+                    return true;
                 }
-                break;                      
-        
+                else
+                    return false; 
+                                         
+            
             case DOWN:
                 if(checkNextSquare((player.getRowCoord() + 1), player.getColCoord()))
                 {
                     updateHelpMap(DOWN);
-                
+                    
                     WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
-                
+                    
                     player.setCoordinates((player.getRowCoord() + 1), player.getColCoord());
-                
+                    
+                    updateScreen();
+                        
+                    return true;
                 }
-                break;
-                
+                else    
+                    return false;
+                    
             case LEFT:
                 if(checkNextSquare(player.getRowCoord(), (player.getColCoord() - 1)))
                 {
                     updateHelpMap(LEFT);
-                    
+                        
                     WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
-                
+                    
                     player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 1));
-                
+                    
+                    updateScreen();
+                        
+                    return true;
                 }
-                break;
-                
+                else
+                    return false;
+                   
+                    
             case RIGHT:            
                 if(checkNextSquare(player.getRowCoord(), (player.getColCoord() + 1)))
                 {
                     updateHelpMap(RIGHT);
-                
+                    
                     WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
-                
+                    
                     player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 1));
-                
+                        
+                    updateScreen();
+                    
+                    return true;
                 }
-            
-        }
+                else
+                    return false;
+                
+            default:
+                return false;
+        }           
         
+    }
+    
+    /**
+     * update screen
+     */
+    private void updateScreen()
+    {
         System.out.println(CLEAR);
         changeImage();
         showInfo();
         updateVisualField();
-        checkFirstInteraction();       
+        checkFirstInteraction();
     }
-    
+        
     /**
      * Update the help map.
      */
@@ -593,6 +666,11 @@ public class Game
         if(fight(character, monster))
         {
             WORLD.addAnother(character);
+            
+            timelineNumberOfKills ++;
+            totalNumberOfKills ++;
+            
+            procentValue = fixedProcentValue + (totalNumberOfKills % bonusDevider);
             
             if(checkMonster(character))
             {
@@ -727,8 +805,7 @@ public class Game
                     return true;
                     
                 case OPENED_BARREL:
-                    message = "Barel has been destroyed";
-                    isDisplayed = true;
+                    displayMessage("Barel has been destroyed");
                     
                     return true; 
                     
@@ -736,14 +813,12 @@ public class Game
                     return true;
                 
                 case WALL:
-                    message = "Cannot go through walls!";
-                    isDisplayed = true;
+                    displayMessage("Cannot go through walls!");
                     
                     return false;
                 
                 case ROCK:
-                    message = "Cannot go through walls!";
-                    isDisplayed = true;
+                    displayMessage("Cannot go through walls!");
                     
                     return false;
                 
@@ -767,8 +842,7 @@ public class Game
                     
                 case NURSE:
                     player.setFullHealth();
-                    message = "Your healh has been restored!";
-                    isDisplayed = true;
+                    displayMessage("Your healh has been restored!");
                     
                     return false;
                 
@@ -1013,8 +1087,7 @@ public class Game
         }
         else
         {
-            message = "Not enough " + Characters.CHEST_KEY.getCharacter() + ":(";
-            isDisplayed = true;
+            displayMessage("Not enough " + Characters.CHEST_KEY.getCharacter());
             
             return false;       
         }
@@ -1122,15 +1195,15 @@ public class Game
         else if(row == Pointers.P31.getValue() && col == Pointers.P13.getValue())
         {
             
-            if((player.getKilled() > 0))
+            if((timelineNumberOfKills > 0))
             {
                 INTERACTION.getInteraction(Characters.PERSON_8.getCharacter());
                 
                 pressAny();
                 
-                player.addGold(10 * player.getKilled());
+                player.addGold(10 * timelineNumberOfKills);
                 
-                player.decreaseKilled();
+                timelineNumberOfKills = 0;
                  
                 WORLD.setFarmer(Characters.PERSON_2.getCharacter());
                 
@@ -1230,15 +1303,13 @@ public class Game
     {
         if(result)
         {
-            message = "You Won!";
-            isDisplayed = true;
+            displayMessage("You Won!");
             
             return true;
         }
         else
         {
-            message = "You Lost :(";
-            isDisplayed = true;
+            displayMessage("You Lost :(");
             
             checkFirstDeath();
             
@@ -1382,8 +1453,7 @@ public class Game
     {
         if(firstDeathDescription == false)
         {
-            message = "You died! When you die you will be sent back at the entrance\n\t\tand your health will be restored.";
-            isDisplayed = true;
+            displayMessage("You died! When you die you will be sent back at the entrance\n\t\tand your health will be restored.");
             
             pressAny();
             
@@ -1590,8 +1660,7 @@ public class Game
         {
             BLACKSMITH.createList(player.getGold());
             
-            message = "\n\n\t\tWhat can I do for you?\n\n"; 
-            isDisplayed = true;
+            System.out.println("\n\t\tWhat can I do for you?\n\n");
                 
             BLACKSMITH.openBlacksmithShop();
                 
@@ -1733,8 +1802,7 @@ public class Game
         {
             
             case FOREST:
-                //int col = ((Player)player).getColCoord();
-                if(((Player)player).getColCoord() == 3 || ((Player)player).getRowCoord() == 12)
+                if(((Player)player).getColCoord() == Pointers.P3.getValue() || ((Player)player).getRowCoord() == Pointers.P12.getValue())
                 {
                     WORLD.setCurrentMap(MOUNTAIN);
                     
@@ -1772,8 +1840,7 @@ public class Game
                 } 
                 else
                 {
-                    message = "You need to fox key to get in!";
-                    isDisplayed = true;
+                    displayMessage("You need to fox key to get in!");
                 }
                    
                 break;
@@ -1787,8 +1854,7 @@ public class Game
                 }
                 else
                 {
-                    message = "You need the Spider Queen key to get in";
-                    isDisplayed = true;
+                    displayMessage("You need the Spider Queen key to get in");
                 }
                 break;
                 
@@ -1806,10 +1872,8 @@ public class Game
                 }
                 else
                 {
-                    message = "You need to kill all the monsters to unlock the teleport!" + " Remaining monsters: " +
-                                WORLD.getAmount(); 
-                                
-                    isDisplayed = true;           
+                    displayMessage("You need to kill all the monsters to unlock the teleport!" + " Remaining monsters: " +
+                                WORLD.getAmount()); 
                     
                 }
                 
@@ -1860,9 +1924,10 @@ public class Game
                 break;
                 
             default:
-                message = "Not a destination";   
-                isDisplayed = true;
+                displayMessage("Not a destination");  
+                
         }
+        
     }
     
     /**
@@ -1870,8 +1935,10 @@ public class Game
      */
     private void printDestinationList()
     {
-        MAP_LIST[0] = "\t\tSelect destination:\n\n";        
+        MAP_LIST[0] = "\t\tSelect destination:\n\n";  
+        
         MAP_LIST[2] = Commands.FORTRESS.getCommand();
+        
         MAP_LIST[1] = Commands.QUIT.getCommand();
         
         if(town)
@@ -1890,6 +1957,7 @@ public class Game
             MAP_LIST[6] = Commands.DESSERT.getCommand();
         
         DISPLAY.listOptions(MAP_LIST);   
+        
     }
     
     /**
@@ -1897,6 +1965,7 @@ public class Game
      */
     private void printRulles(int number)
     {
+        
         switch(number)
         {
             case -1:
@@ -1927,6 +1996,7 @@ public class Game
                 };
                 DISPLAY.runStory(LOST);
         }
+        
     }
     
     /**
@@ -1991,5 +2061,58 @@ public class Game
             
         }
         
+    }
+    
+    /**
+     * Mount the player.
+     */
+    private void mount()
+    {
+        int max = 100;
+        String mapName = WORLD.getCurrentMapName().toLowerCase();
+        
+        switch(mapName)
+        {
+            case FORTRESS:
+                displayMessage("You can not mount here");
+                break;
+             
+            case TOWN:
+                if(player.getColCoord() < Pointers.P13.getValue())
+                {
+                    displayMessage("You can not mount here");
+                    
+                }
+                else
+                    isMounted = true;
+                    
+                break;    
+                
+            default:
+                isMounted = true;
+        }
+        player.increaseAttackForce((player.getAttackValue() / max) * procentValue);
+        player.increaseShield((player.getDefenceValue() / max) * procentValue);
+        player.increaseHealthPoints((player.getHealth() / max) * procentValue);
+    }
+    
+    /**
+     * dismount.
+     */
+    private void dismount()
+    {
+        isMounted = false;
+        
+    }
+    
+    /**
+     * Display mount
+     */
+    private String displayMount()
+    {
+        int max = 100;
+        return "+" + (player.getAttackValue() / max) * procentValue + "Attack bonus\n"+
+                "\t\t+" + (player.getDefenceValue() / max) * procentValue + "Defence bonus\n" +
+                "\t\t+" +  (player.getHealth() / max) * procentValue + "Health bonus\n";
     }
 }
