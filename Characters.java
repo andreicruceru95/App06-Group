@@ -76,6 +76,7 @@ public enum Characters
     SPIDER_KEY(" ⚵ "),
     SPIDER_QUEEN(" Ⓢ "),
     STABLE(" ♞ "),
+    STABLE_1("sta"),
     STAR_FRAG(" ⚝ "),
     TELEPORT(" ↈ "),
     TIGRIS(" Ⓣ "),
