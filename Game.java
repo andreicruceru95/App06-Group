@@ -1,4 +1,5 @@
 import java.util.*;
+import java.time.*;
 
 /**
  * The main Game class.
@@ -119,7 +120,7 @@ public class Game
     public static final String [] MAP_LIST = new String[8];
     public static final Random RAND = new Random();
     public static final Input READER = new Input();
-    
+        
     private Player player;
     private Item weapon;
     private Item armour;
@@ -171,6 +172,7 @@ public class Game
     private boolean isMounted = false;
     private boolean mountIsDisplayed = false;
     private boolean mountExists = false;
+    private Clock clock;
     
     /**
      * Initialise the game.
@@ -367,7 +369,8 @@ public class Game
                         break;
 
                     default:
-                        displayMessage("Not an option");
+                        //displayMessage("Not an option");
+                        breakWord(choice);
                         
                 } 
             
@@ -378,6 +381,29 @@ public class Game
                 
             }
             
+        }
+    }
+    
+    /**
+     * break a word and look for directions.
+     */
+    private void breakWord(String word)
+    {
+        for (int i = 0; i < word.length(); i++)
+        {
+            
+            if(word.charAt(i) == 'w')   
+                moveOnce(UP);
+                
+            else if(word.charAt(i) == 'a')
+                moveOnce(LEFT);
+                
+            else if(word.charAt(i) == 's')
+                moveOnce(DOWN);
+                
+            else if(word.charAt(i) == 'd')
+                moveOnce(RIGHT);
+                
         }
     }
     
@@ -611,13 +637,15 @@ public class Game
      */
     private void showInfo()
     {
+        long time = System.currentTimeMillis();
+        
         String mapName = WORLD.getCurrentMapName().toLowerCase();        
          
         switch(mapName)
         {
             case TOWER:
                 System.out.println("\tMap: " + mapName.toUpperCase() + " Level " + WORLD.getTowerLevel() + "\t" +
-                                    "[" + player.getRowCoord() + ", " + player.getColCoord() + "]\n");
+                                    "[" + player.getRowCoord() + ", " + player.getColCoord() + "] " + clock +"\n");
             
                 break;
                 
@@ -625,9 +653,9 @@ public class Game
                 System.out.println("\tMap: " + mapName.toUpperCase() + "\t" + "[" + player.getRowCoord() + 
                                     ", " + player.getColCoord() + "]\n");                
         }
-        System .out.println();
+        System.out.println();
         System.out.println("\tPlayer: " + player.getName() + "\tScore: " + 
-                                    player.getScore() + "\n" + player.getHealthInfo());
+                                    player.getScore() + "\n" + player.getHealthInfo());       
                                
         if(stats)
         {
