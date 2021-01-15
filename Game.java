@@ -172,7 +172,6 @@ public class Game
     private boolean isMounted = false;
     private boolean mountIsDisplayed = false;
     private boolean mountExists = false;
-    private Clock clock;
     
     /**
      * Initialise the game.
@@ -636,16 +635,14 @@ public class Game
      * Display information about the player and map.
      */
     private void showInfo()
-    {
-        long time = System.currentTimeMillis();
-        
+    {        
         String mapName = WORLD.getCurrentMapName().toLowerCase();        
          
         switch(mapName)
         {
             case TOWER:
                 System.out.println("\tMap: " + mapName.toUpperCase() + " Level " + WORLD.getTowerLevel() + "\t" +
-                                    "[" + player.getRowCoord() + ", " + player.getColCoord() + "] " + clock +"\n");
+                                    "[" + player.getRowCoord() + ", " + player.getColCoord() + "]\n");
             
                 break;
                 
