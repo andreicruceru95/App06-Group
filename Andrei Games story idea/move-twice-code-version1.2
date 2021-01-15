@@ -1,0 +1,69 @@
+
+        switch(direction)
+        {
+            case UP:                    
+                if(checkNextSquare((player.getRowCoord() - 1), player.getColCoord()) && 
+                    checkNextSquare((player.getRowCoord() - 2), player.getColCoord()))
+                {
+                    updateHelpMap(UP);
+                    
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    
+                    player.setCoordinates((player.getRowCoord() - 2), player.getColCoord());
+                          
+                }
+                else
+                    moveOnce(UP);
+                break;                      
+            
+            case DOWN:
+                if(checkNextSquare((player.getRowCoord() + 1), player.getColCoord()) && 
+                     checkNextSquare((player.getRowCoord() + 2), player.getColCoord()))
+                {
+                    updateHelpMap(DOWN);
+                    
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    
+                    player.setCoordinates((player.getRowCoord() + 2), player.getColCoord());
+                    
+                }
+                else
+                    moveOnce(DOWN);
+                break; 
+                    
+            case LEFT:
+                if(checkNextSquare((player.getRowCoord()), player.getColCoord() - 1) && 
+                    checkNextSquare((player.getRowCoord()), player.getColCoord() - 2))
+                {
+                    updateHelpMap(LEFT); 
+                        
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    
+                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() - 2));
+                    
+                }
+                else
+                    moveOnce(LEFT);
+               break;
+                    
+            case RIGHT:           
+                if(checkNextSquare((player.getRowCoord()), player.getColCoord() + 1) && 
+                    checkNextSquare((player.getRowCoord()), player.getColCoord() + 2))
+                {
+                    updateHelpMap(RIGHT);
+                
+                    WORLD.setObject(player.getRowCoord() ,player.getColCoord(),"   ");
+                    
+                    player.setCoordinates(player.getRowCoord(), (player.getColCoord() + 2));
+                    
+                }
+                else
+                    moveOnce(RIGHT);
+                
+        }
+            
+        System.out.println(CLEAR);
+        changeImage();
+        showInfo();
+        updateVisualField();
+        checkFirstInteraction(); 
