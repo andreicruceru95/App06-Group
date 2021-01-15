@@ -127,7 +127,11 @@ public class Storyline
                 Commands.SHOW_STATS.getCommand(),
                 Commands.HIDE_STATS.getCommand(),
                 Commands.SHOW_ITEMS.getCommand(),
-                Commands.HIDE_ITEMS.getCommand()
+                Commands.HIDE_ITEMS.getCommand(),
+                Commands.QUEST.getCommand(),
+                Commands.MOUNT.getCommand(),
+                Commands.DISMOUNT.getCommand(),
+                Commands.SHOW_MOUNT.getCommand()
         };
     }
     
