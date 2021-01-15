@@ -12,7 +12,9 @@ public class Game
 {
     public static final String SQUARE = "   ";
     //to be changed
+    public static final String AGREE = "agreeyessurewhynotofcourse";
     public static final String TEST = "test";
+    public static final String STABLE = " ♞ ";
     public static final String MOUNT = "mount";
     public static final String DISMOUNT = "dismount";
     public static final String TOWER = "tower";
@@ -128,7 +130,7 @@ public class Game
     private int row = 24;
     private int col = 17;    
     private int pickUpGold = 0;
-    private int numberOfInteractions = 10;
+    private int numberOfInteractions = 9;
     private int bossGold = 1;
     private int procentValue = 10;
     private int totalNumberOfKills = 0;
@@ -168,7 +170,8 @@ public class Game
     private boolean mythicalStone = false;
     private boolean isMounted = false;
     private boolean mountIsDisplayed = false;
-        
+    private boolean mountExists = false;
+    
     /**
      * Initialise the game.
      * 
@@ -220,16 +223,17 @@ public class Game
         MONSTERS.add(new Monster (Characters.DEMON.getCharacter(),LEVEL_45, Characters.STAR_FRAG.getCharacter()));
         MONSTERS.add(new Monster (Characters.CURSED_VAMPIRE.getCharacter(),LEVEL_50, Characters.STAR_FRAG.getCharacter()));
         MONSTERS.add(new Monster (Characters.WITCH.getCharacter(),LEVEL_55, Characters.STAR_FRAG.getCharacter()));
-        MONSTERS.add(new Monster (Characters.BERA.getCharacter(),LEVEL_9, Characters.SPIDER_KEY.getCharacter()));
-        MONSTERS.add(new Monster (Characters.TIGRIS.getCharacter(),LEVEL_14, Characters.SPIDER_KEY.getCharacter()));
-        MONSTERS.add(new Monster (Characters.APE_KING.getCharacter(),LEVEL_19, Characters.SPIDER_KEY.getCharacter()));
-        MONSTERS.add(new Monster (Characters.SPIDER_QUEEN.getCharacter(),LEVEL_34, Characters.FOX_KEY.getCharacter()));
-        MONSTERS.add(new Monster (Characters.NINE_TAILS.getCharacter(),LEVEL_49, Characters.TOWER_KEY.getCharacter()));
-        MONSTERS.add(new Monster (Characters.DEATH.getCharacter(),LEVEL_60, Characters.CHEST_KEY.getCharacter()));
-        MONSTERS.add(new Monster (Characters.RED_DRAGON.getCharacter(),70, Characters.MYTHICAL_STONE.getCharacter()));
+        MONSTERS.add(new Monster (Characters.BERA.getCharacter(),LEVEL_9, Characters.GOLD_2.getCharacter()));
+        MONSTERS.add(new Monster (Characters.TIGRIS.getCharacter(),LEVEL_14, Characters.GOLD_2.getCharacter()));
+        MONSTERS.add(new Monster (Characters.APE_KING.getCharacter(),LEVEL_19, Characters.GOLD_2.getCharacter()));
+        MONSTERS.add(new Monster (Characters.SPIDER_QUEEN.getCharacter(),LEVEL_34, Characters.GOLD_2.getCharacter()));
+        MONSTERS.add(new Monster (Characters.NINE_TAILS.getCharacter(),LEVEL_49, Characters.GOLD_2.getCharacter()));
+        MONSTERS.add(new Monster (Characters.DEATH.getCharacter(),LEVEL_60, Characters.GOLD_2.getCharacter()));
+        MONSTERS.add(new Monster (Characters.RED_DRAGON.getCharacter(),70, Characters.GOLD_2.getCharacter()));
         
         BLACKSMITH.addItems(weapon, armour, potion, amulet, ring, bracelet);
-        run();
+         
+        run(); 
                   
     }
        
@@ -337,6 +341,7 @@ public class Game
                     
                         pressAny();
                         break;
+                        
                     case UP:
                         runMenu(choice);
                         break;
@@ -359,7 +364,8 @@ public class Game
                         
                     case DISMOUNT:
                         dismount();
-                    
+                        break;
+
                     default:
                         displayMessage("Not an option");
                         
@@ -839,7 +845,12 @@ public class Game
                     hasRecieved(pickUpGold, Characters.GOLD.getCharacter());
                     player.addGold(pickUpGold);
                     return true;
-                    
+                
+                case STABLE:
+                    runStable();
+                    return false;
+                
+                
                 case NURSE:
                     player.setFullHealth();
                     displayMessage("Your healh has been restored!");
@@ -1075,7 +1086,8 @@ public class Game
     }
         
     /**
-     * 50% chance to obtain (1, 5) x monster level items or gold.
+     * Open a chest if the player has keys.
+     * Display a message otherwise. 
      */
     private boolean openChest()
     {
@@ -1264,6 +1276,7 @@ public class Game
             "\t\tCompleting quests will unlock more items",
             "\t\tTo use a potion, type 'potion'",
             "\t\tA teleport will help you travel to a different map",
+            "\t\tYou can buy a mount from the stable outside the town. (Look for ♞) "
         };
         return MESSAGES[RAND.nextInt(MESSAGES.length - 0) + 0];
     }
@@ -1309,6 +1322,8 @@ public class Game
         }
         else
         {
+            isMounted = false;
+            
             displayMessage("You Lost :(");
             
             checkFirstDeath();
@@ -1500,16 +1515,19 @@ public class Game
     }
     
     /**
-     * Change the player's icon when it's health is lower than 50%.
+     * Change the player's icon.
      */
     private void changeImage()
     {
-        if(player.getCurrentHealth() <= player.getFullHealth() / 2)
-            player.changeImage(Characters.PLAYER2.getCharacter());
+        if(isMounted)
+            player.changeImage(Characters.STABLE.getCharacter());
             
         else
             player.changeImage(Characters.PLAYER.getCharacter()); 
             
+        if(player.getCurrentHealth() <= player.getFullHealth() / 2)
+            player.changeImage(Characters.PLAYER2.getCharacter()); 
+                
     }
         
     /**
@@ -1517,7 +1535,7 @@ public class Game
      */
     private boolean checkFirstInteraction()
     {
-        if(numberOfInteractions == 1)
+        if(numberOfInteractions == 0)
             return false;
         
         if(player.checkVisualField(Characters.SHOP.getCharacter()) && !shopDescription)
@@ -1538,7 +1556,7 @@ public class Game
         }    
         else if(player.checkVisualField(Characters.STABLE.getCharacter()) && !stableDescription)
         {
-            stableDescription = INTERACTION.getInteraction(Characters.STABLE.getCharacter());
+            stableDescription = INTERACTION.getInteraction(Characters.STABLE_1.getCharacter());
             
             numberOfInteractions --;
             
@@ -2111,8 +2129,59 @@ public class Game
     private String displayMount()
     {
         int max = 100;
-        return "+" + (player.getAttackValue() / max) * procentValue + "Attack bonus\n"+
+        if(mountExists)
+            return "+" + (player.getAttackValue() / max) * procentValue + "Attack bonus\n"+
                 "\t\t+" + (player.getDefenceValue() / max) * procentValue + "Defence bonus\n" +
                 "\t\t+" +  (player.getHealth() / max) * procentValue + "Health bonus\n";
+                
+        else
+            return "You do not have a mount";
+            
+    }
+    
+    /**
+     * Display stable message.
+     */
+    private void runStable()
+    {
+        boolean finished = true;
+        int mountPrice = 500;
+        
+        if(!mountExists)
+        {
+            
+            do
+            {
+                System.out.println("\n\n\t\tI can give you a horse for a resonable price, warrior\n\n" +
+                                    "\t\tHow does 500$ sound? Agree?");
+                                    
+                String choice = READER.getString();
+                
+                if(AGREE.contains(choice))
+                {
+                    System.out.println("\n\n\t\tGreat choice, warrior!\nJust type 'mount' to get on the horse "+
+                                        "\t\tor 'dismount' to get off the horse!");
+                                        
+                    player.pay(mountPrice);
+                    displayMessage("You paid 500£");
+                    
+                    finished = true;
+                }
+                else
+                {
+                    System.out.println("\n\n\t\tYou will not get a better price than this! \n\n\t\tTill next time!");
+                    
+                    finished = true;
+                }
+            }
+            while(!finished);
+            
+        }
+        else
+        {
+            INTERACTION.getInteraction(Characters.STABLE.getCharacter());
+            
+            pressAny();
+        }
     }
 }
