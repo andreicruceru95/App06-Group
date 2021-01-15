@@ -31,9 +31,19 @@ public class Database
         DATABASE_OBJECTS.put(Characters.WALL.getCharacter(), "\t\tConcrete wall.");
         DATABASE_OBJECTS.put(Characters.SHOP.getCharacter(), "\t\tLocal earning his living by selling things.");
         DATABASE_OBJECTS.put(Characters.CHEST.getCharacter(), "\t\tLucky chest. Can drop gold or items.");
-        DATABASE_OBJECTS.put(Characters.GOLD.getCharacter(), "\t\tGold. Currency.");
+        DATABASE_OBJECTS.put(Characters.GOLD.getCharacter(), "\t\tGold. Currency.");        
         DATABASE_OBJECTS.put(Characters.TREE.getCharacter(), "\t\tTree. Found in forests.");
         DATABASE_OBJECTS.put(Characters.CACTUS.getCharacter(), "\t\tCactus. Found in dessert areas.");
+        DATABASE_OBJECTS.put(Characters.GOLD_2.getCharacter(), "\t\tA pile of gold.");
+        DATABASE_OBJECTS.put(Characters.POTION.getCharacter(), "\t\tHealth potion. Restores player's health.");
+        DATABASE_OBJECTS.put(Characters.LUCK.getCharacter(), "\t\tCasino. You can gamble your gold there.");
+        DATABASE_OBJECTS.put(Characters.ANVIL.getCharacter(), "\t\tAnvil. You can improve your items there.");
+        DATABASE_OBJECTS.put(Characters.BAG.getCharacter(), "\t\tBag of resources. You can find items in them");
+        DATABASE_OBJECTS.put(Characters.BARREL.getCharacter(), "\t\tUnopened barrel. Contains items");
+        DATABASE_OBJECTS.put(Characters.OPENED_BARREL.getCharacter(), "\t\tOpened barrel. Can be distroyed");
+        DATABASE_OBJECTS.put(Characters.NURSE.getCharacter(), "\t\tNurse. Can heal the player.");
+        DATABASE_OBJECTS.put(Characters.PERSON_2.getCharacter(), "\t\t.Person in game that has a task for you.");
+        DATABASE_OBJECTS.put(Characters.BIOLOGIST.getCharacter(), "\t\tBiologist. Will give you gold in exchange of herbs.");
         
         DATABASE_MONSTERS.put(Characters.BLACK_BEAR.getCharacter(), "\t\tBlack Bear - level 1 monster.");
         DATABASE_MONSTERS.put(Characters.WHITE_TIGER.getCharacter(), "\t\tWhite Tiger - level 2 monster.");
