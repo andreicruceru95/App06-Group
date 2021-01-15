@@ -24,7 +24,7 @@ public class Interactions
         INTERACTIONS.put(Characters.BLACKSMITH.getCharacter(),"\t\tThis is where you can upgrade your equipment to provide a better chance of survival\n" +
                                 "\t\tAsk him \"enchance armour\" or \"enchance weapon\" or \"enchance potion\".");
                                 
-        INTERACTIONS.put(Characters.STABLE.getCharacter(), "\t\tThere is a stable there, you soon be able to buy a horse from there");
+        INTERACTIONS.put(Characters.STABLE_1.getCharacter(), "\t\tThere is a stable there, you soon be able to buy a horse from there");
         
         INTERACTIONS.put(Characters.GUARD.getCharacter(), "\t\tTown guard:\n\n \t\tAhh, young adventurer, while I was having a drink in the pub last night \n" +
                                 "\t\tI overheard some shady characters talking about a teleporter somewhere in the north of the forest");
@@ -128,7 +128,11 @@ public class Interactions
                         
                         
         INTERACTIONS.put(Characters.DEATH.getCharacter(), "\n\t\tVoice: \n\n" +
-                        "\t\tYou will not go any further than this, warrior.\n");                
+                        "\t\tYou will not go any further than this, warrior.\n"); 
+                        
+        INTERACTIONS.put(Characters.STABLE.getCharacter(), "\n\t\tStable:\n\n" +
+                        "\t\tRemember: Just type 'mount' to get on the horse "+
+                                        "\t\tor 'dismount' to get off the horse!");
     }
     
     /**
