@@ -1,7 +1,8 @@
 #BlueJ package file
-dependency1.from=VisualField
-dependency1.to=Characters
+dependency1.from=Blacksmith
+dependency1.to=Display
 dependency1.type=UsesDependency
+<<<<<<< Updated upstream
 dependency10.from=Blacksmith
 dependency10.to=Commands
 dependency10.type=UsesDependency
@@ -14,6 +15,90 @@ dependency12.type=UsesDependency
 dependency13.from=World
 dependency13.to=Map
 dependency13.type=UsesDependency
+=======
+<<<<<<< HEAD
+dependency10.from=Database
+dependency10.to=Characters
+dependency10.type=UsesDependency
+dependency11.from=Player
+dependency11.to=VisualField
+dependency11.type=UsesDependency
+dependency12.from=Player
+dependency12.to=Item
+dependency12.type=UsesDependency
+dependency13.from=Player
+dependency13.to=Weapon
+dependency13.type=UsesDependency
+dependency14.from=Player
+dependency14.to=Armour
+dependency14.type=UsesDependency
+dependency15.from=Player
+dependency15.to=Potion
+dependency15.type=UsesDependency
+dependency16.from=Player
+dependency16.to=Amulet
+dependency16.type=UsesDependency
+dependency17.from=Player
+dependency17.to=Ring
+dependency17.type=UsesDependency
+dependency18.from=Player
+dependency18.to=Bracelet
+dependency18.type=UsesDependency
+dependency19.from=Player
+dependency19.to=Inventory
+dependency19.type=UsesDependency
+dependency2.from=Blacksmith
+dependency2.to=Item
+dependency2.type=UsesDependency
+dependency20.from=Player
+dependency20.to=Display
+dependency20.type=UsesDependency
+dependency21.from=Player
+dependency21.to=Characters
+dependency21.type=UsesDependency
+dependency22.from=Shop
+dependency22.to=Display
+dependency22.type=UsesDependency
+dependency23.from=Shop
+dependency23.to=Commands
+dependency23.type=UsesDependency
+dependency24.from=Game
+dependency24.to=Shop
+dependency24.type=UsesDependency
+dependency25.from=Game
+dependency25.to=Monster
+dependency25.type=UsesDependency
+dependency26.from=Game
+dependency26.to=Interactions
+dependency26.type=UsesDependency
+dependency27.from=Game
+dependency27.to=Database
+dependency27.type=UsesDependency
+dependency28.from=Game
+dependency28.to=Display
+dependency28.type=UsesDependency
+dependency29.from=Game
+dependency29.to=Storyline
+dependency29.type=UsesDependency
+dependency3.from=Blacksmith
+dependency3.to=Commands
+dependency3.type=UsesDependency
+dependency30.from=Game
+dependency30.to=Blacksmith
+=======
+dependency10.from=Blacksmith
+dependency10.to=Commands
+dependency10.type=UsesDependency
+dependency11.from=Inventory
+dependency11.to=Characters
+dependency11.type=UsesDependency
+dependency12.from=Map
+dependency12.to=Characters
+dependency12.type=UsesDependency
+dependency13.from=World
+dependency13.to=Map
+dependency13.type=UsesDependency
+>>>>>>> Stashed changes
 dependency14.from=World
 dependency14.to=Characters
 dependency14.type=UsesDependency
@@ -70,92 +155,150 @@ dependency3.to=Commands
 dependency3.type=UsesDependency
 dependency30.from=Interactions
 dependency30.to=Characters
+>>>>>>> 1c7877a1335782af5bc7e05b7283cdcf52bc416d
 dependency30.type=UsesDependency
 dependency31.from=Game
-dependency31.to=Shop
+dependency31.to=World
 dependency31.type=UsesDependency
 dependency32.from=Game
-dependency32.to=Monster
+dependency32.to=Input
 dependency32.type=UsesDependency
 dependency33.from=Game
-dependency33.to=Interactions
+dependency33.to=Player
 dependency33.type=UsesDependency
 dependency34.from=Game
-dependency34.to=Database
+dependency34.to=Item
 dependency34.type=UsesDependency
 dependency35.from=Game
-dependency35.to=Display
+dependency35.to=Weapon
 dependency35.type=UsesDependency
 dependency36.from=Game
-dependency36.to=Storyline
+dependency36.to=Armour
 dependency36.type=UsesDependency
 dependency37.from=Game
-dependency37.to=Blacksmith
+dependency37.to=Potion
 dependency37.type=UsesDependency
 dependency38.from=Game
-dependency38.to=World
+dependency38.to=Amulet
 dependency38.type=UsesDependency
 dependency39.from=Game
-dependency39.to=Input
+dependency39.to=Ring
 dependency39.type=UsesDependency
+<<<<<<< Updated upstream
 dependency4.from=Main
 dependency4.to=Game
+=======
+<<<<<<< HEAD
+dependency4.from=World
+dependency4.to=Map
+=======
+dependency4.from=Main
+dependency4.to=Game
+>>>>>>> 1c7877a1335782af5bc7e05b7283cdcf52bc416d
+>>>>>>> Stashed changes
 dependency4.type=UsesDependency
 dependency40.from=Game
-dependency40.to=Player
+dependency40.to=Bracelet
 dependency40.type=UsesDependency
 dependency41.from=Game
-dependency41.to=Item
+dependency41.to=Actor
 dependency41.type=UsesDependency
 dependency42.from=Game
-dependency42.to=Weapon
+dependency42.to=Characters
 dependency42.type=UsesDependency
 dependency43.from=Game
-dependency43.to=Armour
+dependency43.to=Pointers
 dependency43.type=UsesDependency
 dependency44.from=Game
-dependency44.to=Potion
+dependency44.to=Commands
 dependency44.type=UsesDependency
-dependency45.from=Game
-dependency45.to=Amulet
+dependency45.from=Storyline
+dependency45.to=Commands
 dependency45.type=UsesDependency
-dependency46.from=Game
-dependency46.to=Ring
+dependency46.from=Interactions
+dependency46.to=Characters
 dependency46.type=UsesDependency
-dependency47.from=Game
-dependency47.to=Bracelet
+dependency47.from=Main
+dependency47.to=Game
 dependency47.type=UsesDependency
-dependency48.from=Game
-dependency48.to=Actor
+dependency48.from=Map
+dependency48.to=Characters
 dependency48.type=UsesDependency
-dependency49.from=Game
+dependency49.from=Inventory
 dependency49.to=Characters
 dependency49.type=UsesDependency
+<<<<<<< Updated upstream
 dependency5.from=Monster
+=======
+<<<<<<< HEAD
+dependency5.from=World
+=======
+dependency5.from=Monster
+>>>>>>> 1c7877a1335782af5bc7e05b7283cdcf52bc416d
+>>>>>>> Stashed changes
 dependency5.to=Characters
 dependency5.type=UsesDependency
-dependency50.from=Game
-dependency50.to=Pointers
+dependency50.from=Display
+dependency50.to=Input
 dependency50.type=UsesDependency
-dependency51.from=Game
+dependency51.from=Display
 dependency51.to=Commands
 dependency51.type=UsesDependency
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+dependency6.from=World
+dependency6.to=Pointers
+dependency6.type=UsesDependency
+dependency7.from=VisualField
+dependency7.to=Characters
+=======
+>>>>>>> Stashed changes
 dependency6.from=Shop
 dependency6.to=Display
 dependency6.type=UsesDependency
 dependency7.from=Shop
 dependency7.to=Commands
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1c7877a1335782af5bc7e05b7283cdcf52bc416d
+>>>>>>> Stashed changes
 dependency7.type=UsesDependency
 dependency8.from=Blacksmith
 dependency8.to=Display
 dependency8.type=UsesDependency
+<<<<<<< Updated upstream
 dependency9.from=Blacksmith
 dependency9.to=Item
+=======
+<<<<<<< HEAD
+dependency9.from=Database
+dependency9.to=Monster
+=======
+dependency9.from=Blacksmith
+dependency9.to=Item
+>>>>>>> 1c7877a1335782af5bc7e05b7283cdcf52bc416d
+>>>>>>> Stashed changes
 dependency9.type=UsesDependency
 editor.fx.0.height=0
 editor.fx.0.width=0
 editor.fx.0.x=0
 editor.fx.0.y=0
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+objectbench.height=111
+objectbench.width=860
+package.divider.horizontal=0.6
+package.divider.vertical=0.8489116517285531
+package.editor.height=656
+package.editor.width=1338
+package.editor.x=0
+package.editor.y=67
+package.frame.height=881
+package.frame.width=1481
+=======
+>>>>>>> Stashed changes
 objectbench.height=97
 objectbench.width=1135
 package.divider.horizontal=0.5997899159663865
@@ -166,6 +309,10 @@ package.editor.x=100
 package.editor.y=100
 package.frame.height=1058
 package.frame.width=1938
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1c7877a1335782af5bc7e05b7283cdcf52bc416d
+>>>>>>> Stashed changes
 package.numDependencies=51
 package.numTargets=27
 package.showExtends=true
