@@ -1,5 +1,11 @@
 import java.util.*;
 import java.time.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * The main Game class.
@@ -13,7 +19,7 @@ public class Game
 {
     public static final String SQUARE = "   ";
     //to be changed
-    public static final String AGREE = "agreeyessurewhynotofcourse";
+    public static final String AGREE = "yes";
     public static final String TEST = "test";
     public static final String STABLE = " ♞ ";
     public static final String MOUNT = "mount";
@@ -119,7 +125,7 @@ public class Game
     public static final World WORLD = new World();  
     public static final String [] MAP_LIST = new String[8];
     public static final Random RAND = new Random();
-    public static final Input READER = new Input();
+    public static final Input READER = new Input();    
         
     private Player player;
     private Item weapon;
@@ -172,6 +178,7 @@ public class Game
     private boolean isMounted = false;
     private boolean mountIsDisplayed = false;
     private boolean mountExists = false;
+    private Date date = new Date();
     
     /**
      * Initialise the game.
@@ -190,6 +197,7 @@ public class Game
         
         String playerName = READER.getString();
         player = new Player(playerName, 1);
+        player.setDate(date);          
         
         weapon = player.getWeapon();
         armour = player.getArmour();
@@ -274,6 +282,7 @@ public class Game
                         break;
                         
                     case QUIT:
+                        savePlayer();
                         finished = true;
                         break;
                     
@@ -381,6 +390,29 @@ public class Game
             }
             
         }
+                
+    }
+    
+    /**
+     * Save player's data
+     */
+    private void savePlayer() throws Exception
+    {
+        final FileOutputStream FOS = new FileOutputStream("Player-data.txt", true);
+        final ObjectOutputStream OOS = new ObjectOutputStream(FOS);
+        
+        OOS.writeObject(player);
+        
+        OOS.close();
+        
+        final FileInputStream FIS = new FileInputStream("Player-data.txt");
+        final ObjectInputStream OIS = new ObjectInputStream(FIS);   
+        
+        Player newPlayer = (Player) OIS.readObject();
+             
+        System.out.println("Date: " + newPlayer.getDate().toLocaleString() + "\tName: " + newPlayer.getName() + "\tLevel: " + newPlayer.getLevel() + "\tScore: " + newPlayer.getScore());
+        
+        OIS.close();
     }
     
     /**
@@ -650,14 +682,13 @@ public class Game
                 System.out.println("\tMap: " + mapName.toUpperCase() + "\t" + "[" + player.getRowCoord() + 
                                     ", " + player.getColCoord() + "]\n");                
         }
-        System.out.println();
-        System.out.println("\tPlayer: " + player.getName() + "\tScore: " + 
-                                    player.getScore() + "\n" + player.getHealthInfo());       
+        
+        System.out.println("\n\tPlayer: " + player.getName() + " Lvl: " + player.getLevel() + "\tExp : " + player.getExp() + "/" + player.getExpRequired() + 
+                           "\n\tScore: " + player.getScore() + "\tGold: " + player.getGold() + Characters.GOLD.getCharacter() + "\n" + player.getHealthInfo());       
                                
         if(stats)
         {
             System.out.println(player.getStats()); 
-            getGold();
               
         }
                    
@@ -682,14 +713,6 @@ public class Game
     }
         
     /**
-     * print the player's gold amount.
-     */
-    private void getGold()
-    {
-        System.out.println("\tGold: " + player.getGold() + "" + Characters.GOLD.getCharacter());
-    }
-    
-    /**
      * the start of the fight with a monster.
      */
     private boolean fightMonster(String character, Actor monster)
@@ -697,9 +720,16 @@ public class Game
         if(fight(character, monster))
         {
             WORLD.addAnother(character);
-            
+             
             timelineNumberOfKills ++;
             totalNumberOfKills ++;
+            
+            if(player.increaseExp(monster.getExp()))
+            {
+                displayMessage("Level increased!");
+                
+                player.update();
+            }
             
             procentValue = fixedProcentValue + (totalNumberOfKills % bonusDevider);
             
@@ -1770,6 +1800,7 @@ public class Game
                 
         }
         
+        player.update();
     }
     
     /**
@@ -2182,10 +2213,11 @@ public class Game
                                     
                 String choice = READER.getString();
                 
-                if(AGREE.contains(choice))
+                if(choice.equals(AGREE))
                 {
                     System.out.println("\n\n\t\tGreat choice, warrior!\nJust type 'mount' to get on the horse "+
                                         "\t\tor 'dismount' to get off the horse!");
+                    pressAny();                    
                                         
                     player.pay(mountPrice);
                     displayMessage("You paid 500£");
@@ -2195,6 +2227,8 @@ public class Game
                 else
                 {
                     System.out.println("\n\n\t\tYou will not get a better price than this! \n\n\t\tTill next time!");
+                    
+                    pressAny();  
                     
                     finished = true;
                 }
