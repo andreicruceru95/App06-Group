@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.io.Serializable;
 
 /**
  * A game actor (Player/monsters)
@@ -6,7 +7,7 @@ import java.util.Random;
  * @authors Andrei Cruceru
  * @version 1.0.12
  */
-public abstract class Actor
+public abstract class Actor implements Serializable
 {
     protected String name;
     protected int level;
@@ -19,8 +20,10 @@ public abstract class Actor
     protected int initialShield = 70;
     protected int shield = 70;
     protected int initialMaxHealthPoints = 1000;
+    protected int initialHealthPoints = 300;
     protected int maxHealthPoints = 1000;
     protected int currentHealthPoints = 1000;
+    protected int exp = 0;
     
     protected int chance = 5;//%
     protected int total = 100; //%
@@ -35,6 +38,14 @@ public abstract class Actor
         this.name = name;
         this.level = level;
         
+    }    
+    
+    /**
+     * get exp.
+     */
+    public int getExp()
+    {
+        return exp;
     }
     
     /**
