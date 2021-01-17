@@ -7,6 +7,7 @@
 public class Monster extends Actor
 {
     private final String drop;
+    protected int expMultiplier = 300; 
     
     /**
      * Initialising the Monster.
@@ -16,9 +17,10 @@ public class Monster extends Actor
         super(name, level);
         
         attackForce = initialAttackForce * level;
-        shield = initialShield * level;
+        shield = (initialShield * level) / 2;
         currentHealthPoints = currentHealthPoints * level;
         maxHealthPoints = initialMaxHealthPoints * level;
+        exp = expMultiplier * level;
         
         this.drop = drop;
     }
