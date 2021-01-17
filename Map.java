@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.Serializable;
 
 /**
  * The game map.
@@ -7,7 +8,7 @@ import java.util.*;
  * @authors Andrei Cruceru
  * @version 1.0.12
  */
-public class Map
+public class Map implements Serializable
 {
     public static final String SQUARE = "   ";
     public static final String TOWN = "Town";
