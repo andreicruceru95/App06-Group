@@ -1,4 +1,6 @@
 import java.util.*;
+import java.time.*;
+import java.io.Serializable;
 
 /**
  * The game user.
@@ -6,7 +8,7 @@ import java.util.*;
  * @authors Andrei Cruceru
  * @version 1.0.12
  */
-public class Player extends Actor
+public class Player extends Actor implements Serializable
 {
     private static final VisualField VISUAL_FIELD = new VisualField();
     public static final Item SWORD = new Weapon("Steel Sword", 200, 1, 100, 15, 10, true);
@@ -18,6 +20,7 @@ public class Player extends Actor
     public static final Inventory INVENTORY = new Inventory();
     public static final Display DISPLAY = new Display();
     public static final String[] QUESTS = new String[6];
+    public static final long serialVersionUID = 123888036;
     
     private boolean stone = false;
     private boolean oldLadyQuest = false;
@@ -31,7 +34,12 @@ public class Player extends Actor
     private int goldAmount = 1000000;
     private int score = 0;
     private int playerRowCoord = 23;
-    private int playerColCoord = 17;
+    private int playerColCoord = 17;    
+    // private int day;
+    // private int month;
+    // private int year;
+    private Date date;
+    private int levelRequirement = 1000;
     
     /**
      * Constructor for player class.
@@ -42,6 +50,46 @@ public class Player extends Actor
         
         update();
         
+    }
+    
+    /**
+     * increase xp
+     */
+    public boolean increaseExp(int exp)
+    {
+        this.exp += exp;
+        
+        if(adjustLevel())
+            return true;
+        
+        return false;    
+    }    
+    
+    /**
+     * get exp requirement.
+     */
+    public int getExpRequired()
+    {
+        return levelRequirement;
+    }
+    
+    /**
+     * Adjust level.
+     */
+    public boolean adjustLevel()
+    {
+        if(exp > levelRequirement)
+        {
+            exp -= levelRequirement;
+            
+            level++;
+            
+            levelRequirement *= 1.2;
+            
+            return true;
+        }
+        
+        return false;
     }
         
     /**
@@ -113,8 +161,6 @@ public class Player extends Actor
     public void pay(int cost)
     {
         goldAmount -= cost;
-        
-        update();
     }
     
     /**
@@ -221,10 +267,10 @@ public class Player extends Actor
      */
     public void update()
     {
-        attackForce = initialAttackForce + SWORD.getStats();
-        shield = initialShield + ARMOUR.getStats();
-        maxHealthPoints = initialMaxHealthPoints + AMULET.getStats();
-        currentHealthPoints += AMULET.getStats();
+        attackForce = SWORD.getStats() + (initialAttackForce * level);
+        shield = ARMOUR.getStats() + (initialShield * level);
+        maxHealthPoints = initialMaxHealthPoints + AMULET.getStats() + (initialHealthPoints * level);
+        currentHealthPoints += AMULET.getStats() + (initialHealthPoints * level);
         
         if(RING.checkVisibility())
             doubleHitChance = initialDoubleHitChance + RING.getStats();
@@ -396,6 +442,22 @@ public class Player extends Actor
     }
     
     /**
+     * Set date at the time of creation.
+     */
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+    
+    /**
+     * @return date.
+     */
+    public Date getDate()
+    {
+        return date;
+    }
+    
+    /**
      * Change the player's image.
      */
     public void changeImage(String image)
@@ -483,4 +545,14 @@ public class Player extends Actor
             
         DISPLAY.listOptions(QUESTS);    
     }
+    
+    // /**
+     // * Write player record to file.
+     // */
+    // @Override
+    // public String toString()
+    // {
+        // return new StringBuffer("Player Name: ").append(this.name)
+                // .append("Date : ").append(new Date()).append("Score : ").append(this.score).toString();
+    // }
 }
