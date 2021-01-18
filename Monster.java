@@ -7,7 +7,7 @@
 public class Monster extends Actor
 {
     private final String drop;
-    protected int expMultiplier = 300; 
+    protected int expMultiplier = 150; 
     
     /**
      * Initialising the Monster.
