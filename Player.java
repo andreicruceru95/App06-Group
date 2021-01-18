@@ -11,9 +11,10 @@ import java.io.Serializable;
 public class Player extends Actor implements Serializable
 {
     private static final VisualField VISUAL_FIELD = new VisualField();
+    //see items constructor method for details about items fields.
     public static final Item SWORD = new Weapon("Steel Sword", 200, 1, 100, 15, 10, true);
     public static final Item ARMOUR = new Armour("Steel Armour", 100, 1, 50, 15, 10, true);
-    public static final Item POTION = new Potion("HP Potion", 200, 1, 200, 15, 10, true);
+    public static final Item POTION = new Potion("HP Potion", 400, 1, 200, 15, 10, true);
     public static final Item AMULET = new Amulet("Hellen's Gift", 500, 1, 1000, 30, 20, true);
     public static final Item RING = new Ring("Potus's Ring", 10, 1, 1, 30, 20, false);
     public static final Item BRACELET = new Bracelet("Spirit Trinket", 10,1,1, 30, 20, false);
@@ -31,13 +32,10 @@ public class Player extends Actor implements Serializable
     private boolean queenIsDeath = false;
     private boolean foxIsDeath = false;
     
-    private int goldAmount = 1000000;
+    private int goldAmount = 0;
     private int score = 0;
     private int playerRowCoord = 23;
     private int playerColCoord = 17;    
-    // private int day;
-    // private int month;
-    // private int year;
     private Date date;
     private int levelRequirement = 1000;
     
@@ -84,7 +82,7 @@ public class Player extends Actor implements Serializable
             
             level++;
             
-            levelRequirement *= 1.2;
+            levelRequirement *= 1.3;
             
             return true;
         }
