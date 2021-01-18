@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 /**
  * The main Game class.
@@ -15,8 +14,9 @@ import java.io.Serializable;
  * @version 1.0.12 
  */
 
-public class Game 
+public class Game
 {
+    public static final File filepath =  new File("C:\\Users\\andre\\blueJ\\App06-Group\\player-data\\playerData.xml");
     public static final String SQUARE = "   ";
     //to be changed
     public static final String AGREE = "yes";
@@ -377,8 +377,8 @@ public class Game
                         break;
 
                     default:
-                        //displayMessage("Not an option");
-                        breakWord(choice);
+                        displayMessage("Not an option");
+                        //breakWord(choice);
                         
                 } 
             
@@ -390,28 +390,28 @@ public class Game
             }
             
         }
-                
+                 
     }
     
     /**
-     * Save player's data
+     * Save and display player's data
      */
     private void savePlayer() throws Exception
     {
-        final FileOutputStream FOS = new FileOutputStream("Player-data.txt", true);
+        final FileOutputStream FOS = new FileOutputStream(filepath, true);
         final ObjectOutputStream OOS = new ObjectOutputStream(FOS);
-        
+                
         OOS.writeObject(player);
         
         OOS.close();
         
-        final FileInputStream FIS = new FileInputStream("Player-data.txt");
-        final ObjectInputStream OIS = new ObjectInputStream(FIS);   
+        final FileInputStream FIS = new FileInputStream(filepath);
+        final ObjectInputStream OIS = new ObjectInputStream(FIS);          
         
         Player newPlayer = (Player) OIS.readObject();
-             
-        System.out.println("Date: " + newPlayer.getDate().toLocaleString() + "\tName: " + newPlayer.getName() + "\tLevel: " + newPlayer.getLevel() + "\tScore: " + newPlayer.getScore());
-        
+        System.out.println("Date: " + newPlayer.getDate().toLocaleString() + "\tName: " + newPlayer.getName() + 
+                            "\tLevel: " + newPlayer.getLevel() + "\tScore: " + newPlayer.getScore());     
+                               
         OIS.close();
     }
     
