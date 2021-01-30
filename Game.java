@@ -197,7 +197,6 @@ public class Game
         
         String playerName = READER.getString();
         player = new Player(playerName, 1);
-        player.setDate(date);          
         
         weapon = player.getWeapon();
         armour = player.getArmour();
@@ -398,21 +397,30 @@ public class Game
      */
     private void savePlayer() throws Exception
     {
-        final FileOutputStream FOS = new FileOutputStream(filepath, true);
-        final ObjectOutputStream OOS = new ObjectOutputStream(FOS);
-                
-        OOS.writeObject(player);
-        
-        OOS.close();
-        
         final FileInputStream FIS = new FileInputStream(filepath);
         final ObjectInputStream OIS = new ObjectInputStream(FIS);          
         
-        Player newPlayer = (Player) OIS.readObject();
-        System.out.println("Date: " + newPlayer.getDate().toLocaleString() + "\tName: " + newPlayer.getName() + 
-                            "\tLevel: " + newPlayer.getLevel() + "\tScore: " + newPlayer.getScore());     
+        ArrayList<Player> players = (ArrayList<Player>) OIS.readObject();
+        
+        players.add(player);
+        
+        for(Player newPlayer : players)
+        {
+        
+            System.out.println("Date: " + newPlayer.getDate() + "\tName: " + newPlayer.getName() + 
+                                "\tLevel: " + newPlayer.getLevel() + "\tScore: " + newPlayer.getScore() + 
+                                "\tTotal time: " + newPlayer.getTimeElapsed());//(newPlayer.getTimeElapsed() % 3600) + " Hours " +
+                                // (newPlayer.getTimeElapsed() % 60 + " Minutes "));     
+        } 
                                
         OIS.close();
+        
+        final FileOutputStream FOS = new FileOutputStream(filepath);
+        final ObjectOutputStream OOS = new ObjectOutputStream(FOS);
+                
+        OOS.writeObject(players);
+        
+        OOS.close();
     }
     
     /**
