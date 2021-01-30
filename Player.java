@@ -1,5 +1,6 @@
 import java.util.*;
 import java.time.*;
+import java.time.LocalDate;
 import java.io.Serializable;
 
 /**
@@ -22,6 +23,7 @@ public class Player extends Actor implements Serializable
     public static final Display DISPLAY = new Display();
     public static final String[] QUESTS = new String[6];
     public static final long serialVersionUID = 123888036;
+    private long start;
     
     private boolean stone = false;
     private boolean oldLadyQuest = false;
@@ -36,7 +38,6 @@ public class Player extends Actor implements Serializable
     private int score = 0;
     private int playerRowCoord = 23;
     private int playerColCoord = 17;    
-    private Date date;
     private int levelRequirement = 1000;
     
     /**
@@ -45,6 +46,8 @@ public class Player extends Actor implements Serializable
     public Player(String name, int level)
     {
         super(name, level);
+        //Start time elapsed
+        start = System.nanoTime();
         
         update();
         
@@ -442,17 +445,22 @@ public class Player extends Actor implements Serializable
     /**
      * Set date at the time of creation.
      */
-    public void setDate(Date date)
+    public LocalDate getDate()
     {
-        this.date = date;
+        LocalDate now = LocalDate.now();
+        
+        return now;
     }
     
     /**
      * @return date.
      */
-    public Date getDate()
+    public long getTimeElapsed()
     {
-        return date;
+        long finish = System.nanoTime();
+        //calculate seconds
+        return (finish - start) / 1000000000;
+         
     }
     
     /**
